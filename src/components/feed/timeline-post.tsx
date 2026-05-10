@@ -83,12 +83,37 @@ const CommentInput = ({ avatarSrc }: { avatarSrc: string }) => (
       <div className="_comment_input_icons">
         <button type="button" className="_comment_icon_btn" aria-label="Voice">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-            <path fill="#000" fillOpacity=".46" fillRule="evenodd" d="M13.167 6.534a.5.5 0 01.5.5c0 3.061-2.35 5.582-5.333 5.837V14.5a.5.5 0 01-1 0v-1.629C4.35 12.616 2 10.096 2 7.034a.5.5 0 011 0c0 2.679 2.168 4.859 4.833 4.859 2.666 0 4.834-2.18 4.834-4.86a.5.5 0 01.5-.5z" clipRule="evenodd" />
+            <path
+              d="M8 1.25a2 2 0 012 2v4a2 2 0 11-4 0v-4a2 2 0 012-2z"
+              stroke="currentColor"
+              strokeWidth="1.25"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M3.5 7v.75a4.5 4.5 0 009 0V7M8 13.25V15M6.25 15h3.5"
+              stroke="currentColor"
+              strokeWidth="1.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </button>
         <button type="button" className="_comment_icon_btn" aria-label="Image">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-            <path fill="#000" fillOpacity=".46" fillRule="evenodd" d="M10.867 1.333c2.257 0 3.774 1.581 3.774 3.933v5.435c0 2.352-1.517 3.932-3.774 3.932H5.101c-2.254 0-3.767-1.58-3.767-3.932V5.266c0-2.352 1.513-3.933 3.767-3.933h5.766z" clipRule="evenodd" />
+            <path
+              d="M2.5 4a2 2 0 012-2h7a2 2 0 012 2v8a2 2 0 01-2 2h-7a2 2 0 01-2-2V4z"
+              stroke="currentColor"
+              strokeWidth="1.25"
+              strokeLinejoin="round"
+            />
+            <circle cx="6.25" cy="6.25" r="1.1" stroke="currentColor" strokeWidth="1.25" />
+            <path
+              d="M3 12 6 9l1.75 1.75L11 7.5l2 2"
+              stroke="currentColor"
+              strokeWidth="1.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </button>
       </div>
