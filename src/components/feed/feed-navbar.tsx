@@ -314,7 +314,7 @@ export const FeedNavbar = () => {
                 <span className="_counting">6</span>
               </button>
               <div
-                className={`_notification_dropdown${notifOpen ? "show" : ""}`}
+                className={`_notification_dropdown ${notifOpen ? "show" : ""}`}
                 id="_notify_drop"
               >
                 <div className="_notifications_content">
@@ -342,7 +342,7 @@ export const FeedNavbar = () => {
                       </svg>
                     </button>
                     <div
-                      className={`_notifications_drop_right${notifOverflowOpen ? "show" : ""}`}
+                      className={`_notifications_drop_right ${notifOverflowOpen ? "show" : ""}`}
                     >
                       <ul className="_notification_list">
                         {NOTIFICATION_OVERFLOW_LINKS.map((label) => (
@@ -454,7 +454,7 @@ export const FeedNavbar = () => {
             </button>
           </div>
 
-          <div className={`_profile_dropdown${profileOpen ? "show" : ""}`}>
+          <div className={`_profile_dropdown ${profileOpen ? "show" : ""}`}>
             <div className="_profile_drop_info">
               <Image
                 src="/assets/images/profile.png"
