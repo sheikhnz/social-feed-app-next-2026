@@ -40,7 +40,7 @@ export const RegisterForm = () => {
 
   return (
     <div className="_auth_content_card">
-      <div className="text-center mb-7">
+      <div className="mb-7 text-center">
         <Image
           src="/assets/images/logo.svg"
           alt="Buddy Script"
@@ -101,7 +101,11 @@ export const RegisterForm = () => {
           ]}
           style={{ marginBottom: 14 }}
         >
-          <Input.Password size="large" autoComplete="new-password" style={{ borderRadius: 6 }} />
+          <Input.Password
+            size="large"
+            autoComplete="new-password"
+            style={{ borderRadius: 6 }}
+          />
         </Form.Item>
 
         <Form.Item
@@ -121,7 +125,11 @@ export const RegisterForm = () => {
           ]}
           style={{ marginBottom: 14 }}
         >
-          <Input.Password size="large" autoComplete="new-password" style={{ borderRadius: 6 }} />
+          <Input.Password
+            size="large"
+            autoComplete="new-password"
+            style={{ borderRadius: 6 }}
+          />
         </Form.Item>
 
         <Form.Item
@@ -145,11 +153,7 @@ export const RegisterForm = () => {
         </Form.Item>
 
         <Form.Item style={{ marginBottom: 0 }}>
-          <button
-            type="submit"
-            className="_auth_submit_btn"
-            disabled={loading}
-          >
+          <button type="submit" className="_auth_submit_btn" disabled={loading}>
             {loading ? "Registering…" : SUBMIT_LABEL}
           </button>
         </Form.Item>
@@ -157,8 +161,7 @@ export const RegisterForm = () => {
 
       <div className="_auth_bottom_txt">
         <p>
-          {HAVE_ACCOUNT_TEXT}{" "}
-          <Link href="/login">{SIGN_IN_LABEL}</Link>
+          {HAVE_ACCOUNT_TEXT} <Link href="/login">{SIGN_IN_LABEL}</Link>
         </p>
       </div>
     </div>

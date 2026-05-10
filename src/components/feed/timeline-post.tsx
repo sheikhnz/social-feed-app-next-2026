@@ -33,15 +33,33 @@ const DROPDOWN_ITEMS = [
   {
     label: "Save Post",
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18">
-        <path stroke="#1890FF" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M14.25 15.75L9 12l-5.25 3.75v-12a1.5 1.5 0 011.5-1.5h7.5a1.5 1.5 0 011.5 1.5v12z" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        fill="none"
+        viewBox="0 0 18 18"
+      >
+        <path
+          stroke="#1890FF"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.2"
+          d="M14.25 15.75L9 12l-5.25 3.75v-12a1.5 1.5 0 011.5-1.5h7.5a1.5 1.5 0 011.5 1.5v12z"
+        />
       </svg>
     ),
   },
   {
     label: "Turn On Notification",
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="22" fill="none" viewBox="0 0 20 22">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="22"
+        fill="none"
+        viewBox="0 0 20 22"
+      >
         <path
           fill="#377DFF"
           fillRule="evenodd"
@@ -54,25 +72,67 @@ const DROPDOWN_ITEMS = [
   {
     label: "Hide",
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18">
-        <path stroke="#1890FF" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M14.25 2.25H3.75a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5h10.5a1.5 1.5 0 001.5-1.5V3.75a1.5 1.5 0 00-1.5-1.5zM6.75 6.75l4.5 4.5M11.25 6.75l-4.5 4.5" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        fill="none"
+        viewBox="0 0 18 18"
+      >
+        <path
+          stroke="#1890FF"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.2"
+          d="M14.25 2.25H3.75a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5h10.5a1.5 1.5 0 001.5-1.5V3.75a1.5 1.5 0 00-1.5-1.5zM6.75 6.75l4.5 4.5M11.25 6.75l-4.5 4.5"
+        />
       </svg>
     ),
   },
   {
     label: "Edit Post",
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18">
-        <path stroke="#1890FF" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M8.25 3H3a1.5 1.5 0 00-1.5 1.5V15A1.5 1.5 0 003 16.5h10.5A1.5 1.5 0 0015 15V9.75" />
-        <path stroke="#1890FF" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M13.875 1.875a1.591 1.591 0 112.25 2.25L9 11.25 6 12l.75-3 7.125-7.125z" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        fill="none"
+        viewBox="0 0 18 18"
+      >
+        <path
+          stroke="#1890FF"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.2"
+          d="M8.25 3H3a1.5 1.5 0 00-1.5 1.5V15A1.5 1.5 0 003 16.5h10.5A1.5 1.5 0 0015 15V9.75"
+        />
+        <path
+          stroke="#1890FF"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.2"
+          d="M13.875 1.875a1.591 1.591 0 112.25 2.25L9 11.25 6 12l.75-3 7.125-7.125z"
+        />
       </svg>
     ),
   },
   {
     label: "Delete Post",
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18">
-        <path stroke="#1890FF" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M2.25 4.5h13.5M6 4.5V3a1.5 1.5 0 011.5-1.5h3A1.5 1.5 0 0112 3v1.5m2.25 0V15a1.5 1.5 0 01-1.5 1.5h-7.5a1.5 1.5 0 01-1.5-1.5V4.5h10.5zM7.5 8.25v4.5M10.5 8.25v4.5" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        fill="none"
+        viewBox="0 0 18 18"
+      >
+        <path
+          stroke="#1890FF"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.2"
+          d="M2.25 4.5h13.5M6 4.5V3a1.5 1.5 0 011.5-1.5h3A1.5 1.5 0 0112 3v1.5m2.25 0V15a1.5 1.5 0 01-1.5 1.5h-7.5a1.5 1.5 0 01-1.5-1.5V4.5h10.5zM7.5 8.25v4.5M10.5 8.25v4.5"
+        />
       </svg>
     ),
   },
@@ -102,10 +162,25 @@ const CommentComposer = ({ avatarSrc, textareaId }: CommentComposerProps) => (
           <img src={avatarSrc} alt="" className="_comment_img" />
         </div>
         <div className="_feed_inner_comment_box_content_txt">
-          <textarea className="form-control _comment_textarea" placeholder="Write a comment" id={textareaId} rows={1} />
+          <textarea
+            className="form-control _comment_textarea"
+            placeholder="Write a comment"
+            id={textareaId}
+            rows={1}
+          />
           <div className="_feed_inner_comment_box_icon">
-            <button type="button" className="_feed_inner_comment_box_icon_btn" aria-label="Voice">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+            <button
+              type="button"
+              className="_feed_inner_comment_box_icon_btn"
+              aria-label="Voice"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="none"
+                viewBox="0 0 16 16"
+              >
                 <path
                   fill="#000"
                   fillOpacity=".46"
@@ -115,8 +190,18 @@ const CommentComposer = ({ avatarSrc, textareaId }: CommentComposerProps) => (
                 />
               </svg>
             </button>
-            <button type="button" className="_feed_inner_comment_box_icon_btn" aria-label="Image">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+            <button
+              type="button"
+              className="_feed_inner_comment_box_icon_btn"
+              aria-label="Image"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="none"
+                viewBox="0 0 16 16"
+              >
                 <path
                   fill="#000"
                   fillOpacity=".46"
@@ -133,7 +218,13 @@ const CommentComposer = ({ avatarSrc, textareaId }: CommentComposerProps) => (
   </div>
 );
 
-const CommentThreadItem = ({ comment, replyTextareaId }: { comment: CommentData; replyTextareaId: string }) => (
+const CommentThreadItem = ({
+  comment,
+  replyTextareaId,
+}: {
+  comment: CommentData;
+  replyTextareaId: string;
+}) => (
   <div className="_comment_main">
     <div className="_comment_image">
       <a href="#" className="_comment_image_link">
@@ -158,12 +249,32 @@ const CommentThreadItem = ({ comment, replyTextareaId }: { comment: CommentData;
         <div className="_total_reactions">
           <div className="_total_react">
             <span className="_reaction_like">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
               </svg>
             </span>
             <span className="_reaction_heart">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
             </span>
@@ -189,7 +300,10 @@ const CommentThreadItem = ({ comment, replyTextareaId }: { comment: CommentData;
           </div>
         </div>
       </div>
-      <CommentComposer avatarSrc="/assets/images/comment_img.png" textareaId={replyTextareaId} />
+      <CommentComposer
+        avatarSrc="/assets/images/comment_img.png"
+        textareaId={replyTextareaId}
+      />
     </div>
   </div>
 );
@@ -225,7 +339,9 @@ export const TimelinePost = ({ post }: TimelinePostProps) => {
               <img src={post.authorImage} alt="" className="_post_img" />
             </div>
             <div className="_feed_inner_timeline_post_box_txt">
-              <h4 className="_feed_inner_timeline_post_box_title">{post.authorName}</h4>
+              <h4 className="_feed_inner_timeline_post_box_title">
+                {post.authorName}
+              </h4>
               <p className="_feed_inner_timeline_post_box_para">
                 {post.meta} . <a href="#">Public</a>
               </p>
@@ -233,19 +349,34 @@ export const TimelinePost = ({ post }: TimelinePostProps) => {
           </div>
           <div className="_feed_inner_timeline_post_box_dropdown">
             <div className="_feed_timeline_post_dropdown">
-              <button type="button" className="_feed_timeline_post_dropdown_link" onClick={toggleDrop} aria-label="Post options">
-                <svg xmlns="http://www.w3.org/2000/svg" width="4" height="17" fill="none" viewBox="0 0 4 17">
+              <button
+                type="button"
+                className="_feed_timeline_post_dropdown_link"
+                onClick={toggleDrop}
+                aria-label="Post options"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="4"
+                  height="17"
+                  fill="none"
+                  viewBox="0 0 4 17"
+                >
                   <circle cx="2" cy="2" r="2" fill="#C4C4C4" />
                   <circle cx="2" cy="8" r="2" fill="#C4C4C4" />
                   <circle cx="2" cy="15" r="2" fill="#C4C4C4" />
                 </svg>
               </button>
             </div>
-            <div className={`_feed_timeline_dropdown${dropOpen ? " show" : ""}`}>
+            <div className={`_feed_timeline_dropdown${dropOpen ? "show" : ""}`}>
               <ul className="_feed_timeline_dropdown_list">
                 {DROPDOWN_ITEMS.map((item) => (
                   <li key={item.label} className="_feed_timeline_dropdown_item">
-                    <a href="#" className="_feed_timeline_dropdown_link" onClick={() => setDropOpen(false)}>
+                    <a
+                      href="#"
+                      className="_feed_timeline_dropdown_link"
+                      onClick={() => setDropOpen(false)}
+                    >
                       <span>{item.icon}</span>
                       {item.label}
                     </a>
@@ -255,7 +386,9 @@ export const TimelinePost = ({ post }: TimelinePostProps) => {
             </div>
           </div>
         </div>
-        {post.title ? <h4 className="_feed_inner_timeline_post_title">{post.title}</h4> : null}
+        {post.title ? (
+          <h4 className="_feed_inner_timeline_post_title">{post.title}</h4>
+        ) : null}
         {post.image ? (
           <div className="_feed_inner_timeline_image">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -270,7 +403,9 @@ export const TimelinePost = ({ post }: TimelinePostProps) => {
             // eslint-disable-next-line @next/next/no-img-element
             <img key={i} src={src} alt="" className={reactionStackClass(i)} />
           ))}
-          <p className="_feed_inner_timeline_total_reacts_para">{post.reactionCount}</p>
+          <p className="_feed_inner_timeline_total_reacts_para">
+            {post.reactionCount}
+          </p>
         </div>
         <div className="_feed_inner_timeline_total_reacts_txt">
           <p className="_feed_inner_timeline_total_reacts_para1">
@@ -287,12 +422,22 @@ export const TimelinePost = ({ post }: TimelinePostProps) => {
       <div className="_feed_inner_timeline_reaction">
         <button
           type="button"
-          className={`_feed_inner_timeline_reaction_emoji _feed_reaction${activeReaction === "Like" ? " _feed_reaction_active" : ""}`}
+          className={`_feed_inner_timeline_reaction_emoji _feed_reaction${activeReaction === "Like" ? "_feed_reaction_active" : ""}`}
           onClick={handleLike}
         >
           <span className="_feed_inner_timeline_reaction_link">
             <span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="19"
+                height="19"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M7 10v12" />
                 <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12.73 4A2 2 0 0 1 16.38 3H17a1 1 0 0 1 1 1v2" />
               </svg>
@@ -300,22 +445,54 @@ export const TimelinePost = ({ post }: TimelinePostProps) => {
             </span>
           </span>
         </button>
-        <button type="button" className="_feed_inner_timeline_reaction_comment _feed_reaction">
+        <button
+          type="button"
+          className="_feed_inner_timeline_reaction_comment _feed_reaction"
+        >
           <span className="_feed_inner_timeline_reaction_link">
             <span>
-              <svg className="_reaction_svg" xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="none" viewBox="0 0 21 21">
-                <path stroke="#000" d="M1 10.5c0-.464 0-.696.009-.893A9 9 0 019.607 1.01C9.804 1 10.036 1 10.5 1v0c.464 0 .696 0 .893.009a9 9 0 018.598 8.598c.009.197.009.429.009.893v6.046c0 1.36 0 2.041-.317 2.535a2 2 0 01-.602.602c-.494.317-1.174.317-2.535.317H10.5c-.464 0-.696 0-.893-.009a9 9 0 01-8.598-8.598C1 11.196 1 10.964 1 10.5v0z" />
-                <path stroke="#000" strokeLinecap="round" strokeLinejoin="round" d="M6.938 9.313h7.125M10.5 14.063h3.563" />
+              <svg
+                className="_reaction_svg"
+                xmlns="http://www.w3.org/2000/svg"
+                width="21"
+                height="21"
+                fill="none"
+                viewBox="0 0 21 21"
+              >
+                <path
+                  stroke="#000"
+                  d="M1 10.5c0-.464 0-.696.009-.893A9 9 0 019.607 1.01C9.804 1 10.036 1 10.5 1v0c.464 0 .696 0 .893.009a9 9 0 018.598 8.598c.009.197.009.429.009.893v6.046c0 1.36 0 2.041-.317 2.535a2 2 0 01-.602.602c-.494.317-1.174.317-2.535.317H10.5c-.464 0-.696 0-.893-.009a9 9 0 01-8.598-8.598C1 11.196 1 10.964 1 10.5v0z"
+                />
+                <path
+                  stroke="#000"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6.938 9.313h7.125M10.5 14.063h3.563"
+                />
               </svg>
               Comment
             </span>
           </span>
         </button>
-        <button type="button" className="_feed_inner_timeline_reaction_share _feed_reaction">
+        <button
+          type="button"
+          className="_feed_inner_timeline_reaction_share _feed_reaction"
+        >
           <span className="_feed_inner_timeline_reaction_link">
             <span>
-              <svg className="_reaction_svg" xmlns="http://www.w3.org/2000/svg" width="24" height="21" fill="none" viewBox="0 0 24 21">
-                <path stroke="#000" strokeLinejoin="round" d="M23 10.5L12.917 1v5.429C3.267 6.429 1 13.258 1 20c2.785-3.52 5.248-5.429 11.917-5.429V20L23 10.5z" />
+              <svg
+                className="_reaction_svg"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="21"
+                fill="none"
+                viewBox="0 0 24 21"
+              >
+                <path
+                  stroke="#000"
+                  strokeLinejoin="round"
+                  d="M23 10.5L12.917 1v5.429C3.267 6.429 1 13.258 1 20c2.785-3.52 5.248-5.429 11.917-5.429V20L23 10.5z"
+                />
               </svg>
               Share
             </span>
@@ -324,7 +501,10 @@ export const TimelinePost = ({ post }: TimelinePostProps) => {
       </div>
 
       <div className="_feed_inner_timeline_cooment_area">
-        <CommentComposer avatarSrc="/assets/images/comment_img.png" textareaId={topCommentId} />
+        <CommentComposer
+          avatarSrc="/assets/images/comment_img.png"
+          textareaId={topCommentId}
+        />
       </div>
 
       {post.comments.length > 0 ? (
@@ -335,7 +515,11 @@ export const TimelinePost = ({ post }: TimelinePostProps) => {
             </button>
           </div>
           {post.comments.map((comment) => (
-            <CommentThreadItem key={comment.id} comment={comment} replyTextareaId={`timeline-reply-${post.id}-${comment.id}`} />
+            <CommentThreadItem
+              key={comment.id}
+              comment={comment}
+              replyTextareaId={`timeline-reply-${post.id}-${comment.id}`}
+            />
           ))}
         </div>
       ) : null}

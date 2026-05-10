@@ -88,8 +88,17 @@ const PROFILE_DROP_ITEMS = [
     label: "Settings",
     href: "#0",
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" fill="none" viewBox="0 0 18 19">
-        <path fill="#377DFF" d="M9.584 0c.671 0 1.315.267 1.783.74.468.473.721 1.112.7 1.709l.009.14a.985.985 0 00.136.395c.145.242.382.418.659.488.276.071.57.03.849-.13l.155-.078c1.165-.538 2.563-.11 3.21.991l.58.99a.695.695 0 01.04.081l.055.107c.519 1.089.15 2.385-.838 3.043l-.244.15a1.046 1.046 0 00-.423 1.144c.074.272.255.504.53.66l.158.1c.478.328.823.812.973 1.367.17.626.08 1.292-.257 1.86l-.625 1.022-.094.144c-.735 1.038-2.16 1.355-3.248.738l-.129-.066a1.123 1.123 0 00-1.178.215c-.204.2-.317.471-.316.786l-.008.163C11.956 18.022 10.88 19 9.584 19h-1.17c-1.373 0-2.486-1.093-2.484-2.398l-.008-.14a.994.994 0 00-.14-.401 1.066 1.066 0 00-.652-.493 1.12 1.12 0 00-.852.127l-.169.083a2.526 2.526 0 01-1.698.122 2.47 2.47 0 01-1.488-1.154l-.604-1.024-.08-.152a2.404 2.404 0 01.975-3.132l.1-.061c.292-.199.467-.527.467-.877 0-.381-.207-.733-.569-.94l-.147-.092a2.419 2.419 0 01-.724-3.236l.615-.993a2.503 2.503 0 013.366-.912l.126.066c.13.058.269.089.403.09a1.08 1.08 0 001.086-1.068l.008-.185c.049-.57.301-1.106.713-1.513A2.5 2.5 0 018.414 0h1.17z" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="19"
+        fill="none"
+        viewBox="0 0 18 19"
+      >
+        <path
+          fill="#377DFF"
+          d="M9.584 0c.671 0 1.315.267 1.783.74.468.473.721 1.112.7 1.709l.009.14a.985.985 0 00.136.395c.145.242.382.418.659.488.276.071.57.03.849-.13l.155-.078c1.165-.538 2.563-.11 3.21.991l.58.99a.695.695 0 01.04.081l.055.107c.519 1.089.15 2.385-.838 3.043l-.244.15a1.046 1.046 0 00-.423 1.144c.074.272.255.504.53.66l.158.1c.478.328.823.812.973 1.367.17.626.08 1.292-.257 1.86l-.625 1.022-.094.144c-.735 1.038-2.16 1.355-3.248.738l-.129-.066a1.123 1.123 0 00-1.178.215c-.204.2-.317.471-.316.786l-.008.163C11.956 18.022 10.88 19 9.584 19h-1.17c-1.373 0-2.486-1.093-2.484-2.398l-.008-.14a.994.994 0 00-.14-.401 1.066 1.066 0 00-.652-.493 1.12 1.12 0 00-.852.127l-.169.083a2.526 2.526 0 01-1.698.122 2.47 2.47 0 01-1.488-1.154l-.604-1.024-.08-.152a2.404 2.404 0 01.975-3.132l.1-.061c.292-.199.467-.527.467-.877 0-.381-.207-.733-.569-.94l-.147-.092a2.419 2.419 0 01-.724-3.236l.615-.993a2.503 2.503 0 013.366-.912l.126.066c.13.058.269.089.403.09a1.08 1.08 0 001.086-1.068l.008-.185c.049-.57.301-1.106.713-1.513A2.5 2.5 0 018.414 0h1.17z"
+        />
       </svg>
     ),
   },
@@ -97,8 +106,20 @@ const PROFILE_DROP_ITEMS = [
     label: "Help & Support",
     href: "#0",
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
-        <path stroke="#377DFF" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 19a9 9 0 100-18 9 9 0 000 18zM7.38 7.3a2.7 2.7 0 015.248.9c0 1.8-2.7 2.7-2.7 2.7M10 14.5h.009" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        fill="none"
+        viewBox="0 0 20 20"
+      >
+        <path
+          stroke="#377DFF"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          d="M10 19a9 9 0 100-18 9 9 0 000 18zM7.38 7.3a2.7 2.7 0 015.248.9c0 1.8-2.7 2.7-2.7 2.7M10 14.5h.009"
+        />
       </svg>
     ),
   },
@@ -106,16 +127,38 @@ const PROFILE_DROP_ITEMS = [
     label: "Log Out",
     href: "#0",
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="none" viewBox="0 0 19 19">
-        <path stroke="#377DFF" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6.667 18H2.889A1.889 1.889 0 011 16.111V2.89A1.889 1.889 0 012.889 1h3.778M13.277 14.222L18 9.5l-4.723-4.722M18 9.5H6.667" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="19"
+        height="19"
+        fill="none"
+        viewBox="0 0 19 19"
+      >
+        <path
+          stroke="#377DFF"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          d="M6.667 18H2.889A1.889 1.889 0 011 16.111V2.89A1.889 1.889 0 012.889 1h3.778M13.277 14.222L18 9.5l-4.723-4.722M18 9.5H6.667"
+        />
       </svg>
     ),
   },
 ];
 
 const CHEVRON_RIGHT_SVG = (
-  <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" fill="none" viewBox="0 0 6 10">
-    <path fill="#112032" d="M5 5l.354.354L5.707 5l-.353-.354L5 5zM1.354 9.354l4-4-.708-.708-4 4 .708.708zm4-4.708l-4-4-.708.708 4 4 .708-.708z" opacity=".5" />
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="6"
+    height="10"
+    fill="none"
+    viewBox="0 0 6 10"
+  >
+    <path
+      fill="#112032"
+      d="M5 5l.354.354L5.707 5l-.353-.354L5 5zM1.354 9.354l4-4-.708-.708-4 4 .708.708zm4-4.708l-4-4-.708.708 4 4 .708-.708z"
+      opacity=".5"
+    />
   </svg>
 );
 
@@ -141,10 +184,13 @@ export const FeedNavbar = () => {
     setProfileOpen(false);
   }, []);
 
-  const toggleNotifOverflow = useCallback((e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    setNotifOverflowOpen((prev) => !prev);
-  }, []);
+  const toggleNotifOverflow = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      setNotifOverflowOpen((prev) => !prev);
+    },
+    [],
+  );
 
   const toggleProfile = useCallback(() => {
     setProfileOpen((prev) => !prev);
@@ -170,7 +216,13 @@ export const FeedNavbar = () => {
 
         <div className="_nav_search_form">
           <span className="_nav_search_icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="none" viewBox="0 0 17 17">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="17"
+              height="17"
+              fill="none"
+              viewBox="0 0 17 17"
+            >
               <circle cx="7" cy="7" r="6" stroke="#666" />
               <path stroke="#666" strokeLinecap="round" d="M16 16l-3-3" />
             </svg>
@@ -192,7 +244,13 @@ export const FeedNavbar = () => {
               className="_feed_header_nav_link _feed_header_nav_link_active"
               aria-current="page"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="21" fill="none" viewBox="0 0 18 21">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="21"
+                fill="none"
+                viewBox="0 0 18 21"
+              >
                 <path
                   fill="none"
                   className="_home_active"
@@ -213,8 +271,19 @@ export const FeedNavbar = () => {
 
           <li className="_feed_header_nav_item">
             <Link href="#" className="_feed_header_nav_link">
-              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20" fill="none" viewBox="0 0 26 20">
-                <path className="_header_nav_filled_glyph" fillRule="evenodd" d={FRIENDS_ICON_PATH} clipRule="evenodd" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="26"
+                height="20"
+                fill="none"
+                viewBox="0 0 26 20"
+              >
+                <path
+                  className="_header_nav_filled_glyph"
+                  fillRule="evenodd"
+                  d={FRIENDS_ICON_PATH}
+                  clipRule="evenodd"
+                />
               </svg>
             </Link>
           </li>
@@ -228,14 +297,30 @@ export const FeedNavbar = () => {
                 aria-expanded={notifOpen}
                 aria-label="Notifications"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="22" fill="none" viewBox="0 0 20 22">
-                  <path className="_header_nav_filled_glyph" fillRule="evenodd" d={NOTIFY_ICON_PATH} clipRule="evenodd" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="22"
+                  fill="none"
+                  viewBox="0 0 20 22"
+                >
+                  <path
+                    className="_header_nav_filled_glyph"
+                    fillRule="evenodd"
+                    d={NOTIFY_ICON_PATH}
+                    clipRule="evenodd"
+                  />
                 </svg>
                 <span className="_counting">6</span>
               </button>
-              <div className={`_notification_dropdown${notifOpen ? " show" : ""}`} id="_notify_drop">
+              <div
+                className={`_notification_dropdown${notifOpen ? "show" : ""}`}
+                id="_notify_drop"
+              >
                 <div className="_notifications_content">
-                  <h4 className="_notifications_content_title">Notifications</h4>
+                  <h4 className="_notifications_content_title">
+                    Notifications
+                  </h4>
                   <div className="_notification_box_right">
                     <button
                       type="button"
@@ -244,13 +329,21 @@ export const FeedNavbar = () => {
                       aria-label="Notification options"
                       onClick={toggleNotifOverflow}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="4" height="17" fill="none" viewBox="0 0 4 17">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="4"
+                        height="17"
+                        fill="none"
+                        viewBox="0 0 4 17"
+                      >
                         <circle cx="2" cy="2" r="2" fill="#C4C4C4" />
                         <circle cx="2" cy="8" r="2" fill="#C4C4C4" />
                         <circle cx="2" cy="15" r="2" fill="#C4C4C4" />
                       </svg>
                     </button>
-                    <div className={`_notifications_drop_right${notifOverflowOpen ? " show" : ""}`}>
+                    <div
+                      className={`_notifications_drop_right${notifOverflowOpen ? "show" : ""}`}
+                    >
                       <ul className="_notification_list">
                         {NOTIFICATION_OVERFLOW_LINKS.map((label) => (
                           <li key={label} className="_notification_item">
@@ -265,14 +358,22 @@ export const FeedNavbar = () => {
                   <div className="_notifications_drop_btn_grp">
                     <button
                       type="button"
-                      className={notifTab === "all" ? "_notifications_btn_link" : "_notifications_btn_link1"}
+                      className={
+                        notifTab === "all"
+                          ? "_notifications_btn_link"
+                          : "_notifications_btn_link1"
+                      }
                       onClick={() => setNotifTab("all")}
                     >
                       All
                     </button>
                     <button
                       type="button"
-                      className={notifTab === "unread" ? "_notifications_btn_link" : "_notifications_btn_link1"}
+                      className={
+                        notifTab === "unread"
+                          ? "_notifications_btn_link"
+                          : "_notifications_btn_link1"
+                      }
                       onClick={() => setNotifTab("unread")}
                     >
                       Unread
@@ -301,8 +402,19 @@ export const FeedNavbar = () => {
 
           <li className="_feed_header_nav_item">
             <Link href="#" className="_feed_header_nav_link">
-              <svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" fill="none" viewBox="0 0 23 22">
-                <path className="_header_nav_filled_glyph" fillRule="evenodd" d={CHAT_ICON_PATH} clipRule="evenodd" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="23"
+                height="22"
+                fill="none"
+                viewBox="0 0 23 22"
+              >
+                <path
+                  className="_header_nav_filled_glyph"
+                  fillRule="evenodd"
+                  d={CHAT_ICON_PATH}
+                  clipRule="evenodd"
+                />
               </svg>
               <span className="_counting">2</span>
             </Link>
@@ -327,13 +439,22 @@ export const FeedNavbar = () => {
               aria-expanded={profileOpen}
               aria-label="Account menu"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" fill="none" viewBox="0 0 10 6">
-                <path fill="#112032" d="M5 5l.354.354L5 5.707l-.354-.353L5 5zm4.354-3.646l-4 4-.708-.708 4-4 .708.708zm-4.708 4l-4-4 .708-.708 4 4-.708.708z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10"
+                height="6"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  fill="#112032"
+                  d="M5 5l.354.354L5 5.707l-.354-.353L5 5zm4.354-3.646l-4 4-.708-.708 4-4 .708.708zm-4.708 4l-4-4 .708-.708 4 4-.708.708z"
+                />
               </svg>
             </button>
           </div>
 
-          <div className={`_profile_dropdown${profileOpen ? " show" : ""}`}>
+          <div className={`_profile_dropdown${profileOpen ? "show" : ""}`}>
             <div className="_profile_drop_info">
               <Image
                 src="/assets/images/profile.png"

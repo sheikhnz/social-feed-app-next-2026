@@ -17,14 +17,9 @@ type AntdAppProviderProps = {
  * Ant Design runtime: SSR-friendly style extraction is handled separately via `AntdRegistry` in `layout.tsx`.
  * This provider applies locale, tokens, dark/light algorithms, and the `App` shell for Modal/Message/notification hooks.
  */
-export const AntdAppProvider = ({
-  children,
-}: AntdAppProviderProps) => {
+export const AntdAppProvider = ({ children }: AntdAppProviderProps) => {
   const isDark = usePrefersDark();
-  const theme = useMemo(
-    () => buildAppAntdTheme({ isDark }),
-    [isDark],
-  );
+  const theme = useMemo(() => buildAppAntdTheme({ isDark }), [isDark]);
 
   return (
     <ConfigProvider

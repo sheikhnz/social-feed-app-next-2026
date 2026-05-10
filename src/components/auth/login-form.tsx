@@ -36,7 +36,7 @@ export const LoginForm = () => {
 
   return (
     <div className="_auth_content_card">
-      <div className="text-center mb-7">
+      <div className="mb-7 text-center">
         <Image
           src="/assets/images/logo.svg"
           alt="Buddy Script"
@@ -94,7 +94,11 @@ export const LoginForm = () => {
           rules={[{ required: true, message: "Please enter your password" }]}
           style={{ marginBottom: 14 }}
         >
-          <Input.Password size="large" autoComplete="current-password" style={{ borderRadius: 6 }} />
+          <Input.Password
+            size="large"
+            autoComplete="current-password"
+            style={{ borderRadius: 6 }}
+          />
         </Form.Item>
 
         <div className="_auth_form_meta">
@@ -109,11 +113,7 @@ export const LoginForm = () => {
         </div>
 
         <Form.Item style={{ marginBottom: 0 }}>
-          <button
-            type="submit"
-            className="_auth_submit_btn"
-            disabled={loading}
-          >
+          <button type="submit" className="_auth_submit_btn" disabled={loading}>
             {loading ? "Signing in…" : SUBMIT_LABEL}
           </button>
         </Form.Item>
@@ -121,8 +121,7 @@ export const LoginForm = () => {
 
       <div className="_auth_bottom_txt">
         <p>
-          {NO_ACCOUNT_TEXT}{" "}
-          <Link href="/register">{CREATE_ACCOUNT_LABEL}</Link>
+          {NO_ACCOUNT_TEXT} <Link href="/register">{CREATE_ACCOUNT_LABEL}</Link>
         </p>
       </div>
     </div>

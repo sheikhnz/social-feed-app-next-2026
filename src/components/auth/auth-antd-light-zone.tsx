@@ -13,15 +13,8 @@ type AuthAntdLightZoneProps = {
  * `prefers-color-scheme`; this nested provider restores the default (light)
  * algorithm so inputs and controls stay on the light palette.
  */
-export const AuthAntdLightZone = ({
-  children,
-}: AuthAntdLightZoneProps) => {
-  const lightTheme = useMemo(
-    () => buildAppAntdTheme({ isDark: false }),
-    [],
-  );
+export const AuthAntdLightZone = ({ children }: AuthAntdLightZoneProps) => {
+  const lightTheme = useMemo(() => buildAppAntdTheme({ isDark: false }), []);
 
-  return (
-    <ConfigProvider theme={lightTheme}>{children}</ConfigProvider>
-  );
+  return <ConfigProvider theme={lightTheme}>{children}</ConfigProvider>;
 };

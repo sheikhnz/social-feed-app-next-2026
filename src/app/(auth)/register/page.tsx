@@ -16,7 +16,15 @@ export default function RegisterPage() {
     <section className="_social_auth_wrapper">
       <AuthBackground />
 
-      <div className="container" style={{ maxWidth: 1320, margin: "0 auto", padding: "0 16px", width: "100%" }}>
+      <div
+        className="container"
+        style={{
+          maxWidth: 1320,
+          margin: "0 auto",
+          padding: "0 16px",
+          width: "100%",
+        }}
+      >
         <div
           style={{
             display: "grid",
