@@ -1,0 +1,31 @@
+---
+description: Production-grade Next.js engineering standards
+alwaysApply: true
+---
+
+- Prefer Server Components by default.
+- Only use `"use client"` when interactivity is required.
+- Avoid unnecessary client-side state and effects.
+- Fetch data on the server whenever possible.
+- Keep components small and composable.
+- Separate UI, business logic, and data access.
+- Never expose secrets or private environment variables to the client.
+- Use `NEXT_PUBLIC_` only for intentionally public variables.
+- Validate all external input.
+- Handle loading, empty, and error states explicitly.
+- Add proper TypeScript types. Avoid `any`.
+- Prefer async/await over promise chains.
+- Avoid deeply nested components and props drilling.
+- Use dynamic imports for heavy client components.
+- Optimize images with Next.js Image component.
+- Prefer route handlers or server actions for backend logic.
+- Avoid duplicate API calls and unnecessary re-renders.
+- Keep API responses typed and predictable.
+- Write accessible HTML and semantic components.
+- Prefer Tailwind utility classes over custom CSS when possible.
+- Avoid inline anonymous functions in heavily rendered lists.
+- Use descriptive naming for files, components, and functions.
+- Remove dead code, console logs, and commented code before completion.
+- Keep dependencies minimal and avoid unnecessary packages.
+- Follow existing project architecture and conventions.
+- Prioritize readability and maintainability over clever abstractions.
