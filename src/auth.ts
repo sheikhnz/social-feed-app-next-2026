@@ -2,6 +2,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcrypt";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import { getServerEnv } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
 import { credentialsSignInSchema } from "@/lib/schemas/sign-in";
@@ -11,12 +12,13 @@ const { authSecret } = getServerEnv();
 /**
  * Use an explicit secret when configured; otherwise Auth.js reads AUTH_SECRET / NEXTAUTH_SECRET itself.
  */
-export const { handlers, auth, signOut } = NextAuth({
+export const { handlers, auth, signIn, signOut } = NextAuth({
   ...(authSecret ? { secret: authSecret } : {}),
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   trustHost: true,
   providers: [
+    Google,
     Credentials({
       name: "Credentials",
       credentials: {
@@ -46,7 +48,8 @@ export const { handlers, auth, signOut } = NextAuth({
         return {
           id: user.id,
           email: user.email,
-          name: user.name,
+          firstName: user.firstName,
+          lastName: user.lastName,
           image: user.image,
         };
       },
@@ -55,14 +58,18 @@ export const { handlers, auth, signOut } = NextAuth({
   callbacks: {
     authorized: () => true,
     jwt: async ({ token, user }) => {
-      if (user?.id) {
+      if (user) {
         token.sub = user.id;
+        token.firstName = user.firstName;
+        token.lastName = user.lastName;
       }
       return token;
     },
     session: async ({ session, token }) => {
       if (session.user && token.sub) {
         session.user.id = token.sub;
+        session.user.firstName = token.firstName as string | undefined;
+        session.user.lastName = token.lastName as string | undefined;
       }
       return session;
     },

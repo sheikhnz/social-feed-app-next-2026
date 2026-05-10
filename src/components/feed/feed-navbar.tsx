@@ -4,6 +4,9 @@ import type { MouseEvent, ReactNode } from "react";
 import { useCallback, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useSession, signOut } from "next-auth/react";
+import { UserAvatar } from "@/components/ui/user-avatar";
+import { getUserName } from "@/lib/utils/user";
 
 /* ─── Static data (matches capital/feed.html notification panel) ───────────── */
 
@@ -168,6 +171,9 @@ const CHEVRON_RIGHT_SVG = (
  * Top navigation — structure and icons match capital feed.html / main.css `._header_nav`.
  */
 export const FeedNavbar = () => {
+  const { data: session } = useSession();
+  const userName = getUserName(session?.user?.firstName, session?.user?.lastName);
+
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifTab, setNotifTab] = useState<"all" | "unread">("all");
   const [notifOverflowOpen, setNotifOverflowOpen] = useState(false);
@@ -423,15 +429,10 @@ export const FeedNavbar = () => {
 
         <div className="_feed_header_nav_profile" ref={profileRef}>
           <div className="_feed_header_nav_profile_image">
-            <Image
-              src="/assets/images/profile.png"
-              alt=""
-              width={24}
-              height={24}
-            />
+            <UserAvatar user={session?.user} size={24} />
           </div>
           <div className="_feed_header_nav_dropdown">
-            <p className="_feed_header_nav_para">Dylan Field</p>
+            <p className="_feed_header_nav_para">{userName}</p>
             <button
               type="button"
               className="_feed_header_nav_dropdown_btn"
@@ -456,15 +457,9 @@ export const FeedNavbar = () => {
 
           <div className={`_profile_dropdown ${profileOpen ? "show" : ""}`}>
             <div className="_profile_drop_info">
-              <Image
-                src="/assets/images/profile.png"
-                alt="Dylan Field"
-                width={40}
-                height={40}
-                className="_profile_drop_avatar"
-              />
+              <UserAvatar user={session?.user} size={40} className="_profile_drop_avatar" />
               <div>
-                <p className="_profile_drop_name">Dylan Field</p>
+                <p className="_profile_drop_name">{userName}</p>
                 <a href="#" className="_profile_drop_link">
                   View Profile
                 </a>
@@ -474,13 +469,28 @@ export const FeedNavbar = () => {
             <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
               {PROFILE_DROP_ITEMS.map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} className="_profile_drop_item">
-                    <span className="_profile_drop_item_left">
-                      <span style={{ display: "flex" }}>{item.icon}</span>
-                      {item.label}
-                    </span>
-                    {CHEVRON_RIGHT_SVG}
-                  </a>
+                  {item.label === "Log Out" ? (
+                    <button
+                      type="button"
+                      className="_profile_drop_item"
+                      style={{ width: "100%", textAlign: "left", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit" }}
+                      onClick={() => signOut()}
+                    >
+                      <span className="_profile_drop_item_left">
+                        <span style={{ display: "flex" }}>{item.icon}</span>
+                        {item.label}
+                      </span>
+                      {CHEVRON_RIGHT_SVG}
+                    </button>
+                  ) : (
+                    <a href={item.href} className="_profile_drop_item">
+                      <span className="_profile_drop_item_left">
+                        <span style={{ display: "flex" }}>{item.icon}</span>
+                        {item.label}
+                      </span>
+                      {CHEVRON_RIGHT_SVG}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

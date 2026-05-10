@@ -1,10 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/antd";
-import { Form, Input } from "@/components/ui/antd";
+import { Input } from "@/components/ui/antd";
+import { Controller } from "react-hook-form";
+import { loginAction, signInWithGoogleAction } from "@/app/actions/auth";
+import { useAuthForm } from "@/hooks/use-auth-form";
+import { credentialsSignInSchema, CredentialsSignInValues } from "@/lib/schemas/sign-in";
 
 const GOOGLE_SIGN_IN_LABEL = "Or sign-in with google";
 const OR_LABEL = "Or";
@@ -16,22 +19,21 @@ const SUBMIT_LABEL = "Login now";
 const NO_ACCOUNT_TEXT = "Dont have an account?";
 const CREATE_ACCOUNT_LABEL = "Create New Account";
 
-/**
- * Login form using Ant Design Form, Input, and Button components.
- * Matches the visual design from login.html exactly.
- */
 export const LoginForm = () => {
-  const [form] = Form.useForm();
-  const [loading, setLoading] = useState(false);
+  const { form, loading, handleSubmit } = useAuthForm<CredentialsSignInValues>({
+    schema: credentialsSignInSchema,
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    action: loginAction,
+  });
 
-  const handleSubmit = async (values: { email: string; password: string }) => {
-    setLoading(true);
-    try {
-      // TODO: wire up Auth.js signIn
-      void values;
-    } finally {
-      setLoading(false);
-    }
+  const { control, formState: { errors } } = form;
+
+  const renderError = (message?: string) => {
+    if (!message) return null;
+    return <div style={{ color: "#ff4d4f", fontSize: "12px", marginTop: "4px" }}>{message}</div>;
   };
 
   return (
@@ -49,7 +51,7 @@ export const LoginForm = () => {
       <p className="_auth_subtitle">Welcome back</p>
       <h4 className="_auth_title">Login to your account</h4>
 
-      <button type="button" className="_google_btn">
+      <button type="button" className="_google_btn" onClick={() => signInWithGoogleAction()}>
         <Image
           src="/assets/images/google.svg"
           alt="Google"
@@ -64,42 +66,33 @@ export const LoginForm = () => {
         <span>{OR_LABEL}</span>
       </div>
 
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={handleSubmit}
-        requiredMark={false}
+      <form
+        onSubmit={handleSubmit}
         style={{ fontFamily: "var(--font-poppins), Poppins, sans-serif" }}
       >
-        <Form.Item
-          label={<span className="_auth_label">{EMAIL_LABEL}</span>}
-          name="email"
-          rules={[
-            { required: true, message: "Please enter your email" },
-            { type: "email", message: "Please enter a valid email" },
-          ]}
-          style={{ marginBottom: 14 }}
-        >
-          <Input
-            type="email"
-            size="large"
-            autoComplete="email"
-            style={{ borderRadius: 6 }}
+        <div style={{ marginBottom: 14 }}>
+          <label className="_auth_label" style={{ display: "block", marginBottom: 8 }}>{EMAIL_LABEL}</label>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input {...field} type="email" size="large" autoComplete="email" style={{ borderRadius: 6 }} status={errors.email ? "error" : ""} />
+            )}
           />
-        </Form.Item>
+          {renderError(errors.email?.message)}
+        </div>
 
-        <Form.Item
-          label={<span className="_auth_label">{PASSWORD_LABEL}</span>}
-          name="password"
-          rules={[{ required: true, message: "Please enter your password" }]}
-          style={{ marginBottom: 14 }}
-        >
-          <Input.Password
-            size="large"
-            autoComplete="current-password"
-            style={{ borderRadius: 6 }}
+        <div style={{ marginBottom: 14 }}>
+          <label className="_auth_label" style={{ display: "block", marginBottom: 8 }}>{PASSWORD_LABEL}</label>
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <Input.Password {...field} size="large" autoComplete="current-password" style={{ borderRadius: 6 }} status={errors.password ? "error" : ""} />
+            )}
           />
-        </Form.Item>
+          {renderError(errors.password?.message)}
+        </div>
 
         <div className="_auth_form_meta">
           <Checkbox>
@@ -112,12 +105,12 @@ export const LoginForm = () => {
           </button>
         </div>
 
-        <Form.Item style={{ marginBottom: 0 }}>
+        <div style={{ marginBottom: 0 }}>
           <button type="submit" className="_auth_submit_btn" disabled={loading}>
             {loading ? "Signing in…" : SUBMIT_LABEL}
           </button>
-        </Form.Item>
-      </Form>
+        </div>
+      </form>
 
       <div className="_auth_bottom_txt">
         <p>

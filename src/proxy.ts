@@ -1,15 +1,32 @@
 import { auth } from "@/auth";
 
-/**
- * Next.js 16+ network boundary (formerly `middleware`). Auth.js attaches session to the request.
- * Route rules live in `callbacks.authorized` inside `auth.ts` until you add redirects here.
- */
-export default auth(() => {
-  /* Intentionally empty — extend when you add protected segments. */
+export default auth((req) => {
+  const isLoggedIn = !!req.auth;
+  const { nextUrl } = req;
+  const isAuthRoute = nextUrl.pathname.startsWith("/login") || nextUrl.pathname.startsWith("/register");
+  const isApiAuthRoute = nextUrl.pathname.startsWith("/api/auth");
+
+  if (isApiAuthRoute) {
+    return null; // Let Auth.js handle these
+  }
+
+  if (isAuthRoute) {
+    if (isLoggedIn) {
+      return Response.redirect(new URL("/", nextUrl));
+    }
+    return null;
+  }
+
+  // Protect all other routes (e.g. the feed)
+  if (!isLoggedIn) {
+    return Response.redirect(new URL("/login", nextUrl));
+  }
+
+  return null;
 });
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|assets|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
