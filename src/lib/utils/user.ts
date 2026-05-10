@@ -1,5 +1,5 @@
-export function getUserName(firstName?: string | null, lastName?: string | null, fallback = "User"): string {
-  return [firstName, lastName].filter(Boolean).join(" ") || fallback;
+export function getUserName(firstName?: string | null, lastName?: string | null, fallback = "User", name?: string | null): string {
+  return [firstName, lastName].filter(Boolean).join(" ") || name || fallback;
 }
 
 export function getUserInitial(name: string): string {

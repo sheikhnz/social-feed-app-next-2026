@@ -172,7 +172,7 @@ const CHEVRON_RIGHT_SVG = (
  */
 export const FeedNavbar = () => {
   const { data: session } = useSession();
-  const userName = getUserName(session?.user?.firstName, session?.user?.lastName);
+  const userName = getUserName(session?.user?.firstName, session?.user?.lastName, "User", session?.user?.name);
 
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifTab, setNotifTab] = useState<"all" | "unread">("all");

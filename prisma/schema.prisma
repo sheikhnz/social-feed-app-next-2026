@@ -11,6 +11,8 @@ datasource db {
 
 model User {
   id            String    @id @default(cuid())
+  /// Full name set by the OAuth provider (e.g. Google). Credentials users use firstName/lastName instead.
+  name          String?
   firstName     String?
   lastName      String?
   email         String    @unique
