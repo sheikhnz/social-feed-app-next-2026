@@ -161,7 +161,7 @@ type TimelinePostProps = {
  */
 export const TimelinePost = ({ post }: TimelinePostProps) => {
   const [dropOpen, setDropOpen] = useState(false);
-  const [activeReaction, setActiveReaction] = useState<string | null>("Haha");
+  const [activeReaction, setActiveReaction] = useState<string | null>("Like");
   const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleDrop = useCallback(() => setDropOpen((prev) => !prev), []);
@@ -241,15 +241,14 @@ export const TimelinePost = ({ post }: TimelinePostProps) => {
       <div className="_post_action_row">
         <button
           type="button"
-          className={`_reaction_btn${activeReaction === "Haha" ? " _reaction_btn_active" : ""}`}
-          onClick={() => handleReaction("Haha")}
+          className={`_reaction_btn${activeReaction === "Like" ? " _reaction_btn_active" : ""}`}
+          onClick={() => handleReaction("Like")}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="none" viewBox="0 0 19 19">
-            <path fill="#FFCC4D" d="M9.5 19a9.5 9.5 0 100-19 9.5 9.5 0 000 19z" />
-            <path fill="#664500" d="M9.5 11.083c-1.912 0-3.181-.222-4.75-.527-.358-.07-1.056 0-1.056 1.055 0 2.111 2.425 4.75 5.806 4.75 3.38 0 5.805-2.639 5.805-4.75 0-1.055-.697-1.125-1.055-1.055-1.57.305-2.838.527-4.75.527z" />
-            <path fill="#fff" d="M4.75 11.611s1.583.528 4.75.528 4.75-.528 4.75-.528-1.056 2.111-4.75 2.111-4.75-2.11-4.75-2.11z" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 10v12" />
+            <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12.73 4A2 2 0 0 1 16.38 3H17a1 1 0 0 1 1 1v2" />
           </svg>
-          Haha
+          Like
         </button>
         <button
           type="button"
