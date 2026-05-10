@@ -306,7 +306,7 @@
   z-index: 1030;
   background: var(--bs-bg2);
   /* capital feed.html `._header_nav._padd_t10` → padding-top 10px */
-  padding-top: 10px;
+  /* padding-top: 10px; */
   padding-bottom: 0;
   box-sizing: border-box;
   transition: 0.2s all ease;
@@ -1582,7 +1582,8 @@
   font-weight: 400;
   color: var(--bs-color6);
   margin-left: 6px;
-}._post_stats {
+}
+._post_stats {
   display: flex;
   gap: 12px;
 }
