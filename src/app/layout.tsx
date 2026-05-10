@@ -23,6 +23,9 @@ export const metadata: Metadata = {
     template: "%s · Social Feed",
   },
   description: "Social feed application built with Next.js.",
+  icons: {
+    icon: "/assets/images/logo-copy.svg",
+  },
 };
 
 /**
