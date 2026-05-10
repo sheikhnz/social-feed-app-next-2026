@@ -37,6 +37,11 @@
     background-color: var(--bs-bcolor1) !important;
     color: var(--bs-color1) !important;
   }
+  /* Auth pages use the same Buddy light shell; keep body from globals dark palette. */
+  body:has(._social_auth_wrapper) {
+    background-color: var(--bs-bcolor1) !important;
+    color: var(--bs-color1) !important;
+  }
 }
 
 /* ─── Base Resets ────────────────────────────────────────────────────────── */
