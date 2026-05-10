@@ -32,9 +32,18 @@ export const AppProviders = ({ children }: { children: ReactNode }) => {
         <QueryKeyRegistry />
         {children}
         {process.env.NODE_ENV === "development" ? (
-          <ReactQueryDevtools buttonPosition="bottom-left" initialIsOpen={false} />
+          <ReactQueryDevtools
+            buttonPosition="bottom-left"
+            initialIsOpen={false}
+          />
         ) : null}
-        <Toaster expand position="top-right" richColors closeButton duration={4500} />
+        <Toaster
+          expand
+          position="top-right"
+          richColors
+          closeButton
+          duration={4500}
+        />
       </QueryClientProvider>
     </SessionProvider>
   );

@@ -5,8 +5,10 @@ declare global {
       NEXT_PUBLIC_SITE_URL?: string;
       /** Public Cloudinary cloud name (safe for client-side upload widgets). */
       NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME?: string;
-      /** Server-only database connection string. Never use the NEXT_PUBLIC_ prefix for secrets. */
+      /** Primary DB URL (use Supabase pooled + ?pgbouncer=true when recommended). */
       DATABASE_URL?: string;
+      /** Direct Postgres URL for Prisma Migrate; same as DATABASE_URL if not using a pooler. */
+      DIRECT_URL?: string;
       /** Auth.js / NextAuth signing secret (preferred). */
       AUTH_SECRET?: string;
       /** Legacy alias for AUTH_SECRET. */
