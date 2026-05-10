@@ -1514,8 +1514,8 @@
   min-height: 100px;
   margin: 0;
   resize: vertical;
-  background: var(--bs-bg3);
-  border: 1px solid var(--bs-bg3);
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: 6px;
   padding: 28px 14px 12px 14px;
   font-size: 16px;
@@ -2416,23 +2416,34 @@
   margin-left: auto;
 }
 
+._composer_visibility_overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+}
+
 ._composer_visibility_toggle {
   display: flex;
   border: 1px solid var(--bs-bcolor2);
   border-radius: 6px;
   overflow: hidden;
+  background: var(--bs-bg2);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
 ._composer_vis_btn {
   font-size: 12px;
   font-weight: 500;
-  padding: 5px 10px;
+  padding: 4px 9px;
   background: transparent;
   border: none;
   cursor: pointer;
   color: var(--bs-color7);
   transition: background 0.15s, color 0.15s;
   font-family: inherit;
+  line-height: 1.4;
 }
 
 ._composer_vis_btn._active {

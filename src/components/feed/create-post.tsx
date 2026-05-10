@@ -24,14 +24,19 @@ const ICON_VIDEO = (
 );
 
 const ICON_EVENT = (
-  <svg xmlns="http://www.w3.org/2000/svg" width={22} height={24} fill="none" viewBox="0 0 22 24">
-    <path fill="#666" d="M14.371 2c.32 0 .585.262.627.603l.005.095v.788c2.598.195 4.188 2.033 4.18 5v8.488c0 3.145-1.786 5.026-4.656 5.026H7.395C4.53 22 2.74 20.087 2.74 16.904V8.486c0-2.966 1.596-4.804 4.187-5v-.788c0-.386.283-.698.633-.698.32 0 .584.262.626.603l.006.095v.771h5.546v-.771c0-.386.284-.698.633-.698.32 0 .584.262.626.603l.005.095v.788c2.598.195 4.188 2.033 4.18 5v8.488c0 3.145-1.786 5.026-4.656 5.026H7.395C4.53 22 2.74 20.087 2.74 16.904V8.486c0-2.966 1.596-4.804 4.187-5v-.874a.632.632 0 00-.625-.603zm3.546 8.283H4.004l.001 6.621c0 2.325 1.137 3.616 3.183 3.697l.207.004h7.132c2.184 0 3.39-1.271 3.39-3.63v-6.692z" />
+  <svg xmlns="http://www.w3.org/2000/svg" width={22} height={22} fill="none" viewBox="0 0 24 24">
+    <rect x="3" y="4" width="18" height="17" rx="2" stroke="#666" strokeWidth="1.5" />
+    <path d="M3 9h18" stroke="#666" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M8 2v4M16 2v4" stroke="#666" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M7 13h4M7 17h6" stroke="#666" strokeWidth="1.5" strokeLinecap="round" />
   </svg>
 );
 
 const ICON_ARTICLE = (
-  <svg xmlns="http://www.w3.org/2000/svg" width={18} height={20} fill="none" viewBox="0 0 18 20">
-    <path fill="#666" d="M12.49 0c2.92 0 4.665 1.92 4.693 5.132v9.659c0 3.257-1.75 5.209-4.693 5.209H5.434c-.377 0-.734-.032-1.07-.095l-.2-.041C2 19.371.74 17.555.74 14.791V5.209c0-.334.019-.654.055-.96C1.114 1.564 2.799 0 5.434 0h7.056z" />
+  <svg xmlns="http://www.w3.org/2000/svg" width={18} height={20} fill="none" viewBox="0 0 24 24">
+    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="#666" strokeWidth="1.5" strokeLinejoin="round" />
+    <path d="M14 2v6h6" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M8 13h8M8 17h5" stroke="#666" strokeWidth="1.5" strokeLinecap="round" />
   </svg>
 );
 
@@ -130,13 +135,13 @@ export const PostComposer = () => {
             </div>
           )}
         </div>
-        <div className="form-floating _feed_inner_text_area_box_form">
+        <div className="form-floating _feed_inner_text_area_box_form" style={{ position: "relative" }}>
           <textarea
             id={fieldId}
             className="form-control _textarea"
             placeholder={PLACEHOLDER_FLOAT}
             aria-label={LABEL_TEXT}
-            rows={3}
+            rows={5}
             value={text}
             onChange={onChange}
             onKeyDown={(e) => {
@@ -150,6 +155,9 @@ export const PostComposer = () => {
           <label className="_feed_textarea_label" htmlFor={fieldId}>
             {LABEL_TEXT}
           </label>
+          <div className="_composer_visibility_overlay">
+            <VisibilityToggle value={visibility} onChange={setVisibility} />
+          </div>
         </div>
       </div>
 
@@ -166,7 +174,6 @@ export const PostComposer = () => {
         </div>
 
         <div className="_composer_controls_right">
-          <VisibilityToggle value={visibility} onChange={setVisibility} />
           <div className="_feed_inner_text_area_btn">
             <button
               type="button"
