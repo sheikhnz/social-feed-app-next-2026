@@ -44,6 +44,8 @@
   font-family: var(--font-poppins), "Poppins", sans-serif;
   background-color: var(--bs-bg1);
   color: var(--bs-color);
+  /* Matches common.css body / paragraph scale (16px) so feed matches capital/feed.html */
+  font-size: 16px;
 }
 
 /* ─── Auth Layout ────────────────────────────────────────────────────────── */
@@ -650,9 +652,10 @@
   padding: 16px 16px 8px;
 }
 ._notif_title {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
-  color: var(--bs-color1);
+  color: var(--bs-color6);
+  line-height: 1.2;
   margin: 0;
 }
 ._notif_tabs {
@@ -662,20 +665,23 @@
   border-bottom: 1px solid var(--bs-bcolor2);
 }
 ._notif_tab_btn {
-  padding: 4px 12px;
-  border-radius: 20px;
-  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #f1f1f1;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 500;
+  line-height: 1.2;
   font-family: "Poppins", sans-serif;
-  background: var(--bs-bg3);
-  color: var(--bs-color4);
+  background: transparent;
+  color: var(--bs-color6);
+  height: 36px;
+  box-sizing: border-box;
   transition: 0.2s;
 }
 ._notif_tab_btn_active {
-  background: var(--bs-color5);
-  color: white;
+  background: #1890ff26;
+  color: var(--bs-color5);
 }
 ._notif_list {
   max-height: 320px;
@@ -704,9 +710,10 @@
   flex: 1;
 }
 ._notif_para {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--bs-color4);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--bs-color7);
   margin: 0 0 4px;
 }
 ._notif_name_link {
@@ -714,8 +721,10 @@
   color: var(--bs-color1);
 }
 ._notif_time {
-  font-size: 11px;
-  color: var(--bs-color3);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--bs-color5);
 }
 
 /* ─── Profile Dropdown ───────────────────────────────────────────────────── */
@@ -749,14 +758,17 @@
   object-fit: cover;
 }
 ._profile_drop_name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--bs-color1);
-  margin: 0 0 2px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--bs-color6);
+  margin: 0 0 4px;
 }
 ._profile_drop_link {
-  font-size: 12px;
-  color: var(--bs-color5);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #377dff;
   text-decoration: none;
 }
 ._profile_drop_divider {
@@ -770,8 +782,10 @@
   justify-content: space-between;
   padding: 10px 16px;
   text-decoration: none;
-  color: var(--bs-color4);
-  font-size: 14px;
+  color: var(--bs-color7);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
   transition: background 0.2s;
   cursor: pointer;
 }
@@ -849,7 +863,8 @@
 }
 
 ._sidebar_see_all {
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 18px;
   color: var(--bs-color5);
   text-decoration: none;
   font-weight: 500;
@@ -872,8 +887,10 @@
   align-items: center;
   gap: 12px;
   padding: 8px 0;
-  font-size: 14px;
-  color: var(--bs-color4);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--bs-color7);
   text-decoration: none;
   border-radius: 6px;
   transition: color 0.2s;
@@ -882,12 +899,20 @@
   color: var(--bs-color5);
 }
 ._explore_new_badge {
-  font-size: 11px;
-  color: var(--bs-color5);
-  background: var(--bs-color9);
-  border-radius: 4px;
-  padding: 1px 6px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--bs-bg2);
+  background: var(--bs-color8);
+  border: 2px solid var(--bs-bg2);
+  border-radius: 8px;
+  padding: 2px 10px;
+  min-height: 24px;
   margin-left: auto;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ─── Suggested People ───────────────────────────────────────────────────── */
@@ -913,9 +938,10 @@
   flex-shrink: 0;
 }
 ._people_name {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  color: var(--bs-color1);
+  line-height: 1.1;
+  color: var(--bs-color6);
   margin: 0 0 2px;
   text-decoration: none;
   display: block;
@@ -924,8 +950,10 @@
   color: var(--bs-color5);
 }
 ._people_role {
-  font-size: 12px;
-  color: var(--bs-color7);
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--bs-color6);
   margin: 0;
 }
 ._connect_btn {
@@ -989,9 +1017,9 @@
   margin: 0;
 }
 ._event_title {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 500;
-  color: var(--bs-color1);
+  color: #000000;
   margin: 0;
   line-height: 1.4;
 }
@@ -1029,29 +1057,50 @@
   display: flex;
   gap: 8px;
   margin-top: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+/* Equal-width controls so “Follow” stays off the card edge in the 300px sidebar */
+._might_like_actions ._ignore_btn,
+._might_like_actions ._follow_btn {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  justify-content: center;
 }
 ._ignore_btn {
-  font-size: 12px;
-  color: var(--bs-color4);
-  background: var(--bs-bg3);
-  border: 1px solid var(--bs-bcolor2);
-  border-radius: 4px;
-  padding: 4px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #959eae;
+  background: transparent;
+  border: 1px solid #f1f1f1;
+  border-radius: 6px;
+  padding: 8px 16px;
   cursor: pointer;
   transition: 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 ._ignore_btn:hover {
   background: var(--bs-bg4);
 }
 ._follow_btn {
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
   color: white;
   background: var(--bs-color5);
-  border: 1px solid transparent;
-  border-radius: 4px;
-  padding: 4px 12px;
+  border: 1px solid #f1f1f1;
+  border-radius: 6px;
+  padding: 8px 16px;
   cursor: pointer;
   transition: 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 ._follow_btn:hover {
   opacity: 0.9;
@@ -1076,8 +1125,8 @@
   border-radius: 20px;
   height: 36px;
   padding: 6px 12px 6px 36px;
-  font-size: 13px;
-  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
   outline: none;
   transition: 0.2s;
 }
@@ -1111,9 +1160,10 @@
   flex-shrink: 0;
 }
 ._friend_name {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  color: var(--bs-color1);
+  line-height: 1.1;
+  color: var(--bs-color6);
   margin: 0 0 2px;
   text-decoration: none;
   display: block;
@@ -1188,9 +1238,10 @@
   margin-bottom: 4px;
 }
 ._story_add_label {
-  font-size: 11px;
+  font-size: 12px;
   color: white;
-  font-weight: 500;
+  font-weight: 400;
+  line-height: 1.4;
   text-align: center;
 }
 
@@ -1215,9 +1266,10 @@
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
 }
 ._story_pub_name {
-  font-size: 11px;
+  font-size: 12px;
   color: white;
-  font-weight: 500;
+  font-weight: 400;
+  line-height: 1.4;
   margin: 0;
 }
 ._story_mini_avatar {
@@ -1261,8 +1313,8 @@
   border: 1px solid var(--bs-bg3);
   border-radius: 6px;
   padding: 10px 14px;
-  font-size: 14px;
-  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
   resize: none;
   min-height: 80px;
   outline: none;
@@ -1296,9 +1348,11 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 16px;
+  line-height: 23px;
+  font-weight: 400;
   color: var(--bs-color7);
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
   transition: background 0.2s;
 }
 ._post_action_btn:hover {
@@ -1308,15 +1362,16 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 20px;
+  padding: 12px 22px;
   background: var(--bs-color5);
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 13px;
-  color: white;
+  font-size: 16px;
+  line-height: 24px;
   font-weight: 500;
-  font-family: "Poppins", sans-serif;
+  color: var(--bs-bg2);
+  font-family: var(--font-poppins), "Poppins", sans-serif;
   transition: opacity 0.2s;
 }
 ._post_submit_btn:hover {
@@ -1349,14 +1404,17 @@
   object-fit: cover;
 }
 ._post_author_name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--bs-color1);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: #000000;
   margin: 0 0 2px;
 }
 ._post_meta {
-  font-size: 12px;
-  color: var(--bs-color7);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: rgba(0, 0, 0, 0.46);
   margin: 0;
 }
 ._post_meta a {
@@ -1397,8 +1455,10 @@
   align-items: center;
   gap: 10px;
   padding: 10px 14px;
-  font-size: 13px;
-  color: var(--bs-color4);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--bs-color7);
   text-decoration: none;
   transition: background 0.2s;
   cursor: pointer;
@@ -1412,11 +1472,12 @@
 }
 
 ._post_title {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--bs-color1);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  color: #000000;
   padding: 0 24px 12px;
-  margin: 0;
+  margin: 0 0 16px;
 }
 
 ._post_image_wrap {
@@ -1453,22 +1514,25 @@
   margin-left: 0;
 }
 ._post_reaction_count {
-  font-size: 13px;
-  color: var(--bs-color7);
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+  color: var(--bs-color6);
   margin-left: 6px;
-}
-._post_stats {
+}._post_stats {
   display: flex;
   gap: 12px;
 }
 ._post_stat_link {
-  font-size: 13px;
-  color: var(--bs-color7);
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.46);
   text-decoration: none;
 }
 ._post_stat_link span {
-  font-weight: 600;
-  color: var(--bs-color1);
+  font-weight: normal;
+  color: var(--bs-color6);
 }
 ._post_stat_link:hover {
   color: var(--bs-color5);
@@ -1493,10 +1557,11 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 13px;
-  color: var(--bs-color7);
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  color: #000000;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
+  font-weight: 400;
   transition: background 0.2s;
 }
 ._reaction_btn:hover {
@@ -1533,8 +1598,8 @@
   border: 1px solid var(--bs-bg3);
   border-radius: 20px;
   padding: 8px 80px 8px 14px;
-  font-size: 13px;
-  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
   resize: none;
   outline: none;
   transition: border-color 0.2s;
@@ -1568,13 +1633,14 @@
 ._prev_comments_btn {
   background: transparent;
   border: none;
-  color: var(--bs-color5);
-  font-size: 13px;
-  font-weight: 500;
+  color: var(--bs-color7);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
   cursor: pointer;
   padding: 4px 0;
   margin-bottom: 12px;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
 }
 
 /* Single comment */
@@ -1593,21 +1659,25 @@
   margin-bottom: 4px;
 }
 ._comment_author {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  color: var(--bs-color1);
+  line-height: 1.3;
+  color: var(--bs-color6);
   text-decoration: none;
   display: block;
   margin-bottom: 4px;
+  word-break: break-word;
 }
 ._comment_author:hover {
   color: var(--bs-color5);
 }
 ._comment_text {
-  font-size: 13px;
-  color: var(--bs-color4);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--bs-color7);
   margin: 0;
-  line-height: 1.5;
+  word-break: break-word;
 }
 ._comment_meta {
   display: flex;
@@ -1621,12 +1691,14 @@
   margin-right: 6px;
 }
 ._comment_action_link {
-  font-size: 12px;
-  color: var(--bs-color7);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--bs-color6);
   cursor: pointer;
   background: transparent;
   border: none;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
   padding: 0;
   transition: color 0.2s;
 }
@@ -1634,8 +1706,10 @@
   color: var(--bs-color5);
 }
 ._comment_time {
-  font-size: 11px;
-  color: var(--bs-color3);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--bs-color7);
 }
 
 /* ─── Dark Mode Toggle Button (feed) ─────────────────────────────────────── */
