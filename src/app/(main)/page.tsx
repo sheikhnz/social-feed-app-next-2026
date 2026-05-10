@@ -16,16 +16,7 @@ export const metadata: Metadata = {
  */
 export default function FeedPage() {
   return (
-    <div
-      style={{
-        maxWidth: 1320,
-        margin: "0 auto",
-        width: "100%",
-        display: "flex",
-        height: "calc(100vh - 65px)",
-        overflow: "hidden",
-      }}
-    >
+    <div className="_feed_three_col">
       <FeedLeftSidebar />
 
       {/* Middle column */}

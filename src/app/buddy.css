@@ -26,6 +26,17 @@
   --bs-shadow1: 7.5px 20px 7.5px 20px rgba(108, 126, 147, 0.15);
   --bs-shadow2: 7.43px 49.03px 7.5px 49.03px rgba(108, 126, 147, 0.1);
   --bs-shadow3: 7px 42px 7px 42px rgba(108, 126, 147, 0.15);
+  /* Matches main.css notification / light panels — avoid large blur “hazes” */
+  --bs-panel-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+  --bs-profile-dropdown-shadow: 0px 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Buddy feed template is light-only in the ref HTML; pin body chrome so OS dark mode + globals don’t paint charcoal behind the layout. */
+@supports selector(:has(*)) {
+  body:has(.bs-root._feed_main_layout) {
+    background-color: var(--bs-bcolor1) !important;
+    color: var(--bs-color1) !important;
+  }
 }
 
 /* ─── Base Resets ────────────────────────────────────────────────────────── */
@@ -253,27 +264,79 @@
   height: 100vh;
   background-color: var(--bs-bcolor1);
   overflow: hidden;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
-/* ─── Navbar ─────────────────────────────────────────────────────────────── */
+/**
+ * Clears fixed navbar and leaves a strip of `var(--bs-bcolor1)` before cards.
+ * Ref uses ~70px on `._layout_inner_wrap` plus `calc(100vh - 75px)` for columns; a bit more top padding
+ * keeps the page-bg band visible when the flex navbar row is slightly taller than the static template.
+ */
+._feed_layout_children {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 72px 0 0;
+}
+
+._feed_three_col {
+  flex: 1;
+  min-height: 0;
+  max-width: 1320px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0 12px;
+}
+
+/* ─── Navbar (matches capital `._header_nav`) ───────────────────────────── */
 ._feed_navbar {
   position: fixed;
   top: 0;
-  left: 0;
   right: 0;
-  z-index: 100;
+  left: 0;
+  z-index: 1030;
   background: var(--bs-bg2);
-  border-bottom: 1px solid var(--bs-bcolor2);
-  height: 65px;
+  /* Between ref `._padd_t10` (10px) and the tighter 6px pass */
+  padding-top: 8px;
+  padding-bottom: 0;
+  box-sizing: border-box;
+  transition: 0.2s all ease;
+}
+
+._feed_nav_inner_container {
+  max-width: 1320px;
+  margin: 0 auto;
+  width: 100%;
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  box-shadow: var(--bs-shadow1);
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+._logo_wrap {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+}
+._logo_wrap > a {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
 }
 
 ._nav_logo_img {
-  height: 32px;
+  height: auto;
+  max-height: 32px;
+  width: auto;
   display: block;
 }
 
@@ -281,23 +344,31 @@
   position: relative;
   display: flex;
   align-items: center;
+  margin-left: 16px;
 }
 ._nav_search_icon {
   position: absolute;
-  left: 14px;
+  top: 50%;
+  left: 18px;
+  transform: translateY(-50%);
   pointer-events: none;
+  line-height: 0;
+  display: flex;
 }
 ._nav_search_input {
   background: var(--bs-bg3);
   border: 1px solid var(--bs-bg3);
   border-radius: 32px;
   height: 40px;
-  padding: 7px 16px 7px 40px;
-  font-size: 14px;
-  font-family: "Poppins", sans-serif;
-  width: 300px;
+  padding: 7px 16px 7px 47px;
+  font-size: 16px;
+  line-height: 1.25;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
+  width: 100%;
+  max-width: 424px;
   transition: 0.2s all ease;
   outline: none;
+  box-sizing: border-box;
 }
 ._nav_search_input:hover,
 ._nav_search_input:focus {
@@ -305,10 +376,177 @@
 }
 ._nav_search_input::placeholder {
   color: rgba(0, 0, 0, 0.25);
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
 }
 
-/* Nav icon items */
+._feed_nav_flex_spacer {
+  flex: 1 1 auto;
+  min-width: 8px;
+}
+
+._feed_header_nav_list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0 8px 0 0;
+  padding: 0;
+}
+
+._feed_header_nav_item {
+  margin: 0 12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Nav icon links — between compact (12/14) and ref `._header_nav_link` (22/26) */
+._feed_header_nav_link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  vertical-align: middle;
+  transition: 0.2s all ease;
+  padding: 18px 14px 22px !important;
+  width: fit-content;
+  max-width: 100%;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+  border: none;
+  margin: 0;
+  font: inherit;
+  text-align: inherit;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+}
+._feed_header_nav_link svg {
+  display: block;
+  flex-shrink: 0;
+}
+._feed_header_nav_link:focus-visible {
+  outline: 2px solid var(--bs-color5);
+  outline-offset: 2px;
+}
+._feed_header_nav_link::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: #00acff;
+}
+._feed_header_nav_link:hover::before {
+  height: 2px;
+  transition: 0.2s all ease;
+}
+._feed_header_nav_link_active::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #00acff;
+  visibility: visible !important;
+}
+._feed_header_nav_link svg path {
+  transition: 0.2s all ease;
+}
+._feed_header_nav_link:hover svg path {
+  fill: var(--bs-color5);
+  fill-opacity: 1;
+}
+._feed_header_nav_link:hover svg ._home_active {
+  stroke: var(--bs-color5);
+  fill: none;
+  stroke-opacity: 1;
+}
+._feed_header_nav_link_active svg path {
+  fill-opacity: 1;
+  fill: var(--bs-color5);
+}
+._feed_header_nav_link_active svg ._home_active {
+  stroke: var(--bs-color5);
+  stroke-opacity: 1;
+  fill: none !important;
+}
+
+._counting {
+  position: absolute;
+  background: var(--bs-color5);
+  border: 1px solid var(--bs-bg2);
+  border-radius: 9px;
+  min-width: 17px;
+  height: 17px;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--bs-bg2);
+  top: 12px;
+  right: 9px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+._feed_header_nav_profile {
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+  position: relative;
+}
+._feed_header_nav_profile_image {
+  margin: 0 8px 0 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+._feed_header_nav_profile_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+._feed_header_nav_dropdown {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+._feed_header_nav_para {
+  font-weight: normal !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  color: var(--bs-color6) !important;
+  margin: 0;
+}
+._feed_header_nav_dropdown_btn {
+  border: 1px solid transparent;
+  background: transparent;
+  margin: -3px 0 0 8px;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+._feed_notify_wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+/* Legacy circular nav (unused) — kept for any older imports */
 ._nav_icon_list {
   display: flex;
   align-items: center;
@@ -356,7 +594,7 @@
   line-height: 1;
 }
 
-/* Profile dropdown toggle */
+/* Profile dropdown toggle (legacy class name on button) */
 ._nav_profile_btn {
   display: flex;
   align-items: center;
@@ -387,14 +625,19 @@
 /* ─── Notification Dropdown ──────────────────────────────────────────────── */
 ._notification_dropdown {
   position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  width: 360px;
+  left: -110px;
+  top: 32px;
+  width: 400px;
+  max-width: calc(100vw - 24px);
   background: var(--bs-bg2);
-  border-radius: 8px;
-  box-shadow: var(--bs-shadow2);
+  border-radius: 6px;
+  padding: 16px;
+  box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
   z-index: 200;
-  border: 1px solid var(--bs-bcolor2);
+  height: calc(100vh - 90px);
+  max-height: 560px;
+  overflow: auto;
+  box-sizing: border-box;
   display: none;
 }
 ._notification_dropdown.show {
@@ -480,14 +723,15 @@
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  width: 240px;
+  width: 312px;
   background: var(--bs-bg2);
-  border-radius: 8px;
-  box-shadow: var(--bs-shadow2);
+  border-radius: 6px;
+  box-shadow: var(--bs-profile-dropdown-shadow);
   z-index: 200;
-  border: 1px solid var(--bs-bcolor2);
+  border: none;
   display: none;
-  padding: 8px 0;
+  padding: 16px;
+  box-sizing: border-box;
 }
 ._profile_dropdown.show {
   display: block;
@@ -540,20 +784,15 @@
   gap: 10px;
 }
 
-/* ─── Feed Layout Inner ──────────────────────────────────────────────────── */
-._feed_inner_wrap {
-  display: flex;
-  gap: 0;
-  padding-top: 65px;
-  height: 100vh;
-  overflow: hidden;
-}
-
+/* ─── Feed columns (see main layouts `._layout_left_sidebar_wrap` / `._layout_middle_wrap`) ─── */
 ._feed_sidebar_col {
   width: 300px;
   flex-shrink: 0;
-  height: calc(100vh - 65px);
-  overflow-y: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  flex: 0 0 auto;
   padding: 18px 12px 18px 0;
   scrollbar-width: none;
 }
@@ -564,8 +803,9 @@
 ._feed_right_sidebar_col {
   width: 300px;
   flex-shrink: 0;
-  height: calc(100vh - 65px);
-  overflow-y: auto;
+  height: 100%;
+  overflow: auto;
+  flex: 0 0 auto;
   padding: 18px 0 18px 12px;
   scrollbar-width: none;
 }
@@ -574,8 +814,9 @@
 }
 
 ._feed_middle_col {
-  flex: 1;
-  height: calc(100vh - 65px);
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
   overflow-y: auto;
   padding: 10px 12px;
   scrollbar-width: none;
@@ -588,7 +829,7 @@
 ._sidebar_card {
   background: var(--bs-bg2);
   border-radius: 6px;
-  box-shadow: var(--bs-shadow1);
+  /* Ref `._feed_inner_area`: white panel on page bg, no drop shadow */
   margin-bottom: 16px;
   padding: 24px;
 }
@@ -715,7 +956,7 @@
   transition: box-shadow 0.2s;
 }
 ._event_card:hover {
-  box-shadow: var(--bs-shadow1);
+  box-shadow: var(--bs-panel-shadow);
 }
 ._event_img_wrap {
   height: 100px;
@@ -902,7 +1143,6 @@
 ._stories_row {
   background: var(--bs-bg2);
   border-radius: 6px;
-  box-shadow: var(--bs-shadow1);
   padding: 16px;
   margin-bottom: 16px;
   position: relative;
@@ -995,7 +1235,6 @@
 ._create_post_card {
   background: var(--bs-bg2);
   border-radius: 6px;
-  box-shadow: var(--bs-shadow1);
   padding: 24px;
   margin-bottom: 16px;
 }
@@ -1088,7 +1327,6 @@
 ._post_card {
   background: var(--bs-bg2);
   border-radius: 6px;
-  box-shadow: var(--bs-shadow1);
   margin-bottom: 16px;
   overflow: hidden;
 }
@@ -1145,7 +1383,7 @@
   min-width: 180px;
   background: var(--bs-bg2);
   border-radius: 8px;
-  box-shadow: var(--bs-shadow2);
+  box-shadow: var(--bs-panel-shadow);
   border: 1px solid var(--bs-bcolor2);
   z-index: 50;
   display: none;
