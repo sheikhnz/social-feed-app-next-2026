@@ -1,43 +1,41 @@
 import type { Metadata } from "next";
-import { auth } from "@/auth";
-import { CredentialsSignInForm } from "@/components/forms/credentials-sign-in-form";
+import { FeedLeftSidebar } from "@/components/feed/feed-left-sidebar";
+import { FeedRightSidebar } from "@/components/feed/feed-right-sidebar";
+import { StoryCards } from "@/components/feed/story-cards";
+import { CreatePost } from "@/components/feed/create-post";
+import { FeedTimeline } from "@/components/feed/feed-timeline";
 
 export const metadata: Metadata = {
-  title: "Home",
-  description: "Social feed home: session state, sign-in, and stack overview.",
+  title: "Feed",
+  description: "Your social feed — posts, stories, and connections.",
 };
 
 /**
- * Home route: session summary and a reference implementation for RHF + Zod + Auth.js.
+ * Main feed page — three-column layout matching the feed.html design:
+ * left sidebar (explore/people/events), center (stories/post/timeline), right sidebar (friends).
  */
-export default async function HomePage() {
-  const session = await auth();
-
+export default function FeedPage() {
   return (
-    <div className="flex flex-col gap-12">
-      <section className="space-y-3">
-        <h1 className="text-3xl font-semibold tracking-tight">Social Feed</h1>
-        <p className="max-w-prose leading-relaxed text-zinc-600 dark:text-zinc-400">
-          Stack is wired with Prisma, PostgreSQL, Auth.js (credentials + JWT
-          sessions), TanStack Query, React Hook Form, Zod, bcrypt, Sonner
-          toasts, and a Cloudinary service helper.
-        </p>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          {session?.user?.email ? (
-            <>
-              Signed in as{" "}
-              <strong className="text-foreground">{session.user.email}</strong>.
-            </>
-          ) : (
-            <>
-              You are browsing as a guest. Sign in below after seeding the dev
-              user.
-            </>
-          )}
-        </p>
-      </section>
+    <div
+      style={{
+        maxWidth: 1320,
+        margin: "0 auto",
+        width: "100%",
+        display: "flex",
+        height: "calc(100vh - 65px)",
+        overflow: "hidden",
+      }}
+    >
+      <FeedLeftSidebar />
 
-      {!session?.user ? <CredentialsSignInForm /> : null}
+      {/* Middle column */}
+      <div className="_feed_middle_col">
+        <StoryCards />
+        <CreatePost />
+        <FeedTimeline />
+      </div>
+
+      <FeedRightSidebar />
     </div>
   );
 }

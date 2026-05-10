@@ -7,6 +7,7 @@ export {
   App,
   Button,
   Card,
+  Checkbox,
   Divider,
   Empty,
   Flex,

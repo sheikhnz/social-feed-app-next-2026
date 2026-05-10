@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import { AntdAppProvider } from "@/components/providers/antd-app-provider";
 import { AppProviders } from "@/components/providers/app-providers";
 import { getServerEnv } from "@/lib/env";
 import "@/app/globals.css";
+import "@/app/buddy.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,6 +15,13 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 const { siteUrl } = getServerEnv();
@@ -41,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} h-full antialiased`}
     >
       <body className="text-foreground flex min-h-full flex-col bg-zinc-50 dark:bg-black">
         <AntdRegistry>
