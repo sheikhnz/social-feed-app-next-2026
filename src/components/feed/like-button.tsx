@@ -67,10 +67,12 @@ export const PostLikeButton = ({ post }: PostLikeButtonProps) => {
 
 type CommentLikeButtonProps = {
   comment: Pick<CommentWithMeta, "id" | "postId" | "isLiked" | "likesCount">;
+  /** Pass the parent comment id when this button belongs to a reply. */
+  parentCommentId?: string;
 };
 
-export const CommentLikeButton = ({ comment }: CommentLikeButtonProps) => {
-  const { like, unlike, isPending } = useLikeComment(comment.id, comment.postId);
+export const CommentLikeButton = ({ comment, parentCommentId }: CommentLikeButtonProps) => {
+  const { like, unlike, isPending } = useLikeComment(comment.id, comment.postId, parentCommentId);
 
   const handleClick = useCallback(() => {
     if (isPending) return;

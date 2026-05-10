@@ -18,9 +18,11 @@ type CommentItemProps = {
   postId: string;
   /** Depth: 0 = top-level, 1 = reply */
   depth?: number;
+  /** Id of the parent comment — required when depth > 0 to correctly update the replies cache */
+  parentCommentId?: string;
 };
 
-const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) => {
+const CommentItem = ({ comment, postId, depth = 0, parentCommentId }: CommentItemProps) => {
   const [replyOpen, setReplyOpen] = useState(false);
   const [repliesOpen, setRepliesOpen] = useState(false);
 
@@ -91,7 +93,7 @@ const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) => {
           </div>
 
           <div className="_comment_actions_row">
-            <CommentLikeButton comment={comment} />
+            <CommentLikeButton comment={comment} parentCommentId={parentCommentId} />
 
             <button
               type="button"
@@ -138,6 +140,7 @@ const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) => {
                   comment={reply}
                   postId={postId}
                   depth={1}
+                  parentCommentId={comment.id}
                 />
               ))}
             </div>

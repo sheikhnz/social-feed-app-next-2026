@@ -69,10 +69,44 @@ export function useLikePost(postId: string) {
 // Like a Comment
 // ---------------------------------------------------------------------------
 
-export function useLikeComment(commentId: string, postId: string) {
+export function useLikeComment(
+  commentId: string,
+  postId: string,
+  /** Pass the parent comment's id when liking a reply so the correct cache is updated. */
+  parentCommentId?: string,
+) {
   const qc = useQueryClient();
 
   const mutate = async (liked: boolean) => {
+    if (parentCommentId) {
+      // --- Reply: update the feedReplies cache keyed by parent comment id ---
+      const key = queryKeys.feedReplies(parentCommentId);
+      await qc.cancelQueries({ queryKey: key });
+      const previous = qc.getQueryData<CommentPages>(key);
+
+      qc.setQueryData<CommentPages>(key, (old) => {
+        if (!old) return old;
+        return {
+          ...old,
+          pages: old.pages.map((page) => ({
+            ...page,
+            items: page.items.map((c) =>
+              c.id === commentId
+                ? {
+                    ...c,
+                    isLiked: liked,
+                    likesCount: c.likesCount + (liked ? 1 : -1),
+                  }
+                : c,
+            ),
+          })),
+        };
+      });
+
+      return previous;
+    }
+
+    // --- Top-level comment: update the feedComments cache keyed by post id ---
     const key = queryKeys.feedComments(postId);
     await qc.cancelQueries({ queryKey: key });
     const previous = qc.getQueryData<CommentPages>(key);
@@ -99,11 +133,15 @@ export function useLikeComment(commentId: string, postId: string) {
     return previous;
   };
 
+  const errorKey = parentCommentId
+    ? queryKeys.feedReplies(parentCommentId)
+    : queryKeys.feedComments(postId);
+
   const like = useMutation({
     mutationFn: () => likeComment(commentId),
     onMutate: () => mutate(true),
     onError: (_err, _vars, ctx) => {
-      if (ctx) qc.setQueryData(queryKeys.feedComments(postId), ctx);
+      if (ctx) qc.setQueryData(errorKey, ctx);
     },
   });
 
@@ -111,7 +149,7 @@ export function useLikeComment(commentId: string, postId: string) {
     mutationFn: () => unlikeComment(commentId),
     onMutate: () => mutate(false),
     onError: (_err, _vars, ctx) => {
-      if (ctx) qc.setQueryData(queryKeys.feedComments(postId), ctx);
+      if (ctx) qc.setQueryData(errorKey, ctx);
     },
   });
 
