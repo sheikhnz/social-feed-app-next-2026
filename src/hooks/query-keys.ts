@@ -12,4 +12,6 @@ export const queryKeys = {
   feedPosts: () => [...queryKeys.feed, "posts"] as const,
   feedComments: (postId: string) =>
     [...queryKeys.feed, "comments", postId] as const,
+  feedReplies: (commentId: string) =>
+    [...queryKeys.feed, "replies", commentId] as const,
 } as const;

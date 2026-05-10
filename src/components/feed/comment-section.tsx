@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import type { CommentWithMeta } from "@/lib/repositories/comment.repository";
 import { useComments } from "@/hooks/feed/use-comments";
+import { useReplies } from "@/hooks/feed/use-replies";
 import { useCreateComment } from "@/hooks/feed/use-create-comment";
 import { CommentLikeButton } from "@/components/feed/like-button";
 import { ReplyInput } from "@/components/feed/reply-input";
@@ -23,7 +24,7 @@ const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) => {
   const [replyOpen, setReplyOpen] = useState(false);
   const [repliesOpen, setRepliesOpen] = useState(false);
 
-  const { comments: replies, isLoading: repliesLoading } = useComments(
+  const { replies, isLoading: repliesLoading } = useReplies(
     comment.id,
     repliesOpen,
   );
@@ -43,7 +44,12 @@ const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) => {
           content,
           parentCommentId: comment.id,
         },
-        { onSuccess: () => setReplyOpen(false) },
+        {
+          onSuccess: () => {
+            setReplyOpen(false);
+            setRepliesOpen(true); // auto-open replies so the new one is visible
+          },
+        },
       );
     },
     [createReply, postId, comment.id],

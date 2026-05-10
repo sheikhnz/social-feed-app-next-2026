@@ -11,8 +11,11 @@ import type { CreateCommentInput } from "@/lib/schemas/feed/comment.schema";
 type CommentPages = InfiniteData<PaginatedResult<CommentWithMeta>>;
 
 /**
- * Mutation for creating a comment (or reply).
- * Optimistically appends to the first page of the comment list.
+ * Mutation for creating a top-level comment OR a reply.
+ *
+ * - If `input.parentCommentId` is set → optimistically appends to the
+ *   feedReplies cache for that parent comment.
+ * - Otherwise → optimistically appends to the feedComments cache for the post.
  */
 export function useCreateComment(
   postId: string,
@@ -24,7 +27,11 @@ export function useCreateComment(
     mutationFn: (input: CreateCommentInput) => createComment(input),
 
     onMutate: async (input) => {
-      const key = queryKeys.feedComments(postId);
+      const isReply = !!input.parentCommentId;
+      const key = isReply
+        ? queryKeys.feedReplies(input.parentCommentId!)
+        : queryKeys.feedComments(postId);
+
       await qc.cancelQueries({ queryKey: key });
       const previous = qc.getQueryData<CommentPages>(key);
 
@@ -61,17 +68,22 @@ export function useCreateComment(
         };
       });
 
-      return { previous };
+      return { previous, key };
     },
 
     onError: (_err, _vars, ctx) => {
-      if (ctx?.previous) {
-        qc.setQueryData(queryKeys.feedComments(postId), ctx.previous);
+      if (ctx?.previous && ctx?.key) {
+        qc.setQueryData(ctx.key, ctx.previous);
       }
     },
 
-    onSuccess: (newComment) => {
-      const key = queryKeys.feedComments(postId);
+    onSuccess: (newComment, input) => {
+      const isReply = !!input.parentCommentId;
+      const key = isReply
+        ? queryKeys.feedReplies(input.parentCommentId!)
+        : queryKeys.feedComments(postId);
+
+      // Replace temp entry with real server data
       qc.setQueryData<CommentPages>(key, (old) => {
         if (!old) return old;
         const [firstPage, ...rest] = old.pages;
@@ -88,12 +100,38 @@ export function useCreateComment(
           ],
         };
       });
+
+      // After a reply, also bump the repliesCount on the parent comment
+      if (isReply) {
+        const commentsKey = queryKeys.feedComments(postId);
+        qc.setQueryData<CommentPages>(commentsKey, (old) => {
+          if (!old) return old;
+          return {
+            ...old,
+            pages: old.pages.map((page) => ({
+              ...page,
+              items: page.items.map((c) =>
+                c.id === input.parentCommentId
+                  ? { ...c, repliesCount: c.repliesCount + 1 }
+                  : c,
+              ),
+            })),
+          };
+        });
+      }
+
       options?.onSuccess?.();
     },
 
-    onSettled: () => {
+    onSettled: (_data, _err, input) => {
       // Refresh feed posts so commentsCount stays accurate
       void qc.invalidateQueries({ queryKey: queryKeys.feedPosts() });
+      // Refresh replies list so newly added reply is synced from server
+      if (input.parentCommentId) {
+        void qc.invalidateQueries({
+          queryKey: queryKeys.feedReplies(input.parentCommentId),
+        });
+      }
     },
   });
 }

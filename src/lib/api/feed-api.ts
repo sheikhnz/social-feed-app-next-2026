@@ -69,6 +69,19 @@ export async function fetchComments(
   return data;
 }
 
+export async function fetchReplies(
+  parentCommentId: string,
+  cursor?: string,
+  limit = 10,
+): Promise<PaginatedResult<CommentWithMeta>> {
+  const params = new URLSearchParams({ limit: String(limit) });
+  if (cursor) params.set("cursor", cursor);
+  const { data } = await apiFetch<PaginatedResult<CommentWithMeta>>(
+    `/api/v1/comments/${parentCommentId}/replies?${params}`,
+  );
+  return data;
+}
+
 export async function createComment(
   input: CreateCommentInput,
 ): Promise<CommentWithMeta> {
