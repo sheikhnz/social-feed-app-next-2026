@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Geist, Geist_Mono } from "next/font/google";
+import { AntdAppProvider } from "@/components/providers/antd-app-provider";
 import { AppProviders } from "@/components/providers/app-providers";
 import { getServerEnv } from "@/lib/env";
 import "@/app/globals.css";
@@ -42,7 +44,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="text-foreground flex min-h-full flex-col bg-zinc-50 dark:bg-black">
-        <AppProviders>{children}</AppProviders>
+        <AntdRegistry>
+          <AntdAppProvider>
+            <AppProviders>{children}</AppProviders>
+          </AntdAppProvider>
+        </AntdRegistry>
       </body>
     </html>
   );

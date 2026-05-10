@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  transpilePackages: [
+    "@ant-design/icons",
+    "@ant-design/nextjs-registry",
+    "antd",
+  ],
 };
 
 export default nextConfig;
