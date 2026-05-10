@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { StoryStripNextButton } from "@/components/feed/story-strip-next-button";
 
 /* ─── Static data ─────────────────────────────────────────────────────────── */
 
@@ -11,21 +12,23 @@ const PUBLIC_STORIES = [
 /* ─── Component ───────────────────────────────────────────────────────────── */
 
 /**
- * Story cards row — "Your Story" card + 3 public story cards matching card layout.
+ * Story cards row — matches `capital/feed.html` `._feed_inner_ppl_card` + row of story tiles + `._feed_inner_story_arrow`.
  */
 export const StoryCards = () => (
-  <div className="_stories_row">
-    <div className="_story_scroll">
+  <div className="_stories_row _feed_inner_ppl_card">
+    <div className="_story_scroll" id="story-scroll-row">
       {/* Your Story */}
       <div className="_story_card_my">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/assets/images/card_ppl1.png" alt="Your story" />
         <div className="_story_add_overlay">
-          <button type="button" className="_story_add_btn" aria-label="Add story">
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10">
-              <path stroke="#fff" strokeLinecap="round" d="M.5 4.884h9M4.884 9.5v-9" />
-            </svg>
-          </button>
+          <div className="_story_add_btn_wrap">
+            <button type="button" className="_story_add_btn" aria-label="Add story">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10">
+                <path stroke="#fff" strokeLinecap="round" d="M.5 4.884h9M4.884 9.5v-9" />
+              </svg>
+            </button>
+          </div>
           <p className="_story_add_label">Your Story</p>
         </div>
       </div>
@@ -48,5 +51,6 @@ export const StoryCards = () => (
         </div>
       ))}
     </div>
+    <StoryStripNextButton />
   </div>
 );
