@@ -1257,12 +1257,11 @@
   flex-shrink: 0;
 }
 
-/* ─── Story Cards ────────────────────────────────────────────────────────── */
+/* ─── Story Cards (capital feed: row has no panel — sits on page/middle bg) ─ */
 ._stories_row {
-  background: var(--bs-bg2);
-  border-radius: 6px;
-  padding: 16px;
+  background: transparent;
   margin-bottom: 16px;
+  margin-top: 8px;
   position: relative;
 }
 ._story_scroll {
@@ -1320,7 +1319,8 @@
   height: 160px;
   cursor: pointer;
 }
-._story_card_pub img {
+/* Only the background cover image — do not target the mini avatar <img> inside Next/Image */
+._story_card_pub > img:not(._story_mini_avatar) {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1330,7 +1330,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 8px;
+  padding: 8px 8px 10px;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
 }
 ._story_pub_name {
@@ -1339,16 +1339,23 @@
   font-weight: 400;
   line-height: 1.4;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 ._story_mini_avatar {
   position: absolute;
   top: 8px;
-  left: 8px;
+  right: 8px;
+  left: auto;
   width: 28px;
   height: 28px;
+  max-width: 28px;
+  max-height: 28px;
   border-radius: 50%;
   border: 2px solid var(--bs-color5);
   object-fit: cover;
+  box-sizing: border-box;
 }
 
 /* ─── Create Post ────────────────────────────────────────────────────────── */
