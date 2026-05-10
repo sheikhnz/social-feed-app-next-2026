@@ -54,7 +54,13 @@ export function useCreateComment(
       };
 
       qc.setQueryData<CommentPages>(key, (old) => {
-        if (!old) return old;
+        // Seed the cache from scratch if replies were never loaded yet
+        if (!old) {
+          return {
+            pages: [{ items: [optimistic], nextCursor: null, hasMore: false }],
+            pageParams: [undefined],
+          };
+        }
         const [firstPage, ...rest] = old.pages;
         return {
           ...old,
@@ -83,9 +89,14 @@ export function useCreateComment(
         ? queryKeys.feedReplies(input.parentCommentId!)
         : queryKeys.feedComments(postId);
 
-      // Replace temp entry with real server data
+      // Replace temp entry with real server data (or seed if cache still missing)
       qc.setQueryData<CommentPages>(key, (old) => {
-        if (!old) return old;
+        if (!old) {
+          return {
+            pages: [{ items: [newComment], nextCursor: null, hasMore: false }],
+            pageParams: [undefined],
+          };
+        }
         const [firstPage, ...rest] = old.pages;
         return {
           ...old,

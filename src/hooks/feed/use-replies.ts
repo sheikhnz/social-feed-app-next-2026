@@ -16,7 +16,7 @@ export function useReplies(parentCommentId: string, enabled = true) {
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     enabled,
-    staleTime: 30 * 1000,
+    staleTime: 0, // always refetch when re-enabled so newly added replies appear immediately
   });
 
   const replies = query.data?.pages.flatMap((p) => p.items) ?? [];
