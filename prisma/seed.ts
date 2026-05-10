@@ -15,11 +15,13 @@ const main = async (): Promise<void> => {
       where: { email: DEV_USER_EMAIL },
       create: {
         email: DEV_USER_EMAIL,
-        name: "Dev User",
+        firstName: "Dev",
+        lastName: "User",
         passwordHash: hash,
       },
       update: {
-        name: "Dev User",
+        firstName: "Dev",
+        lastName: "User",
         passwordHash: hash,
       },
     });
