@@ -9,25 +9,52 @@ datasource db {
   provider = "postgresql"
 }
 
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum LikeTargetType {
+  POST
+  COMMENT
+}
+
+// ---------------------------------------------------------------------------
+// Models
+// ---------------------------------------------------------------------------
+
 model User {
-  id            String    @id @default(cuid())
-  /// Full name set by the OAuth provider (e.g. Google). Credentials users use firstName/lastName instead.
+  id            String    @id @default(uuid()) @db.Uuid
+  /// Full display name set by the OAuth provider (e.g. Google). Credentials users should use firstName/lastName.
   name          String?
   firstName     String?
   lastName      String?
   email         String    @unique
+  /// Populated by Auth.js when the user verifies their email via a magic link / OAuth.
   emailVerified DateTime?
-  image         String?
-  /// Bcrypt hash for credentials-based sign-in; null for OAuth-only users.
   passwordHash  String?
-  accounts      Account[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  /// OAuth or manually uploaded profile image.
+  image         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  accounts Account[]
+  posts    Post[]
+  comments Comment[]
+  likes    Like[]
+
+  @@index([email])
+  @@map("users")
 }
 
+/// OAuth provider accounts (Auth.js / next-auth).
 model Account {
-  id                String  @id @default(cuid())
-  userId            String
+  id                String  @id @default(uuid()) @db.Uuid
+  userId            String  @db.Uuid
   type              String
   provider          String
   providerAccountId String
@@ -42,5 +69,65 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("accounts")
 }
 
+model Post {
+  id         String     @id @default(uuid()) @db.Uuid
+  authorId   String     @db.Uuid
+  content    String     @db.Text
+  imageUrl   String?
+  visibility Visibility @default(PUBLIC)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments Comment[]
+
+  // High-traffic query: public feed sorted by newest first.
+  @@index([visibility, createdAt(sort: Desc)])
+  // User profile feed.
+  @@index([authorId, createdAt(sort: Desc)])
+  @@map("posts")
+}
+
+model Comment {
+  id              String   @id @default(uuid()) @db.Uuid
+  postId          String   @db.Uuid
+  authorId        String   @db.Uuid
+  /// Null → top-level comment; non-null → reply to another comment.
+  parentCommentId String?  @db.Uuid
+  content         String   @db.Text
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  post          Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author        User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  parentComment Comment?  @relation("CommentReplies", fields: [parentCommentId], references: [id], onDelete: SetNull)
+  replies       Comment[] @relation("CommentReplies")
+
+  // Fetch all top-level comments for a post, sorted newest first.
+  @@index([postId, parentCommentId, createdAt(sort: Desc)])
+  // Fetch all replies to a specific comment.
+  @@index([parentCommentId, createdAt(sort: Desc)])
+  @@map("comments")
+}
+
+/// Polymorphic like: targets either a Post or a Comment via (targetType, targetId).
+model Like {
+  id         String         @id @default(uuid()) @db.Uuid
+  userId     String         @db.Uuid
+  targetType LikeTargetType
+  /// ID of the liked Post or Comment (not a FK — polymorphic).
+  targetId   String         @db.Uuid
+  createdAt  DateTime       @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Enforce one like per user per target; also the primary lookup index.
+  @@unique([userId, targetType, targetId])
+  // Count / check likes on a target (e.g. "how many likes does post X have?").
+  @@index([targetType, targetId])
+  @@map("likes")
+}
