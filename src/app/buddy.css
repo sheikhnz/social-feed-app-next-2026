@@ -272,9 +272,7 @@
 }
 
 /**
- * Clears fixed navbar and leaves a strip of `var(--bs-bcolor1)` before cards.
- * Ref uses ~70px on `._layout_inner_wrap` plus `calc(100vh - 75px)` for columns; a bit more top padding
- * keeps the page-bg band visible when the flex navbar row is slightly taller than the static template.
+ * Clears fixed navbar — matches `._layout_inner_wrap` in capital main.css (`padding-top: 70px !important`).
  */
 ._feed_layout_children {
   position: relative;
@@ -284,7 +282,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  padding: 72px 0 0;
+  padding: 70px 0 0;
 }
 
 ._feed_three_col {
@@ -307,8 +305,8 @@
   left: 0;
   z-index: 1030;
   background: var(--bs-bg2);
-  /* Between ref `._padd_t10` (10px) and the tighter 6px pass */
-  padding-top: 8px;
+  /* capital feed.html `._header_nav._padd_t10` → padding-top 10px */
+  padding-top: 10px;
   padding-bottom: 0;
   box-sizing: border-box;
   transition: 0.2s all ease;
@@ -401,7 +399,7 @@
   align-items: center;
 }
 
-/* Nav icon links — between compact (12/14) and ref `._header_nav_link` (22/26) */
+/* Nav icon links — matches main.css `._header_nav_link` */
 ._feed_header_nav_link {
   position: relative;
   display: inline-flex;
@@ -410,7 +408,7 @@
   line-height: 0;
   vertical-align: middle;
   transition: 0.2s all ease;
-  padding: 18px 14px 22px !important;
+  padding: 22px 16px 26px !important;
   width: fit-content;
   max-width: 100%;
   cursor: pointer;
@@ -490,8 +488,8 @@
   line-height: 1.4;
   text-align: center;
   color: var(--bs-bg2);
-  top: 12px;
-  right: 9px;
+  top: 16px;
+  right: 10px;
   padding: 3px;
   display: flex;
   align-items: center;
@@ -624,109 +622,174 @@
   white-space: nowrap;
 }
 
-/* ─── Notification Dropdown ──────────────────────────────────────────────── */
+/* ─── Notification Dropdown — capital/feed.html + main.css ───────────────── */
 ._notification_dropdown {
-  position: absolute;
-  left: -110px;
-  top: 32px;
+  background: var(--bs-bg2);
+  box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+  padding: 16px;
   width: 400px;
   max-width: calc(100vw - 24px);
-  background: var(--bs-bg2);
-  border-radius: 6px;
-  padding: 16px;
-  box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
-  z-index: 200;
+  position: absolute;
+  left: -110px;
+  transition: 0.2s all ease;
+  top: 32px;
   height: calc(100vh - 90px);
-  max-height: 560px;
   overflow: auto;
+  transform: translateY(20px);
+  opacity: 0;
+  visibility: hidden;
+  border-radius: 6px;
+  z-index: 200;
   box-sizing: border-box;
+  pointer-events: none;
+  scrollbar-width: none;
+}
+._notification_dropdown::-webkit-scrollbar {
   display: none;
 }
 ._notification_dropdown.show {
-  display: block;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(40px);
+  pointer-events: auto;
 }
-._notif_header {
+._notifications_content {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 16px 8px;
+  margin: 0 0 20px;
 }
-._notif_title {
+._notifications_content_title {
   font-size: 20px;
   font-weight: 600;
   color: var(--bs-color6);
   line-height: 1.2;
   margin: 0;
 }
-._notif_tabs {
+._notifications_drop_btn_grp {
   display: flex;
-  gap: 8px;
-  padding: 0 16px 8px;
-  border-bottom: 1px solid var(--bs-bcolor2);
+  align-items: center;
+  flex-wrap: wrap;
 }
-._notif_tab_btn {
-  padding: 8px;
-  border-radius: 6px;
+._notifications_btn_link {
   border: 1px solid #f1f1f1;
-  cursor: pointer;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.2;
-  font-family: "Poppins", sans-serif;
-  background: transparent;
+  color: var(--bs-color5);
+  height: 36px;
+  padding: 8px;
+  border-radius: 6px;
+  background: #1890ff26;
+  margin: 0 10px 0 0;
+  cursor: pointer;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+._notifications_btn_link1 {
+  border: 1px solid #f1f1f1;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
   color: var(--bs-color6);
   height: 36px;
-  box-sizing: border-box;
-  transition: 0.2s;
-}
-._notif_tab_btn_active {
-  background: #1890ff26;
-  color: var(--bs-color5);
-}
-._notif_list {
-  max-height: 320px;
-  overflow-y: auto;
-}
-._notif_item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--bs-bg3);
-  transition: background 0.2s;
+  padding: 8px;
+  border-radius: 6px;
+  background: transparent;
   cursor: pointer;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
+  box-sizing: border-box;
 }
-._notif_item:hover {
-  background: var(--bs-bg3);
+._notification_box_right {
+  position: relative;
 }
-._notif_avatar {
-  width: 42px;
-  height: 42px;
+._notification_box_right_link {
+  border: none;
+  background: transparent;
+  outline: none !important;
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+._notifications_drop_right {
+  background: var(--bs-bg2);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 16px;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  width: 220px;
+  display: none;
+  z-index: 250;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+._notifications_drop_right.show {
+  display: block;
+}
+._notification_list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+._notification_item {
+  margin: 0 0 10px;
+}
+._notification_item:last-child {
+  margin-bottom: 0;
+}
+._notification_link {
+  color: var(--bs-color7);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  display: block;
+}
+._notify_img {
+  max-width: 56px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   object-fit: cover;
-  flex-shrink: 0;
 }
-._notif_text {
-  flex: 1;
+._notification_box {
+  display: flex;
+  align-items: center;
+  margin: 0 0 16px;
+  cursor: pointer;
+  transition: 0.2s all ease;
+  padding: 6px;
 }
-._notif_para {
+._notification_box:hover {
+  background: #66666621;
+}
+._notification_image {
+  flex: 0 0 56px;
+  margin: 0 12px 0 0;
+}
+._nitification_time span {
+  color: var(--bs-color5);
+  line-height: 1.2;
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+._notification_para {
   font-size: 14px;
   font-weight: 500;
-  line-height: 1.6;
   color: var(--bs-color7);
+  line-height: 1.6;
   margin: 0 0 4px;
 }
-._notif_name_link {
-  font-weight: 600;
-  color: var(--bs-color1);
+._notification_para span,
+._notification_para ._notify_txt_link {
+  color: var(--bs-color6);
 }
-._notif_time {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  line-height: 1.2;
-  color: var(--bs-color5);
+._notifications_all {
+  margin: 20px 0 0;
 }
-
 /* ─── Profile Dropdown ───────────────────────────────────────────────────── */
 ._profile_dropdown {
   position: absolute;

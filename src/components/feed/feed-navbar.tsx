@@ -1,36 +1,77 @@
 "use client";
 
+import type { MouseEvent, ReactNode } from "react";
 import { useCallback, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-/* ─── Static data ─────────────────────────────────────────────────────────── */
+/* ─── Static data (matches capital/feed.html notification panel) ───────────── */
 
-const NOTIFICATIONS = [
+const NOTIFICATION_OVERFLOW_LINKS = [
+  "Mark as all read",
+  "Notifivations seetings",
+  "Open Notifications",
+] as const;
+
+type NotificationRow = {
+  id: number;
+  image: string;
+  body: ReactNode;
+  time: string;
+};
+
+const NOTIFICATION_ROWS: NotificationRow[] = [
   {
     id: 1,
     image: "/assets/images/friend-req.png",
-    text: "Steve Jobs posted a link in your timeline.",
-    time: "42 minutes ago",
+    body: (
+      <>
+        <span className="_notify_txt_link">Steve Jobs</span>
+        posted a link in your timeline.
+      </>
+    ),
+    time: "42 miniutes ago",
   },
   {
     id: 2,
     image: "/assets/images/profile-1.png",
-    text: "An admin changed the name of the group Freelacer usa to Freelacer usa.",
-    time: "42 minutes ago",
+    body: (
+      <>
+        An admin changed the name of the group{" "}
+        <span className="_notify_txt_link">Freelacer usa</span>
+        to
+        <span className="_notify_txt_link"> Freelacer usa </span>
+      </>
+    ),
+    time: "42 miniutes ago",
   },
-  {
-    id: 3,
-    image: "/assets/images/friend-req.png",
-    text: "Steve Jobs posted a link in your timeline.",
-    time: "42 minutes ago",
-  },
-  {
-    id: 4,
-    image: "/assets/images/profile-1.png",
-    text: "An admin changed the name of the group Freelacer usa.",
-    time: "42 minutes ago",
-  },
+  ...[3, 4, 5, 6, 7, 8, 9, 10].map((id) =>
+    id % 2 === 1
+      ? {
+          id,
+          image: "/assets/images/friend-req.png",
+          body: (
+            <>
+              <span className="_notify_txt_link">Steve Jobs</span>
+              posted a link in your timeline.
+            </>
+          ),
+          time: "42 miniutes ago",
+        }
+      : {
+          id,
+          image: "/assets/images/profile-1.png",
+          body: (
+            <>
+              An admin changed the name of the group{" "}
+              <span className="_notify_txt_link">Freelacer usa</span>
+              to
+              <span className="_notify_txt_link"> Freelacer usa </span>
+            </>
+          ),
+          time: "42 miniutes ago",
+        },
+  ),
 ];
 
 const FRIENDS_ICON_PATH =
@@ -85,17 +126,30 @@ const CHEVRON_RIGHT_SVG = (
  */
 export const FeedNavbar = () => {
   const [notifOpen, setNotifOpen] = useState(false);
+  const [notifTab, setNotifTab] = useState<"all" | "unread">("all");
+  const [notifOverflowOpen, setNotifOverflowOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
 
   const toggleNotif = useCallback(() => {
-    setNotifOpen((prev) => !prev);
+    setNotifOpen((prev) => {
+      if (prev) {
+        setNotifOverflowOpen(false);
+      }
+      return !prev;
+    });
     setProfileOpen(false);
+  }, []);
+
+  const toggleNotifOverflow = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setNotifOverflowOpen((prev) => !prev);
   }, []);
 
   const toggleProfile = useCallback(() => {
     setProfileOpen((prev) => !prev);
     setNotifOpen(false);
+    setNotifOverflowOpen(false);
   }, []);
 
   return (
@@ -182,28 +236,66 @@ export const FeedNavbar = () => {
                 <span className="_counting">6</span>
               </button>
               <div className={`_notification_dropdown${notifOpen ? " show" : ""}`} id="_notify_drop">
-                <div className="_notif_header">
-                  <h4 className="_notif_title">Notifications</h4>
-                </div>
-                <div className="_notif_tabs">
-                  <button className="_notif_tab_btn _notif_tab_btn_active" type="button">
-                    All
-                  </button>
-                  <button className="_notif_tab_btn" type="button">
-                    Unread
-                  </button>
-                </div>
-                <div className="_notif_list">
-                  {NOTIFICATIONS.map((n) => (
-                    <div key={n.id} className="_notif_item">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={n.image} alt="" className="_notif_avatar" />
-                      <div className="_notif_text">
-                        <p className="_notif_para">{n.text}</p>
-                        <span className="_notif_time">{n.time}</span>
-                      </div>
+                <div className="_notifications_content">
+                  <h4 className="_notifications_content_title">Notifications</h4>
+                  <div className="_notification_box_right">
+                    <button
+                      type="button"
+                      className="_notification_box_right_link"
+                      aria-expanded={notifOverflowOpen}
+                      aria-label="Notification options"
+                      onClick={toggleNotifOverflow}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="4" height="17" fill="none" viewBox="0 0 4 17">
+                        <circle cx="2" cy="2" r="2" fill="#C4C4C4" />
+                        <circle cx="2" cy="8" r="2" fill="#C4C4C4" />
+                        <circle cx="2" cy="15" r="2" fill="#C4C4C4" />
+                      </svg>
+                    </button>
+                    <div className={`_notifications_drop_right${notifOverflowOpen ? " show" : ""}`}>
+                      <ul className="_notification_list">
+                        {NOTIFICATION_OVERFLOW_LINKS.map((label) => (
+                          <li key={label} className="_notification_item">
+                            <span className="_notification_link">{label}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  ))}
+                  </div>
+                </div>
+                <div className="_notifications_drop_box">
+                  <div className="_notifications_drop_btn_grp">
+                    <button
+                      type="button"
+                      className={notifTab === "all" ? "_notifications_btn_link" : "_notifications_btn_link1"}
+                      onClick={() => setNotifTab("all")}
+                    >
+                      All
+                    </button>
+                    <button
+                      type="button"
+                      className={notifTab === "unread" ? "_notifications_btn_link" : "_notifications_btn_link1"}
+                      onClick={() => setNotifTab("unread")}
+                    >
+                      Unread
+                    </button>
+                  </div>
+                  <div className="_notifications_all">
+                    {NOTIFICATION_ROWS.map((n) => (
+                      <div key={n.id} className="_notification_box">
+                        <div className="_notification_image">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={n.image} alt="" className="_notify_img" />
+                        </div>
+                        <div className="_notification_txt">
+                          <p className="_notification_para">{n.body}</p>
+                          <div className="_nitification_time">
+                            <span>{n.time}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

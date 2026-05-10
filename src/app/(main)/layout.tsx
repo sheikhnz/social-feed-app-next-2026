@@ -9,7 +9,7 @@ export default function FeedLayout({ children }: { children: ReactNode }) {
   return (
     <div className="_feed_main_layout bs-root">
       <FeedNavbar />
-      {/* Matches feed.html: content sits below fixed ._header_nav via ._layout_inner_wrap padding-top */}
+      {/* Content offset matches capital `._layout_inner_wrap` (padding-top: 70px) below fixed `_header_nav` */}
       <div className="_feed_layout_children">{children}</div>
     </div>
   );
