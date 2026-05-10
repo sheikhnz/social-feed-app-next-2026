@@ -114,8 +114,8 @@ const CommentItem = ({ comment, postId, depth = 0, parentCommentId }: CommentIte
             )}
           </div>
 
-          {/* Replies toggle */}
-          {comment.repliesCount > 0 && depth === 0 && (
+          {/* Replies toggle — shown at any depth */}
+          {comment.repliesCount > 0 && (
             <button
               type="button"
               className="_previous_comment_txt"
