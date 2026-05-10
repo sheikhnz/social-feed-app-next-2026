@@ -1221,13 +1221,13 @@
 ._friend_item:last-child {
   border-bottom: none;
 }
-._friend_item_inactive {
-  opacity: 0.6;
-}
+
 ._friend_info {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: 1 1 0;
+  min-width: 0;
 }
 ._friend_avatar {
   width: 36px;
@@ -1256,6 +1256,7 @@
 ._friend_status {
   font-size: 11px;
   color: var(--bs-color7);
+  white-space: nowrap;
 }
 ._online_dot {
   width: 10px;
