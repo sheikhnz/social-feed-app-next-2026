@@ -344,7 +344,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  margin-left: 16px;
+  /* Space from logo — source template uses a wider gutter than a tight 16px */
+  margin-left: 110px;
 }
 ._nav_search_icon {
   position: absolute;
