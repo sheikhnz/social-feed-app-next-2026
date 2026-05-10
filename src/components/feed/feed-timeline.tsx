@@ -1,73 +1,86 @@
-import { TimelinePost } from "@/components/feed/timeline-post";
+"use client";
 
-/* ─── Static mock data (matches feed.html) ───────────────────────────────── */
+import { useFeed } from "@/hooks/feed/use-feed";
+import { PostCard } from "@/components/feed/post-card";
+import { PostCardSkeleton } from "@/components/feed/post-card-skeleton";
 
-const POSTS = [
-  {
-    id: 1,
-    authorName: "Karim Saif",
-    authorImage: "/assets/images/post_img.png",
-    meta: "5 minute ago",
-    title: "-Healthy Tracking App",
-    image: "/assets/images/timeline_img.png",
-    reactionImages: [
-      "/assets/images/react_img1.png",
-      "/assets/images/react_img2.png",
-      "/assets/images/react_img3.png",
-      "/assets/images/react_img4.png",
-      "/assets/images/react_img5.png",
-    ],
-    reactionCount: "9+",
-    commentCount: 12,
-    shareCount: 122,
-    comments: [
-      {
-        id: 1,
-        authorName: "Radovan SkillArena",
-        authorImage: "/assets/images/txt_img.png",
-        text: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-        reactions: 198,
-        time: "21m",
-      },
-    ],
-  },
-  {
-    id: 2,
-    authorName: "Karim Saif",
-    authorImage: "/assets/images/post_img.png",
-    meta: "5 minute ago",
-    title: "-Healthy Tracking App",
-    image: "/assets/images/timeline_img.png",
-    reactionImages: [
-      "/assets/images/react_img1.png",
-      "/assets/images/react_img2.png",
-      "/assets/images/react_img3.png",
-      "/assets/images/react_img4.png",
-      "/assets/images/react_img5.png",
-    ],
-    reactionCount: "9+",
-    commentCount: 12,
-    shareCount: 122,
-    comments: [
-      {
-        id: 1,
-        authorName: "Radovan SkillArena",
-        authorImage: "/assets/images/txt_img.png",
-        text: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-        reactions: 198,
-        time: "21m",
-      },
-    ],
-  },
-];
+const SKELETON_COUNT = 3;
 
 /**
- * Timeline feed — list of post cards mapped from mock data.
+ * FeedList — infinite-scroll list of PostCards.
+ * - Shows shimmer skeletons on initial load.
+ * - Automatically loads the next page as the user scrolls to the sentinel.
+ * - Shows a subtle spinner when fetching subsequent pages.
  */
-export const FeedTimeline = () => (
-  <div>
-    {POSTS.map((post) => (
-      <TimelinePost key={post.id} post={post} />
-    ))}
-  </div>
-);
+export const FeedList = () => {
+  const { posts, sentinelRef, isLoading, isFetchingNextPage, hasNextPage, error } =
+    useFeed();
+
+  // ── Error state ────────────────────────────────────────────────────────────
+  if (error) {
+    return (
+      <div className="_feed_error_state" role="alert">
+        <p>Couldn&apos;t load posts. Please try again.</p>
+        <button
+          type="button"
+          className="_feed_inner_text_area_btn_link"
+          onClick={() => window.location.reload()}
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  // ── Initial skeleton ───────────────────────────────────────────────────────
+  if (isLoading) {
+    return (
+      <div aria-label="Loading feed" aria-busy="true">
+        {Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+          <PostCardSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
+  // ── Empty state ────────────────────────────────────────────────────────────
+  if (posts.length === 0) {
+    return (
+      <div className="_feed_empty_state">
+        <p>No posts yet — be the first to share something!</p>
+      </div>
+    );
+  }
+
+  return (
+    <div role="feed" aria-label="Social feed">
+      {posts.map((post) => (
+        <PostCard key={post.id} post={post} />
+      ))}
+
+      {/* Infinite-scroll sentinel */}
+      {hasNextPage ? (
+        <div
+          ref={sentinelRef}
+          className="_feed_sentinel"
+          aria-hidden="true"
+        >
+          {isFetchingNextPage && (
+            <div className="_feed_loading_more" aria-label="Loading more posts">
+              <span className="_feed_spinner" />
+            </div>
+          )}
+        </div>
+      ) : (
+        posts.length > 0 && (
+          <p className="_feed_end_message">
+            {"You're all caught up! 🎉"}
+          </p>
+        )
+      )}
+    </div>
+  );
+};
+
+// Legacy alias kept for any existing imports
+export { FeedList as FeedTimeline };

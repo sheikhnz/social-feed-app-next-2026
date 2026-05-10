@@ -2199,3 +2199,347 @@
     margin-bottom: 32px;
   }
 }
+
+/* ─── Skeleton / Shimmer ────────────────────────────────────────────────── */
+
+@keyframes _shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+._skeleton {
+  background: linear-gradient(90deg, #f0f2f5 25%, #e8eaed 50%, #f0f2f5 75%);
+  background-size: 800px 100%;
+  animation: _shimmer 1.4s infinite linear;
+  border-radius: 4px;
+}
+
+._skeleton_avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+._skeleton_avatar_sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+._skeleton_line {
+  height: 12px;
+  display: block;
+}
+
+._skeleton_img {
+  width: 100%;
+  height: 240px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+/* ─── Visibility Badge ──────────────────────────────────────────────────── */
+
+._visibility_badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 10px;
+  vertical-align: middle;
+  line-height: 1.4;
+}
+
+._visibility_badge_public {
+  background: #e8f4ff;
+  color: var(--bs-color5);
+}
+
+._visibility_badge_private {
+  background: #f5f5f5;
+  color: var(--bs-color7);
+}
+
+/* ─── Post body text ────────────────────────────────────────────────────── */
+
+._feed_inner_timeline_post_body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--bs-color);
+  margin: 0 0 16px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ─── Avatar fallback circles ───────────────────────────────────────────── */
+
+._post_avatar_fallback,
+._comment_avatar_fallback,
+._comment_avatar_placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bs-color5);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+._post_avatar_fallback {
+  width: 40px;
+  height: 40px;
+}
+
+._comment_avatar_fallback {
+  width: 36px;
+  height: 36px;
+  font-size: 13px;
+}
+
+._comment_avatar_placeholder {
+  width: 36px;
+  height: 36px;
+  background: var(--bs-bg4);
+}
+
+/* ─── Like button active state ──────────────────────────────────────────── */
+
+._feed_reaction_active {
+  color: var(--bs-color5) !important;
+}
+
+._feed_reaction_active svg {
+  stroke: var(--bs-color5) !important;
+  fill: var(--bs-color5) !important;
+}
+
+._like_count {
+  font-size: 13px;
+  font-weight: 600;
+  margin-left: 2px;
+}
+
+/* ─── Comment like button ───────────────────────────────────────────────── */
+
+._comment_like_btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--bs-color7);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
+}
+
+._comment_like_btn:hover {
+  color: var(--bs-color5);
+  background: var(--bs-bg9, #e8f4ff);
+}
+
+._comment_like_btn_active {
+  color: var(--bs-color5) !important;
+}
+
+._comment_like_count {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ─── Comment actions row ───────────────────────────────────────────────── */
+
+._comment_actions_row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+._comment_action_link {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--bs-color7);
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+
+._comment_action_link:hover {
+  color: var(--bs-color5);
+}
+
+._comment_time {
+  font-size: 11px;
+  color: var(--bs-color3);
+}
+
+._comment_like_meta {
+  font-size: 11px;
+  color: var(--bs-color7);
+  margin-left: auto;
+}
+
+/* ─── Reply list indentation ────────────────────────────────────────────── */
+
+._comment_reply_item {
+  margin-left: 48px;
+}
+
+._comment_replies_list {
+  margin-top: 8px;
+}
+
+._reply_input_wrap {
+  margin-top: 8px;
+}
+
+/* ─── Composer controls ─────────────────────────────────────────────────── */
+
+._composer_controls_right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+._composer_visibility_toggle {
+  display: flex;
+  border: 1px solid var(--bs-bcolor2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+._composer_vis_btn {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--bs-color7);
+  transition: background 0.15s, color 0.15s;
+  font-family: inherit;
+}
+
+._composer_vis_btn._active {
+  background: var(--bs-color5);
+  color: #fff;
+}
+
+._composer_vis_btn:hover:not(._active) {
+  background: var(--bs-bg3);
+}
+
+/* ─── Feed sentinel / spinner / states ──────────────────────────────────── */
+
+._feed_sentinel {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+._feed_loading_more {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+._feed_spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--bs-bcolor2);
+  border-top-color: var(--bs-color5);
+  border-radius: 50%;
+  animation: _spin 0.7s linear infinite;
+}
+
+@keyframes _spin {
+  to { transform: rotate(360deg); }
+}
+
+._feed_end_message {
+  text-align: center;
+  font-size: 14px;
+  color: var(--bs-color3);
+  padding: 24px 0 12px;
+}
+
+._feed_empty_state,
+._feed_error_state {
+  text-align: center;
+  padding: 48px 24px;
+  background: var(--bs-bg2);
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 15px;
+  color: var(--bs-color7);
+}
+
+._plain_btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  padding: 0;
+}
+
+/* dropdown show fix (add class _feed_timeline_dropdownshow for open state) */
+._feed_timeline_dropdownshow {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 100;
+  background: var(--bs-bg2);
+  box-shadow: var(--bs-panel-shadow);
+  border-radius: 6px;
+  min-width: 180px;
+  padding: 8px 0;
+}
+
+._feed_timeline_dropdownshow ._feed_timeline_dropdown_list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+._feed_timeline_dropdownshow ._feed_timeline_dropdown_item {
+  margin: 0;
+}
+
+._feed_timeline_dropdownshow ._feed_timeline_dropdown_link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: var(--bs-color7);
+  background: transparent;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+._feed_timeline_dropdownshow ._feed_timeline_dropdown_link:hover {
+  background: var(--bs-bg3);
+  color: var(--bs-color1);
+}
