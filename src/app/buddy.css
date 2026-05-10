@@ -1446,99 +1446,207 @@
   box-sizing: border-box;
 }
 
-/* ─── Create Post ────────────────────────────────────────────────────────── */
-._create_post_card {
-  background: var(--bs-bg2);
+/* ─── Create post (`capital/feed.html` `._feed_inner_text_area_*`) ─────────── */
+._b_radious6 {
   border-radius: 6px;
-  padding: 24px;
+}
+._padd_b24 {
+  padding-bottom: 24px;
+}
+._padd_t24 {
+  padding-top: 24px;
+}
+._padd_r24 {
+  padding-right: 24px;
+}
+._padd_l24 {
+  padding-left: 24px;
+}
+._mar_b16 {
   margin-bottom: 16px;
 }
-._create_post_top {
+
+._feed_inner_text_area {
+  box-sizing: border-box;
+  background: var(--bs-bg2);
+  font-family: var(--font-poppins), "Poppins", sans-serif;
+}
+
+._feed_inner_text_area_box {
   display: flex;
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 16px;
 }
-._create_post_avatar {
+
+._feed_inner_text_area_box_image {
+  flex-shrink: 0;
+}
+
+._txt_img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  flex-shrink: 0;
+  display: block;
 }
-._create_post_textarea_wrap {
-  flex: 1;
+
+/** Bootstrap-style wrapper name only; themed here (project does not ship Bootstrap CSS). */
+._feed_inner_text_area .form-floating._feed_inner_text_area_box_form {
   position: relative;
+  flex: 1;
+  min-width: 0;
 }
-._create_post_textarea {
+
+._feed_inner_text_area .form-control._textarea {
+  box-sizing: border-box;
+  display: block;
   width: 100%;
+  min-height: 100px;
+  margin: 0;
+  resize: vertical;
   background: var(--bs-bg3);
   border: 1px solid var(--bs-bg3);
   border-radius: 6px;
-  padding: 10px 14px;
+  padding: 28px 14px 12px 14px;
   font-size: 16px;
-  font-family: var(--font-poppins), "Poppins", sans-serif;
-  resize: none;
-  min-height: 80px;
+  line-height: 1.45;
+  font-family: inherit;
+  color: var(--bs-color6);
   outline: none;
   transition: border-color 0.2s;
 }
-._create_post_textarea:focus {
+
+._feed_inner_text_area .form-control._textarea:focus {
   border-color: var(--bs-color5);
 }
-._create_post_textarea::placeholder {
-  color: rgba(0, 0, 0, 0.35);
+
+._feed_inner_text_area .form-control._textarea::placeholder {
+  color: transparent;
 }
 
-._create_post_actions {
+._feed_textarea_label {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: calc(100% - 28px);
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 400;
+  color: rgba(102, 102, 102, 0.95);
+  cursor: text;
+  pointer-events: none;
+  transform-origin: left top;
+  transition:
+    transform 0.18s ease,
+    opacity 0.18s ease;
+}
+
+._feed_textarea_label svg {
+  flex-shrink: 0;
+}
+
+._feed_inner_text_area .form-control._textarea:focus + ._feed_textarea_label,
+._feed_inner_text_area .form-control._textarea:not(:placeholder-shown) + ._feed_textarea_label {
+  transform: translateY(-10px) scale(0.8);
+  opacity: 0.85;
+}
+
+._feed_inner_text_area_bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid var(--bs-bg3);
+  gap: 12px;
+  flex-wrap: wrap;
   padding-top: 12px;
+  border-top: 1px solid var(--bs-bg3);
 }
-._post_action_btns {
+
+._feed_inner_text_area_item {
   display: flex;
   align-items: center;
-  gap: 4px;
+  flex-wrap: wrap;
+  gap: 2px;
 }
-._post_action_btn {
-  display: flex;
+
+._mar_img {
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  background: transparent;
+  justify-content: center;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+._feed_inner_text_area_bottom_photo_link {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 6px 8px;
   border: none;
   border-radius: 6px;
+  background: transparent;
   cursor: pointer;
+  font-family: inherit;
   font-size: 16px;
   line-height: 23px;
   font-weight: 400;
   color: var(--bs-color7);
-  font-family: var(--font-poppins), "Poppins", sans-serif;
   transition: background 0.2s;
 }
-._post_action_btn:hover {
+
+._feed_inner_text_area_bottom_photo_link:hover {
   background: var(--bs-bg3);
 }
-._post_submit_btn {
+
+._feed_inner_text_area_bottom_mobile {
+  display: none;
+}
+
+._feed_inner_text_mobile {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--bs-bg3);
+}
+
+@media (max-width: 992px) {
+  ._feed_inner_text_area_bottom {
+    display: none;
+  }
+  ._feed_inner_text_area_bottom_mobile {
+    display: block;
+  }
+  ._mar_img {
+    margin-right: 0;
+  }
+}
+
+._feed_inner_text_area_btn_link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   gap: 6px;
+  margin: 0;
   padding: 12px 22px;
-  background: var(--bs-color5);
   border: none;
   border-radius: 6px;
+  background: var(--bs-color5);
   cursor: pointer;
+  font-family: inherit;
   font-size: 16px;
   line-height: 24px;
   font-weight: 500;
   color: var(--bs-bg2);
-  font-family: var(--font-poppins), "Poppins", sans-serif;
   transition: opacity 0.2s;
 }
-._post_submit_btn:hover {
-  opacity: 0.9;
+
+._feed_inner_text_area_btn_link:hover {
+  opacity: 0.92;
 }
 
 /* ─── Timeline Post Card ─────────────────────────────────────────────────── */
