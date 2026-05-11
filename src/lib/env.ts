@@ -26,6 +26,18 @@ export const getPublicEnv = (): PublicEnv => {
   };
 };
 
+/**
+ * Cloudinary credentials for signed direct uploads (server-only secret).
+ * Public delivery URLs use https://res.cloudinary.com/<cloud_name>/...
+ */
+export type CloudinaryServerEnv = {
+  readonly cloudName: string;
+  readonly apiKey: string;
+  readonly apiSecret: string;
+  /** Root folder segment under each user's uploads (e.g. social-feed/posts → …/posts/<userId>). */
+  readonly uploadFolderPrefix: string;
+};
+
 export type ServerEnv = PublicEnv & {
   readonly nodeEnv: string;
   readonly databaseUrl: string | undefined;
@@ -45,5 +57,30 @@ export const getServerEnv = (): ServerEnv => {
     nodeEnv: process.env.NODE_ENV ?? "development",
     databaseUrl: databaseUrl === "" ? undefined : databaseUrl,
     authSecret: authSecret === "" ? undefined : authSecret,
+  };
+};
+
+const DEFAULT_CLOUDINARY_FOLDER = "social-feed/posts";
+
+/**
+ * Returns Cloudinary configuration when all required vars are set; otherwise null.
+ * Used by signed upload and post image URL verification.
+ */
+export const getCloudinaryEnv = (): CloudinaryServerEnv | null => {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME?.trim() ?? "";
+  const apiKey = process.env.CLOUDINARY_API_KEY?.trim() ?? "";
+  const apiSecret = process.env.CLOUDINARY_API_SECRET?.trim() ?? "";
+  const folder =
+    process.env.CLOUDINARY_UPLOAD_FOLDER?.trim() ?? DEFAULT_CLOUDINARY_FOLDER;
+
+  if (!cloudName || !apiKey || !apiSecret) {
+    return null;
+  }
+
+  return {
+    cloudName,
+    apiKey,
+    apiSecret,
+    uploadFolderPrefix: folder.replace(/^\/+|\/+$/g, ""),
   };
 };

@@ -44,6 +44,8 @@
     "@tanstack/react-query-devtools": "5.100.9",
     "antd": "6.3.7",
     "bcrypt": "6.0.0",
+    "cloudinary": "2.10.0",
+    "file-type": "22.0.1",
     "next": "16.2.6",
     "next-auth": "5.0.0-beta.31",
     "pg": "8.20.0",

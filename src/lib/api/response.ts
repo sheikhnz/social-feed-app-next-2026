@@ -29,3 +29,8 @@ export const internalError = (
   error = "Internal server error",
 ): NextResponse<ApiError> =>
   NextResponse.json({ success: false, error }, { status: 500 });
+
+export const serviceUnavailable = (
+  error = "Service unavailable",
+): NextResponse<ApiError> =>
+  NextResponse.json({ success: false, error }, { status: 503 });

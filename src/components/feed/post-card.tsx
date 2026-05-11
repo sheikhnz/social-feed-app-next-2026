@@ -171,6 +171,8 @@ export const PostCard = ({ post }: PostCardProps) => {
               src={post.imageUrl}
               alt="Post attachment"
               className="_time_img"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         ) : null}

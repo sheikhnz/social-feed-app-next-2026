@@ -1,10 +1,14 @@
 "use client";
 
-import { useCallback, useId, useState, type ChangeEvent } from "react";
+import { useCallback, useId, useRef, useState, type ChangeEvent } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { useCreatePost } from "@/hooks/feed/use-create-post";
+import {
+  type CloudinaryImageUploaderHandle,
+  CloudinaryImageUploader,
+} from "@/components/uploads/cloudinary-image-uploader";
 import {
   PictureOutlined,
   VideoCameraOutlined,
@@ -85,13 +89,17 @@ const VisibilityToggle = ({
 export const PostComposer = () => {
   const reactId = useId();
   const fieldId = `feed-create-post-${reactId}`;
+  const photoUploaderRef = useRef<CloudinaryImageUploaderHandle>(null);
   const [text, setText] = useState("");
+  const [postImageUrl, setPostImageUrl] = useState<string | null>(null);
+  const [attachmentBusy, setAttachmentBusy] = useState(false);
   const [visibility, setVisibility] = useState<Visibility>("PUBLIC");
   const { data: session } = useSession();
 
   const createPost = useCreatePost({
     onSuccess: () => {
       setText("");
+      setPostImageUrl(null);
       toast.success("Post published!");
     },
   });
@@ -100,11 +108,17 @@ export const PostComposer = () => {
     setText(e.target.value);
   }, []);
 
+  const composerBusy = createPost.isPending || attachmentBusy;
+
   const handleSubmit = useCallback(() => {
     const content = text.trim();
-    if (!content || createPost.isPending) return;
-    createPost.mutate({ content, visibility });
-  }, [text, visibility, createPost]);
+    if (!content || composerBusy) return;
+    createPost.mutate({
+      content,
+      visibility,
+      imageUrl: postImageUrl,
+    });
+  }, [text, visibility, postImageUrl, composerBusy, createPost]);
 
   const authorImage = session?.user?.image;
   const authorName = session?.user?.name ?? "You";
@@ -145,13 +159,22 @@ export const PostComposer = () => {
                 handleSubmit();
               }
             }}
-            disabled={createPost.isPending}
+            disabled={composerBusy}
           />
           <label className="_feed_textarea_label" htmlFor={fieldId}>
             {LABEL_TEXT}
           </label>
           <div className="_composer_visibility_overlay">
             <VisibilityToggle value={visibility} onChange={setVisibility} />
+          </div>
+          <div style={{ marginTop: 12 }}>
+            <CloudinaryImageUploader
+              ref={photoUploaderRef}
+              value={postImageUrl}
+              onChange={setPostImageUrl}
+              disabled={composerBusy}
+              onBusyChange={setAttachmentBusy}
+            />
           </div>
         </div>
       </div>
@@ -163,6 +186,11 @@ export const PostComposer = () => {
               <button
                 type="button"
                 className="_feed_inner_text_area_bottom_photo_link"
+                onClick={
+                  key === "photo"
+                    ? () => photoUploaderRef.current?.openFilePicker()
+                    : undefined
+                }
               >
                 <span className="_feed_inner_text_area_bottom_photo_iamge _mar_img">
                   {icon}
@@ -179,7 +207,7 @@ export const PostComposer = () => {
               type="button"
               className="_feed_inner_text_area_btn_link"
               onClick={handleSubmit}
-              disabled={!text.trim() || createPost.isPending}
+              disabled={!text.trim() || composerBusy}
               aria-label="Publish post"
             >
               <SendOutlined
@@ -190,7 +218,7 @@ export const PostComposer = () => {
                   transform: "rotate(-45deg)",
                 }}
               />
-              <span>{createPost.isPending ? "Posting…" : "Post"}</span>
+              <span>{composerBusy ? "Posting…" : "Post"}</span>
             </button>
           </div>
         </div>
@@ -206,6 +234,11 @@ export const PostComposer = () => {
                   type="button"
                   className="_feed_inner_text_area_bottom_photo_link"
                   aria-label={label}
+                  onClick={
+                    key === "photo"
+                      ? () => photoUploaderRef.current?.openFilePicker()
+                      : undefined
+                  }
                 >
                   <span className="_feed_inner_text_area_bottom_photo_iamge _mar_img">
                     {icon}
@@ -219,7 +252,7 @@ export const PostComposer = () => {
               type="button"
               className="_feed_inner_text_area_btn_link"
               onClick={handleSubmit}
-              disabled={!text.trim() || createPost.isPending}
+              disabled={!text.trim() || composerBusy}
               aria-label="Publish post"
             >
               <SendOutlined
@@ -230,7 +263,7 @@ export const PostComposer = () => {
                   transform: "rotate(-45deg)",
                 }}
               />
-              <span>{createPost.isPending ? "…" : "Post"}</span>
+              <span>{composerBusy ? "…" : "Post"}</span>
             </button>
           </div>
         </div>

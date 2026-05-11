@@ -3,6 +3,7 @@ import type { PostWithMeta } from "@/lib/repositories/post.repository";
 import type { CommentWithMeta } from "@/lib/repositories/comment.repository";
 import type { PaginatedResult } from "@/lib/api/pagination";
 import type { CreatePostInput } from "@/lib/schemas/feed/post.schema";
+import type { CloudinarySignedUploadParams } from "@/lib/uploads/cloudinary-upload-types";
 import type { CreateCommentInput } from "@/lib/schemas/feed/comment.schema";
 
 // ---------------------------------------------------------------------------
@@ -49,6 +50,17 @@ export async function createPost(
     method: "POST",
     body: JSON.stringify(input),
   });
+  return data;
+}
+
+/**
+ * Requests signed Cloudinary upload parameters for the current session (requires auth cookie).
+ */
+export async function fetchCloudinarySignedUploadParams(): Promise<CloudinarySignedUploadParams> {
+  const { data } = await apiFetch<CloudinarySignedUploadParams>(
+    "/api/v1/uploads/cloudinary",
+    { method: "POST", body: JSON.stringify({}) },
+  );
   return data;
 }
 

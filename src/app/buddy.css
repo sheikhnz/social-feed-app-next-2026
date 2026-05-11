@@ -1515,7 +1515,8 @@
   margin: 0;
   resize: vertical;
   background: transparent;
-  border: 1px solid transparent;
+  /* Softer than focus (`--bs-color5`); same hue family so it matches the focused edge. */
+  border: 1px solid color-mix(in srgb, var(--bs-color5) 28%, var(--bs-bcolor2));
   border-radius: 6px;
   padding: 28px 14px 12px 14px;
   font-size: 16px;

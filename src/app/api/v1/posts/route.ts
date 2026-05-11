@@ -6,6 +6,8 @@ import {
   feedQuerySchema,
 } from "@/lib/schemas/feed/post.schema";
 import { createPost, getFeedPosts } from "@/lib/repositories/post.repository";
+import { getCloudinaryEnv } from "@/lib/env";
+import { isTrustedCloudinaryImageUrl } from "@/lib/uploads/cloudinary-url";
 
 /**
  * POST /api/v1/posts
@@ -21,6 +23,22 @@ export const POST = withAuth(async (req: NextRequest, { userId }) => {
     return badRequest(
       parsed.error.issues[0]?.message ?? "Invalid request body",
     );
+  }
+
+  const { imageUrl } = parsed.data;
+  if (imageUrl) {
+    const cloudinaryEnv = getCloudinaryEnv();
+    if (!cloudinaryEnv) {
+      return badRequest("Image attachments are not enabled.");
+    }
+    if (
+      !isTrustedCloudinaryImageUrl({
+        urlString: imageUrl,
+        trustedCloudName: cloudinaryEnv.cloudName,
+      })
+    ) {
+      return badRequest("Invalid image URL.");
+    }
   }
 
   const post = await createPost(userId, parsed.data);

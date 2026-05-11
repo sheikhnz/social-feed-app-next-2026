@@ -15,6 +15,7 @@ export {
   Grid,
   Input,
   Modal,
+  Progress,
   Result,
   Select,
   Space,
