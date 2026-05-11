@@ -111,13 +111,18 @@ const CommentItem = ({ comment, postId, depth = 0, parentCommentId }: CommentIte
             {comment.likesCount > 0 && (
               <Tooltip
                 title={
-                  comment.recentLikers && comment.recentLikers.length > 0
-                    ? `${comment.recentLikers.map(l => l.name || [l.firstName, l.lastName].filter(Boolean).join(" ") || "Someone").join(", ")}${
-                        comment.likesCount > comment.recentLikers.length
-                          ? ` and ${comment.likesCount - comment.recentLikers.length} others`
-                          : ""
-                      }`
-                    : `${comment.likesCount} likes`
+                  comment.recentLikers && comment.recentLikers.length > 0 ? (
+                    <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                      {comment.recentLikers.map(l => (
+                        <span key={l.id}>• {l.name || [l.firstName, l.lastName].filter(Boolean).join(" ") || "Someone"}</span>
+                      ))}
+                      {comment.likesCount > comment.recentLikers.length && (
+                        <span>• and {comment.likesCount - comment.recentLikers.length} others</span>
+                      )}
+                    </div>
+                  ) : (
+                    `${comment.likesCount} likes`
+                  )
                 }
                 placement="top"
               >

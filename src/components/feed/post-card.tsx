@@ -202,13 +202,18 @@ export const PostCard = ({ post }: PostCardProps) => {
         {post.likesCount > 0 && (
             <Tooltip
               title={
-                post.recentLikers && post.recentLikers.length > 0
-                  ? `${post.recentLikers.map(l => l.name || [l.firstName, l.lastName].filter(Boolean).join(" ") || "Someone").join(", ")}${
-                      post.likesCount > post.recentLikers.length
-                        ? ` and ${post.likesCount - post.recentLikers.length} others`
-                        : ""
-                    }`
-                  : `${post.likesCount} likes`
+                post.recentLikers && post.recentLikers.length > 0 ? (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                    {post.recentLikers.map(l => (
+                      <span key={l.id}>• {l.name || [l.firstName, l.lastName].filter(Boolean).join(" ") || "Someone"}</span>
+                    ))}
+                    {post.likesCount > post.recentLikers.length && (
+                      <span>• and {post.likesCount - post.recentLikers.length} others</span>
+                    )}
+                  </div>
+                ) : (
+                  `${post.likesCount} likes`
+                )
               }
               placement="top"
             >
