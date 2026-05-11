@@ -163,7 +163,6 @@ export const FeedNavbar = () => {
               width={169}
               height={32}
               className="_nav_logo_img"
-              priority
             />
           </Link>
         </div>

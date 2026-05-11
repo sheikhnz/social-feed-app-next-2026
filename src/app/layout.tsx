@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import { AntdAppProvider } from "@/components/providers/antd-app-provider";
@@ -25,6 +25,12 @@ const poppins = Poppins({
 });
 
 const { siteUrl } = getServerEnv();
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   ...(siteUrl ? { metadataBase: new URL(siteUrl) } : {}),

@@ -25,17 +25,9 @@ export default function LoginPage() {
           width: "100%",
         }}
       >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr",
-            alignItems: "center",
-            gap: 32,
-          }}
-          className="auth-grid"
-        >
-          {/* Hero Image */}
-          <div style={{ display: "flex", justifyContent: "center" }}>
+        <div className="auth-grid">
+          {/* Hero Image — hidden on mobile via `._auth_hero_col` in buddy.css */}
+          <div className="_auth_hero_col">
             <Image
               src="/assets/images/login.png"
               alt="Login illustration"
@@ -52,17 +44,6 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 992px) {
-          .auth-grid {
-            grid-template-columns: 1fr !important;
-          }
-          .auth-grid > div:first-child {
-            display: none;
-          }
-        }
-      `}</style>
     </section>
   );
 }
