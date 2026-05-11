@@ -1,6 +1,6 @@
 # Social Feed - Next.js
 
-Professional social feed demo: registration, session auth, global timeline with text/image posts, visibility (public/private), nested comments/replies, and likes on posts and comments — matching the provided HTML/CSS design direction.
+Professional social feed demo: registration, session auth, global timeline with text/image posts, visibility (public/private), nested comments/replies, and likes on posts and comments 
 
 **Live app:** [https://buddy-script-bay.vercel.app](https://buddy-script-bay.vercel.app)
 
