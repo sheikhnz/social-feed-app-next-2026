@@ -7,6 +7,8 @@ import { CommentSection } from "@/components/feed/comment-section";
 import { useCreateComment } from "@/hooks/feed/use-create-comment";
 import { useSession } from "next-auth/react";
 import { formatDistanceToNowStrict } from "@/lib/utils/date";
+import { UserAvatar } from "@/components/ui/user-avatar";
+import { Tooltip } from "@/components/ui/antd";
 
 // ---------------------------------------------------------------------------
 // Dropdown menu items
@@ -110,18 +112,12 @@ export const PostCard = ({ post }: PostCardProps) => {
         <div className="_feed_inner_timeline_post_top">
           <div className="_feed_inner_timeline_post_box">
             <div className="_feed_inner_timeline_post_box_image">
-              {post.author.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={post.author.image}
-                  alt={authorName}
-                  className="_post_img"
-                />
-              ) : (
-                <div className="_post_img _post_avatar_fallback" aria-hidden="true">
-                  {authorName.slice(0, 1).toUpperCase()}
-                </div>
-              )}
+              <UserAvatar
+                user={post.author}
+                size={42}
+                className="_post_img"
+                fallbackClassName="_post_avatar_fallback"
+              />
             </div>
             <div className="_feed_inner_timeline_post_box_txt">
               <h4 className="_feed_inner_timeline_post_box_title">
@@ -205,12 +201,42 @@ export const PostCard = ({ post }: PostCardProps) => {
       {(post.likesCount > 0 || post.commentsCount > 0) && (
         <div className="_feed_inner_timeline_total_reacts _padd_r24 _padd_l24 _mar_b26">
           {post.likesCount > 0 && (
-            <div className="_feed_inner_timeline_total_reacts_image">
-              <span className="_reaction_like_icon" aria-hidden="true">👍</span>
-              <p className="_feed_inner_timeline_total_reacts_para">
-                {post.likesCount}
-              </p>
-            </div>
+            <Tooltip
+              title={
+                post.recentLikers && post.recentLikers.length > 0
+                  ? `${post.recentLikers.map(l => l.name || [l.firstName, l.lastName].filter(Boolean).join(" ") || "Someone").join(", ")}${
+                      post.likesCount > post.recentLikers.length
+                        ? ` and ${post.likesCount - post.recentLikers.length} others`
+                        : ""
+                    }`
+                  : `${post.likesCount} likes`
+              }
+              placement="top"
+            >
+              <div className="_feed_inner_timeline_total_reacts_image cursor-pointer">
+                {post.recentLikers?.map((liker, i) => {
+                  const zIndex = 10 - i;
+                  return (
+                    <UserAvatar
+                      key={liker.id}
+                      user={liker}
+                      size={24}
+                      className={i === 0 ? "_react_img1" : "_react_img"}
+                      fallbackClassName="_react_avatar_fallback"
+                      style={{ zIndex }}
+                    />
+                  );
+                })}
+                {post.likesCount > (post.recentLikers?.length || 0) && (
+                  <div 
+                    className="_react_count_badge"
+                    style={{ zIndex: 0 }}
+                  >
+                    {post.likesCount - (post.recentLikers?.length || 0)}+
+                  </div>
+                )}
+              </div>
+            </Tooltip>
           )}
           {post.commentsCount > 0 && (
             <div className="_feed_inner_timeline_total_reacts_txt">

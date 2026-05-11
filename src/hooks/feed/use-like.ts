@@ -2,11 +2,13 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { InfiniteData } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import { likePost, unlikePost, likeComment, unlikeComment } from "@/lib/api/feed-api";
 import { queryKeys } from "@/hooks/query-keys";
 import type { PostWithMeta } from "@/lib/repositories/post.repository";
 import type { CommentWithMeta } from "@/lib/repositories/comment.repository";
 import type { PaginatedResult } from "@/lib/api/pagination";
+import type { AuthorPayload } from "@/lib/repositories/_shared";
 
 type FeedPages = InfiniteData<PaginatedResult<PostWithMeta>>;
 type CommentPages = InfiniteData<PaginatedResult<CommentWithMeta>>;
@@ -17,11 +19,22 @@ type CommentPages = InfiniteData<PaginatedResult<CommentWithMeta>>;
 
 export function useLikePost(postId: string) {
   const qc = useQueryClient();
+  const { data: session } = useSession();
 
   const mutate = async (liked: boolean) => {
     const key = queryKeys.feedPosts();
     await qc.cancelQueries({ queryKey: key });
     const previous = qc.getQueryData<FeedPages>(key);
+
+    const currentUserLiker: AuthorPayload | null = session?.user
+      ? {
+          id: session.user.id || "optimistic-id",
+          firstName: session.user.firstName || null,
+          lastName: session.user.lastName || null,
+          name: session.user.name || null,
+          image: session.user.image || null,
+        }
+      : null;
 
     // Optimistic toggle
     qc.setQueryData<FeedPages>(key, (old) => {
@@ -30,15 +43,31 @@ export function useLikePost(postId: string) {
         ...old,
         pages: old.pages.map((page) => ({
           ...page,
-          items: page.items.map((p) =>
-            p.id === postId
-              ? {
-                  ...p,
-                  isLiked: liked,
-                  likesCount: p.likesCount + (liked ? 1 : -1),
+          items: page.items.map((p) => {
+            if (p.id !== postId) return p;
+
+            let newRecentLikers = p.recentLikers ? [...p.recentLikers] : [];
+            if (liked && currentUserLiker) {
+              if (!newRecentLikers.find((l) => l.id === currentUserLiker.id)) {
+                newRecentLikers.unshift(currentUserLiker);
+                // Keep only top 3
+                if (newRecentLikers.length > 3) {
+                  newRecentLikers.pop();
                 }
-              : p,
-          ),
+              }
+            } else if (!liked && currentUserLiker) {
+              newRecentLikers = newRecentLikers.filter(
+                (l) => l.id !== currentUserLiker.id
+              );
+            }
+
+            return {
+              ...p,
+              isLiked: liked,
+              likesCount: p.likesCount + (liked ? 1 : -1),
+              recentLikers: newRecentLikers,
+            };
+          }),
         })),
       };
     });

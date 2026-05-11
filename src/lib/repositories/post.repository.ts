@@ -6,6 +6,7 @@ import { AUTHOR_SELECT, type AuthorPayload } from "./_shared";
 import {
   batchGetLikeCounts,
   batchGetUserLiked,
+  batchGetRecentLikers,
 } from "./like.repository";
 import type { CreatePostInput } from "@/lib/schemas/feed/post.schema";
 
@@ -19,6 +20,7 @@ export interface PostWithMeta {
   likesCount: number;
   commentsCount: number;
   isLiked: boolean;
+  recentLikers: AuthorPayload[];
 }
 
 /** Create a new post and return it with author info. */
@@ -49,6 +51,7 @@ export async function createPost(
     likesCount: 0,
     commentsCount: 0,
     isLiked: false,
+    recentLikers: [],
   };
 }
 
@@ -92,9 +95,10 @@ export async function getFeedPosts(
 
   const postIds = rawPosts.map((p) => p.id);
 
-  const [likeCountMap, userLikedSet] = await Promise.all([
+  const [likeCountMap, userLikedSet, recentLikersMap] = await Promise.all([
     batchGetLikeCounts(LikeTargetType.POST, postIds),
     batchGetUserLiked(userId, LikeTargetType.POST, postIds),
+    batchGetRecentLikers(LikeTargetType.POST, postIds, 3),
   ]);
 
   const posts: PostWithMeta[] = rawPosts.map((p) => ({
@@ -107,6 +111,7 @@ export async function getFeedPosts(
     likesCount: likeCountMap.get(p.id) ?? 0,
     commentsCount: p._count.comments,
     isLiked: userLikedSet.has(p.id),
+    recentLikers: recentLikersMap.get(p.id) ?? [],
   }));
 
   return buildPaginatedResult(posts, limit);

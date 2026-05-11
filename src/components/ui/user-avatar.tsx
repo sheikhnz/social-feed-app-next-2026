@@ -11,9 +11,10 @@ interface UserAvatarProps {
   size?: number;
   className?: string;
   fallbackClassName?: string;
+  style?: React.CSSProperties;
 }
 
-export const UserAvatar = ({ user, size = 32, className = "", fallbackClassName = "bg-blue-500 text-white" }: UserAvatarProps) => {
+export const UserAvatar = ({ user, size = 32, className = "", fallbackClassName = "bg-blue-500 text-white", style }: UserAvatarProps) => {
   const userName = user?.name || getUserName(user?.firstName, user?.lastName);
   const userInitial = getUserInitial(userName);
   const userImage = user?.image;
@@ -26,6 +27,7 @@ export const UserAvatar = ({ user, size = 32, className = "", fallbackClassName 
         width={size}
         height={size}
         className={`rounded-full object-cover ${className}`}
+        style={style}
       />
     );
   }
@@ -33,7 +35,7 @@ export const UserAvatar = ({ user, size = 32, className = "", fallbackClassName 
   return (
     <div
       className={`flex items-center justify-center rounded-full font-semibold ${fallbackClassName} ${className}`}
-      style={{ width: size, height: size, fontSize: Math.max(12, size * 0.4) }}
+      style={{ width: size, height: size, fontSize: Math.max(12, size * 0.4), ...style }}
     >
       {userInitial}
     </div>

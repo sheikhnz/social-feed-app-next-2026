@@ -1,5 +1,6 @@
 import { LikeTargetType } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { AUTHOR_SELECT, type AuthorPayload } from "./_shared";
 
 /**
  * Idempotent like — creates the record if it doesn't exist.
@@ -77,3 +78,36 @@ export async function batchGetUserLiked(
   });
   return new Set(rows.map((r) => r.targetId));
 }
+
+/**
+ * Batch-fetches recent likers for multiple targets.
+ * We use Promise.all to fetch them concurrently for the limited set of targets.
+ */
+export async function batchGetRecentLikers(
+  targetType: LikeTargetType,
+  targetIds: string[],
+  limit = 3,
+): Promise<Map<string, AuthorPayload[]>> {
+  const resultMap = new Map<string, AuthorPayload[]>();
+  if (targetIds.length === 0) return resultMap;
+
+  await Promise.all(
+    targetIds.map(async (targetId) => {
+      const rows = await prisma.like.findMany({
+        where: { targetType, targetId },
+        take: limit,
+        orderBy: { createdAt: "desc" },
+        select: {
+          user: { select: AUTHOR_SELECT },
+        },
+      });
+      resultMap.set(
+        targetId,
+        rows.map((r) => r.user),
+      );
+    }),
+  );
+
+  return resultMap;
+}
+
