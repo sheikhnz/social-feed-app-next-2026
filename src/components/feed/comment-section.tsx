@@ -8,6 +8,7 @@ import { useCreateComment } from "@/hooks/feed/use-create-comment";
 import { CommentLikeButton } from "@/components/feed/like-button";
 import { ReplyInput } from "@/components/feed/reply-input";
 import { formatDistanceToNowStrict } from "@/lib/utils/date";
+import { Tooltip } from "@/components/ui/antd";
 
 // ---------------------------------------------------------------------------
 // Individual comment item (top-level or reply)
@@ -108,9 +109,22 @@ const CommentItem = ({ comment, postId, depth = 0, parentCommentId }: CommentIte
             </span>
 
             {comment.likesCount > 0 && (
-              <span className="_comment_like_meta">
-                {comment.likesCount} like{comment.likesCount !== 1 ? "s" : ""}
-              </span>
+              <Tooltip
+                title={
+                  comment.recentLikers && comment.recentLikers.length > 0
+                    ? `${comment.recentLikers.map(l => l.name || [l.firstName, l.lastName].filter(Boolean).join(" ") || "Someone").join(", ")}${
+                        comment.likesCount > comment.recentLikers.length
+                          ? ` and ${comment.likesCount - comment.recentLikers.length} others`
+                          : ""
+                      }`
+                    : `${comment.likesCount} likes`
+                }
+                placement="top"
+              >
+                <span className="_comment_like_meta cursor-pointer">
+                  {comment.likesCount} like{comment.likesCount !== 1 ? "s" : ""}
+                </span>
+              </Tooltip>
             )}
           </div>
 

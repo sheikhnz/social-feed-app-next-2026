@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { buildPaginatedResult, decodeCursor } from "@/lib/api/pagination";
 import type { PaginatedResult } from "@/lib/api/pagination";
 import { AUTHOR_SELECT, type AuthorPayload } from "./_shared";
-import { batchGetLikeCounts, batchGetUserLiked } from "./like.repository";
+import { batchGetLikeCounts, batchGetUserLiked, batchGetRecentLikers } from "./like.repository";
 import type { CreateCommentInput } from "@/lib/schemas/feed/comment.schema";
 
 export interface CommentWithMeta {
@@ -16,6 +16,7 @@ export interface CommentWithMeta {
   likesCount: number;
   repliesCount: number;
   isLiked: boolean;
+  recentLikers: AuthorPayload[];
 }
 
 /**
@@ -51,6 +52,7 @@ export async function createComment(
     likesCount: 0,
     repliesCount: 0,
     isLiked: false,
+    recentLikers: [],
   };
 }
 
@@ -112,9 +114,10 @@ async function _getCommentPage(
 
   const commentIds = rawComments.map((c) => c.id);
 
-  const [likeCountMap, userLikedSet] = await Promise.all([
+  const [likeCountMap, userLikedSet, recentLikersMap] = await Promise.all([
     batchGetLikeCounts(LikeTargetType.COMMENT, commentIds),
     batchGetUserLiked(userId, LikeTargetType.COMMENT, commentIds),
+    batchGetRecentLikers(LikeTargetType.COMMENT, commentIds, 3),
   ]);
 
   const comments: CommentWithMeta[] = rawComments.map((c) => ({
@@ -127,6 +130,7 @@ async function _getCommentPage(
     likesCount: likeCountMap.get(c.id) ?? 0,
     repliesCount: c._count.replies,
     isLiked: userLikedSet.has(c.id),
+    recentLikers: recentLikersMap.get(c.id) ?? [],
   }));
 
   return buildPaginatedResult(comments, limit);

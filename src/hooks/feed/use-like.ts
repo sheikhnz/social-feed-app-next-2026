@@ -105,8 +105,19 @@ export function useLikeComment(
   parentCommentId?: string,
 ) {
   const qc = useQueryClient();
+  const { data: session } = useSession();
 
   const mutate = async (liked: boolean) => {
+    const currentUserLiker: AuthorPayload | null = session?.user
+      ? {
+          id: session.user.id || "optimistic-id",
+          firstName: session.user.firstName || null,
+          lastName: session.user.lastName || null,
+          name: session.user.name || null,
+          image: session.user.image || null,
+        }
+      : null;
+
     if (parentCommentId) {
       // --- Reply: update the feedReplies cache keyed by parent comment id ---
       const key = queryKeys.feedReplies(parentCommentId);
@@ -119,15 +130,30 @@ export function useLikeComment(
           ...old,
           pages: old.pages.map((page) => ({
             ...page,
-            items: page.items.map((c) =>
-              c.id === commentId
-                ? {
-                    ...c,
-                    isLiked: liked,
-                    likesCount: c.likesCount + (liked ? 1 : -1),
+            items: page.items.map((c) => {
+              if (c.id !== commentId) return c;
+
+              let newRecentLikers = c.recentLikers ? [...c.recentLikers] : [];
+              if (liked && currentUserLiker) {
+                if (!newRecentLikers.find((l) => l.id === currentUserLiker.id)) {
+                  newRecentLikers.unshift(currentUserLiker);
+                  if (newRecentLikers.length > 3) {
+                    newRecentLikers.pop();
                   }
-                : c,
-            ),
+                }
+              } else if (!liked && currentUserLiker) {
+                newRecentLikers = newRecentLikers.filter(
+                  (l) => l.id !== currentUserLiker.id
+                );
+              }
+
+              return {
+                ...c,
+                isLiked: liked,
+                likesCount: c.likesCount + (liked ? 1 : -1),
+                recentLikers: newRecentLikers,
+              };
+            }),
           })),
         };
       });
@@ -146,15 +172,30 @@ export function useLikeComment(
         ...old,
         pages: old.pages.map((page) => ({
           ...page,
-          items: page.items.map((c) =>
-            c.id === commentId
-              ? {
-                  ...c,
-                  isLiked: liked,
-                  likesCount: c.likesCount + (liked ? 1 : -1),
+          items: page.items.map((c) => {
+            if (c.id !== commentId) return c;
+
+            let newRecentLikers = c.recentLikers ? [...c.recentLikers] : [];
+            if (liked && currentUserLiker) {
+              if (!newRecentLikers.find((l) => l.id === currentUserLiker.id)) {
+                newRecentLikers.unshift(currentUserLiker);
+                if (newRecentLikers.length > 3) {
+                  newRecentLikers.pop();
                 }
-              : c,
-          ),
+              }
+            } else if (!liked && currentUserLiker) {
+              newRecentLikers = newRecentLikers.filter(
+                (l) => l.id !== currentUserLiker.id
+              );
+            }
+
+            return {
+              ...c,
+              isLiked: liked,
+              likesCount: c.likesCount + (liked ? 1 : -1),
+              recentLikers: newRecentLikers,
+            };
+          }),
         })),
       };
     });
