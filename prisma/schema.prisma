@@ -89,6 +89,8 @@ model Post {
   @@index([visibility, createdAt(sort: Desc)])
   // User profile feed.
   @@index([authorId, createdAt(sort: Desc)])
+  // Feed filter: current user's private posts (author + visibility + sort).
+  @@index([authorId, visibility, createdAt(sort: Desc)])
   @@map("posts")
 }
 
@@ -129,5 +131,7 @@ model Like {
   @@unique([userId, targetType, targetId])
   // Count / check likes on a target (e.g. "how many likes does post X have?").
   @@index([targetType, targetId])
+  // Recent likers / time-ordered scans per target.
+  @@index([targetType, targetId, createdAt(sort: Desc)])
   @@map("likes")
 }
