@@ -35,11 +35,7 @@ export const uploadImageWithSignedParams = ({
       const raw = xhr.responseText ?? "";
       if (xhr.status < 200 || xhr.status >= 300) {
         const parsed = parseCloudinaryUploadJson({ rawJson: raw });
-        reject(
-          new Error(
-            parsed.ok ? "Upload rejected." : parsed.message,
-          ),
-        );
+        reject(new Error(parsed.ok ? "Upload rejected." : parsed.message));
         return;
       }
 

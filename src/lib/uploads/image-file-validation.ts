@@ -43,9 +43,7 @@ export const validatePostImageFile = async ({
   }
 
   const chunkLength = Math.min(file.size, SNIFF_CHUNK_BYTES);
-  const chunk = new Uint8Array(
-    await file.slice(0, chunkLength).arrayBuffer(),
-  );
+  const chunk = new Uint8Array(await file.slice(0, chunkLength).arrayBuffer());
 
   const detected = await fileTypeFromBuffer(chunk);
 

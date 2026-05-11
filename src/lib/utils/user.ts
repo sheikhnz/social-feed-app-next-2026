@@ -12,8 +12,12 @@ export const resolveAuthorHeaderName = (args: {
   name?: string | null;
   fallback?: string;
 }): string => {
-  const { firstName, lastName, name, fallback = AUTHOR_HEADER_FALLBACK_UNKNOWN } =
-    args;
+  const {
+    firstName,
+    lastName,
+    name,
+    fallback = AUTHOR_HEADER_FALLBACK_UNKNOWN,
+  } = args;
   if (firstName && lastName) return `${firstName} ${lastName}`;
   return name ?? fallback;
 };

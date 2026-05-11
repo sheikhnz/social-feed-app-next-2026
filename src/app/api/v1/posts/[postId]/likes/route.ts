@@ -1,6 +1,6 @@
 import { LikeTargetType } from "@prisma/client";
 import { withAuth } from "@/lib/api/auth-guard";
-import { badRequest, notFound, ok } from "@/lib/api/response";
+import { badRequest, ok } from "@/lib/api/response";
 import { resourceAccessToResponse } from "@/lib/api/resource-access-response";
 import { postLikeParamsSchema } from "@/lib/schemas/feed/like.schema";
 import {

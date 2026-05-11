@@ -252,7 +252,8 @@ export const CloudinaryImageUploader = forwardRef<
               color: "rgba(0,0,0,0.55)",
             }}
           >
-            Drag an image here or use Photo to browse (JPEG, PNG, WebP, GIF · max 5&nbsp;MB).
+            Drag an image here or use Photo to browse (JPEG, PNG, WebP, GIF ·
+            max 5&nbsp;MB).
           </p>
         )}
       </div>

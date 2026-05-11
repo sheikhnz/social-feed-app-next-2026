@@ -14,9 +14,7 @@ type CloudinaryUploadSuccessPayload = {
   readonly secure_url?: string;
 };
 
-const extractSecureUrl = (
-  payload: unknown,
-): string | null => {
+const extractSecureUrl = (payload: unknown): string | null => {
   if (!payload || typeof payload !== "object") return null;
   const url = (payload as CloudinaryUploadSuccessPayload).secure_url;
   return typeof url === "string" && url.length > 0 ? url : null;
@@ -29,7 +27,9 @@ export const parseCloudinaryUploadJson = ({
   rawJson,
 }: {
   readonly rawJson: string;
-}): { readonly ok: true; readonly secureUrl: string } | { readonly ok: false; readonly message: string } => {
+}):
+  | { readonly ok: true; readonly secureUrl: string }
+  | { readonly ok: false; readonly message: string } => {
   try {
     const parsed: unknown = JSON.parse(rawJson);
     const secureUrl = extractSecureUrl(parsed);
@@ -41,7 +41,8 @@ export const parseCloudinaryUploadJson = ({
       parsed &&
       typeof parsed === "object" &&
       "error" in parsed &&
-      typeof (parsed as { error?: { message?: string } }).error?.message === "string"
+      typeof (parsed as { error?: { message?: string } }).error?.message ===
+        "string"
         ? (parsed as { error: { message: string } }).error.message
         : "Upload failed.";
     return { ok: false, message: errMsg };
