@@ -79,6 +79,7 @@ export const ReplyInput = ({
                   style={{
                     fontSize: 14,
                     color: text.trim() ? "#1890ff" : "rgba(0,0,0,0.46)",
+                    transform: "rotate(-45deg)",
                   }}
                 />
               </button>

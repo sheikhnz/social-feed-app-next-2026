@@ -154,7 +154,7 @@ export const PostComposer = () => {
               disabled={!text.trim() || createPost.isPending}
               aria-label="Publish post"
             >
-              <SendOutlined className="_mar_img" style={{ fontSize: 14, color: "#fff" }} />
+              <SendOutlined className="_mar_img" style={{ fontSize: 14, color: "#fff", transform: "rotate(-45deg)" }} />
               <span>{createPost.isPending ? "Posting…" : "Post"}</span>
             </button>
           </div>
@@ -181,7 +181,7 @@ export const PostComposer = () => {
               disabled={!text.trim() || createPost.isPending}
               aria-label="Publish post"
             >
-              <SendOutlined className="_mar_img" style={{ fontSize: 14, color: "#fff" }} />
+              <SendOutlined className="_mar_img" style={{ fontSize: 14, color: "#fff", transform: "rotate(-45deg)" }} />
               <span>{createPost.isPending ? "…" : "Post"}</span>
             </button>
           </div>
