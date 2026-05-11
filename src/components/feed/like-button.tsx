@@ -5,6 +5,7 @@ import type { PostWithMeta } from "@/lib/repositories/post.repository";
 import type { CommentWithMeta } from "@/lib/repositories/comment.repository";
 import { useLikePost } from "@/hooks/feed/use-like";
 import { useLikeComment } from "@/hooks/feed/use-like";
+import { LikeOutlined, LikeFilled } from "@ant-design/icons";
 
 // ---------------------------------------------------------------------------
 // Post like button
@@ -37,20 +38,11 @@ export const PostLikeButton = ({ post }: PostLikeButtonProps) => {
     >
       <span className="_feed_inner_timeline_reaction_link">
         <span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="19"
-            height="19"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M7 10v12" />
-            <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12.73 4A2 2 0 0 1 16.38 3H17a1 1 0 0 1 1 1v2" />
-          </svg>
+          {post.isLiked ? (
+            <LikeFilled style={{ fontSize: 19 }} />
+          ) : (
+            <LikeOutlined style={{ fontSize: 19 }} />
+          )}
           {post.likesCount > 0 ? (
             <span className="_like_count">{post.likesCount}</span>
           ) : null}
@@ -92,19 +84,11 @@ export const CommentLikeButton = ({ comment, parentCommentId }: CommentLikeButto
       aria-label={comment.isLiked ? "Unlike comment" : "Like comment"}
       aria-pressed={comment.isLiked}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill={comment.isLiked ? "currentColor" : "none"}
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
-      </svg>
+      {comment.isLiked ? (
+        <LikeFilled style={{ fontSize: 14 }} />
+      ) : (
+        <LikeOutlined style={{ fontSize: 14 }} />
+      )}
       {comment.likesCount > 0 && (
         <span className="_comment_like_count">{comment.likesCount}</span>
       )}

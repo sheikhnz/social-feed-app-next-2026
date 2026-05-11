@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { SearchOutlined } from "@ant-design/icons";
 
 /* ─── Static data ─────────────────────────────────────────────────────────── */
 
@@ -122,16 +123,7 @@ export const FeedRightSidebar = () => (
       {/* Search */}
       <div className="_friends_search_wrap">
         <span className="_friends_search_icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            fill="none"
-            viewBox="0 0 17 17"
-          >
-            <circle cx="7" cy="7" r="6" stroke="#666" />
-            <path stroke="#666" strokeLinecap="round" d="M16 16l-3-3" />
-          </svg>
+          <SearchOutlined style={{ fontSize: 14, color: "#666" }} />
         </span>
         <input
           type="search"

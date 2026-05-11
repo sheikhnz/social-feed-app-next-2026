@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { StoryStripNextButton } from "@/components/feed/story-strip-next-button";
+import { PlusOutlined } from "@ant-design/icons";
 
 /* ─── Static data ─────────────────────────────────────────────────────────── */
 
@@ -28,19 +29,7 @@ export const StoryCards = () => (
               className="_story_add_btn"
               aria-label="Add story"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="10"
-                height="10"
-                fill="none"
-                viewBox="0 0 10 10"
-              >
-                <path
-                  stroke="#fff"
-                  strokeLinecap="round"
-                  d="M.5 4.884h9M4.884 9.5v-9"
-                />
-              </svg>
+              <PlusOutlined style={{ fontSize: 10, color: "#fff" }} />
             </button>
           </div>
           <p className="_story_add_label">Your Story</p>

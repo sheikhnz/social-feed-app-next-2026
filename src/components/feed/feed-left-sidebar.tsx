@@ -1,5 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import {
+  PlayCircleOutlined,
+  BarChartOutlined,
+  UserAddOutlined,
+  BookOutlined,
+  TeamOutlined,
+  TrophyOutlined,
+  SettingOutlined,
+  SaveOutlined,
+} from "@ant-design/icons";
 
 /* ─── Static data ─────────────────────────────────────────────────────────── */
 
@@ -8,211 +18,43 @@ const EXPLORE_ITEMS = [
     label: "Learning",
     href: "#0",
     badge: "New",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        fill="none"
-        viewBox="0 0 20 20"
-      >
-        <circle
-          cx="10"
-          cy="10"
-          r="7.25"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-        <path
-          d="M8.25 7.25 13.25 10 8.25 12.75z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
+    icon: <PlayCircleOutlined style={{ fontSize: 20 }} />,
   },
   {
     label: "Insights",
     href: "#0",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="22"
-        height="24"
-        fill="none"
-        viewBox="0 0 22 24"
-      >
-        <path
-          d="M6 3h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M9 17V11M11 17V9M13 17V12M15 17V14"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-      </svg>
-    ),
+    icon: <BarChartOutlined style={{ fontSize: 20 }} />,
   },
   {
     label: "Find friends",
     href: "#0",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="22"
-        height="24"
-        fill="none"
-        viewBox="0 0 22 24"
-      >
-        <circle
-          cx="9"
-          cy="8.5"
-          r="3.25"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-        <path
-          d="M3.5 21v-.5a5 5 0 015-5h1a5 5 0 015 5v.5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-        <path
-          d="M17.5 9v5M15 11.5h5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-      </svg>
-    ),
+    icon: <UserAddOutlined style={{ fontSize: 20 }} />,
   },
   {
     label: "Bookmarks",
     href: "#0",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="22"
-        height="24"
-        fill="none"
-        viewBox="0 0 22 24"
-      >
-        <path
-          d="M8 2h6a2 2 0 012 2v17l-5-2.9L6 21V4a2 2 0 012-2z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
+    icon: <BookOutlined style={{ fontSize: 20 }} />,
   },
   {
     label: "Group",
     href: "#0",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="22"
-        height="22"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
+    icon: <TeamOutlined style={{ fontSize: 20 }} />,
   },
   {
     label: "Gaming",
     href: "#0",
     badge: "New",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="22"
-        height="24"
-        fill="none"
-        viewBox="0 0 22 24"
-      >
-        <path
-          d="M5 10a3 3 0 013-3h6a3 3 0 013 3v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M8 12v3M6.5 13.5h3"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-        <circle
-          cx="15"
-          cy="12.5"
-          r="1"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-        <circle
-          cx="17.5"
-          cy="15"
-          r="1"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-      </svg>
-    ),
+    icon: <TrophyOutlined style={{ fontSize: 20 }} />,
   },
   {
     label: "Settings",
     href: "#0",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="22"
-        height="22"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <circle cx="12" cy="12" r="3" />
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-      </svg>
-    ),
+    icon: <SettingOutlined style={{ fontSize: 20 }} />,
   },
   {
     label: "Save post",
     href: "#0",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="22"
-        height="22"
-        viewBox="0 0 22 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-        <polyline points="17 21 17 13 7 13 7 21" />
-        <polyline points="7 3 7 8 15 8" />
-      </svg>
-    ),
+    icon: <SaveOutlined style={{ fontSize: 20 }} />,
   },
 ];
 
