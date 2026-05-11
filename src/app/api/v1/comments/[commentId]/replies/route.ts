@@ -4,7 +4,7 @@ import { badRequest, notFound, ok } from "@/lib/api/response";
 import { commentLikeParamsSchema } from "@/lib/schemas/feed/like.schema";
 import {
   getReplies,
-  commentExists,
+  isCommentOnReadablePost,
 } from "@/lib/repositories/comment.repository";
 import { z } from "zod";
 
@@ -25,7 +25,8 @@ export const GET = withAuth<{ commentId: string }>(
     }
 
     const { commentId } = parsed.data;
-    if (!(await commentExists(commentId))) return notFound("Comment");
+    if (!(await isCommentOnReadablePost(userId, commentId)))
+      return notFound("Comment");
 
     const { searchParams } = new URL(req.url);
     const queryParsed = repliesQuerySchema.safeParse({

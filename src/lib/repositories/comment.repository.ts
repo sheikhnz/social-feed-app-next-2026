@@ -92,10 +92,40 @@ export async function getReplies(
   return _getCommentPage(userId, { parentCommentId }, cursor, limit);
 }
 
-/** Check whether a comment exists (used for 404 guards in like routes). */
-export async function commentExists(commentId: string): Promise<boolean> {
-  const count = await prisma.comment.count({ where: { id: commentId } });
+/**
+ * Whether the comment exists and belongs to a post the user is allowed to read.
+ * Prevents IDOR via comment/reply/like endpoints on private posts.
+ */
+export async function isCommentOnReadablePost(
+  userId: string,
+  commentId: string,
+): Promise<boolean> {
+  const count = await prisma.comment.count({
+    where: {
+      id: commentId,
+      post: {
+        OR: [
+          { visibility: "PUBLIC" },
+          { authorId: userId, visibility: "PRIVATE" },
+        ],
+      },
+    },
+  });
   return count > 0;
+}
+
+/**
+ * Whether `parentCommentId` is a comment on `postId` (for reply creation).
+ */
+export async function isParentCommentOnPost(
+  postId: string,
+  parentCommentId: string,
+): Promise<boolean> {
+  const row = await prisma.comment.findFirst({
+    where: { id: parentCommentId, postId },
+    select: { id: true },
+  });
+  return row !== null;
 }
 
 // ---------------------------------------------------------------------------

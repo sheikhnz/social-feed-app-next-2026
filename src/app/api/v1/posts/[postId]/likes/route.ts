@@ -7,7 +7,7 @@ import {
   unlikeTarget,
   getLikeCount,
 } from "@/lib/repositories/like.repository";
-import { postExists } from "@/lib/repositories/post.repository";
+import { isPostReadableByUser } from "@/lib/repositories/post.repository";
 
 /**
  * POST /api/v1/posts/:postId/likes
@@ -21,7 +21,8 @@ export const POST = withAuth<{ postId: string }>(
     }
 
     const { postId } = parsed.data;
-    if (!(await postExists(postId))) return notFound("Post");
+    if (!(await isPostReadableByUser(userId, postId)))
+      return notFound("Post");
 
     await likeTarget(userId, LikeTargetType.POST, postId);
     const likesCount = await getLikeCount(LikeTargetType.POST, postId);
@@ -41,7 +42,8 @@ export const DELETE = withAuth<{ postId: string }>(
     }
 
     const { postId } = parsed.data;
-    if (!(await postExists(postId))) return notFound("Post");
+    if (!(await isPostReadableByUser(userId, postId)))
+      return notFound("Post");
 
     await unlikeTarget(userId, LikeTargetType.POST, postId);
     const likesCount = await getLikeCount(LikeTargetType.POST, postId);

@@ -1,6 +1,6 @@
 import { type NextRequest } from "next/server";
 import { withAuth } from "@/lib/api/auth-guard";
-import { badRequest, created, ok } from "@/lib/api/response";
+import { badRequest, created, notFound, ok } from "@/lib/api/response";
 import {
   createCommentSchema,
   commentQuerySchema,
@@ -8,7 +8,9 @@ import {
 import {
   createComment,
   getComments,
+  isParentCommentOnPost,
 } from "@/lib/repositories/comment.repository";
+import { isPostReadableByUser } from "@/lib/repositories/post.repository";
 
 /**
  * POST /api/v1/comments
@@ -24,6 +26,17 @@ export const POST = withAuth(async (req: NextRequest, { userId }) => {
     return badRequest(
       parsed.error.issues[0]?.message ?? "Invalid request body",
     );
+  }
+
+  const { postId, parentCommentId } = parsed.data;
+  if (!(await isPostReadableByUser(userId, postId))) {
+    return notFound("Post");
+  }
+  if (
+    parentCommentId &&
+    !(await isParentCommentOnPost(postId, parentCommentId))
+  ) {
+    return notFound("Comment");
   }
 
   const comment = await createComment(userId, parsed.data);
@@ -50,6 +63,9 @@ export const GET = withAuth(async (req: NextRequest, { userId }) => {
   }
 
   const { postId, cursor, limit } = parsed.data;
+  if (!(await isPostReadableByUser(userId, postId))) {
+    return notFound("Post");
+  }
   const result = await getComments(userId, postId, cursor, limit);
   return ok(result);
 });

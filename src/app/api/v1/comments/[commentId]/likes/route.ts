@@ -7,7 +7,7 @@ import {
   unlikeTarget,
   getLikeCount,
 } from "@/lib/repositories/like.repository";
-import { commentExists } from "@/lib/repositories/comment.repository";
+import { isCommentOnReadablePost } from "@/lib/repositories/comment.repository";
 
 /**
  * POST /api/v1/comments/:commentId/likes
@@ -21,7 +21,8 @@ export const POST = withAuth<{ commentId: string }>(
     }
 
     const { commentId } = parsed.data;
-    if (!(await commentExists(commentId))) return notFound("Comment");
+    if (!(await isCommentOnReadablePost(userId, commentId)))
+      return notFound("Comment");
 
     await likeTarget(userId, LikeTargetType.COMMENT, commentId);
     const likesCount = await getLikeCount(LikeTargetType.COMMENT, commentId);
@@ -41,7 +42,8 @@ export const DELETE = withAuth<{ commentId: string }>(
     }
 
     const { commentId } = parsed.data;
-    if (!(await commentExists(commentId))) return notFound("Comment");
+    if (!(await isCommentOnReadablePost(userId, commentId)))
+      return notFound("Comment");
 
     await unlikeTarget(userId, LikeTargetType.COMMENT, commentId);
     const likesCount = await getLikeCount(LikeTargetType.COMMENT, commentId);

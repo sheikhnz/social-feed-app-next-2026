@@ -117,8 +117,22 @@ export async function getFeedPosts(
   return buildPaginatedResult(posts, limit);
 }
 
-/** Check whether a post exists (used for 404 guards in like routes). */
-export async function postExists(postId: string): Promise<boolean> {
-  const count = await prisma.post.count({ where: { id: postId } });
+/**
+ * Whether the requesting user may read this post (PUBLIC, or PRIVATE authored by them).
+ * Used to prevent IDOR on private posts for likes, comments, and related APIs.
+ */
+export async function isPostReadableByUser(
+  userId: string,
+  postId: string,
+): Promise<boolean> {
+  const count = await prisma.post.count({
+    where: {
+      id: postId,
+      OR: [
+        { visibility: "PUBLIC" },
+        { authorId: userId, visibility: "PRIVATE" },
+      ],
+    },
+  });
   return count > 0;
 }
