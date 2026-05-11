@@ -2,6 +2,8 @@
 
 Professional social feed demo: registration, session auth, global timeline with text/image posts, visibility (public/private), nested comments/replies, and likes on posts and comments — matching the provided HTML/CSS design direction.
 
+**Live app:** [https://buddy-script-bay.vercel.app](https://buddy-script-bay.vercel.app)
+
 ---
 
 ## Project overview
@@ -165,6 +167,8 @@ prisma/
 ---
 
 ## Deployment
+
+**Deployed instance:** [https://buddy-script-bay.vercel.app](https://buddy-script-bay.vercel.app) (Vercel).
 
 See **[DEPLOYMENT.md](DEPLOYMENT.md)** for Vercel: Node 24, `DATABASE_URL` / `DIRECT_URL`, `AUTH_*`, Google redirects, and build-time `prisma migrate deploy`.
 
