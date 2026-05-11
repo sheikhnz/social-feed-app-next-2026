@@ -3,7 +3,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { InfiniteData } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { likePost, unlikePost, likeComment, unlikeComment } from "@/lib/api/feed-api";
+import {
+  likePost,
+  unlikePost,
+  likeComment,
+  unlikeComment,
+} from "@/lib/api/feed-api";
 import { queryKeys } from "@/hooks/query-keys";
 import type { PostWithMeta } from "@/lib/repositories/post.repository";
 import type { CommentWithMeta } from "@/lib/repositories/comment.repository";
@@ -57,7 +62,7 @@ export function useLikePost(postId: string) {
               }
             } else if (!liked && currentUserLiker) {
               newRecentLikers = newRecentLikers.filter(
-                (l) => l.id !== currentUserLiker.id
+                (l) => l.id !== currentUserLiker.id,
               );
             }
 
@@ -135,7 +140,9 @@ export function useLikeComment(
 
               let newRecentLikers = c.recentLikers ? [...c.recentLikers] : [];
               if (liked && currentUserLiker) {
-                if (!newRecentLikers.find((l) => l.id === currentUserLiker.id)) {
+                if (
+                  !newRecentLikers.find((l) => l.id === currentUserLiker.id)
+                ) {
                   newRecentLikers.unshift(currentUserLiker);
                   if (newRecentLikers.length > 3) {
                     newRecentLikers.pop();
@@ -143,7 +150,7 @@ export function useLikeComment(
                 }
               } else if (!liked && currentUserLiker) {
                 newRecentLikers = newRecentLikers.filter(
-                  (l) => l.id !== currentUserLiker.id
+                  (l) => l.id !== currentUserLiker.id,
                 );
               }
 
@@ -185,7 +192,7 @@ export function useLikeComment(
               }
             } else if (!liked && currentUserLiker) {
               newRecentLikers = newRecentLikers.filter(
-                (l) => l.id !== currentUserLiker.id
+                (l) => l.id !== currentUserLiker.id,
               );
             }
 

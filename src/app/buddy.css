@@ -2233,8 +2233,12 @@
 /* ─── Skeleton / Shimmer ────────────────────────────────────────────────── */
 
 @keyframes _shimmer {
-  0% { background-position: -400px 0; }
-  100% { background-position: 400px 0; }
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
 }
 
 ._skeleton {
@@ -2369,7 +2373,9 @@
   font-weight: 500;
   padding: 2px 4px;
   border-radius: 4px;
-  transition: color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    background 0.15s;
 }
 
 ._comment_like_btn:hover {
@@ -2471,7 +2477,9 @@
   border: none;
   cursor: pointer;
   color: var(--bs-color7);
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
   font-family: inherit;
   line-height: 1.4;
 }
@@ -2511,7 +2519,9 @@
 }
 
 @keyframes _spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 ._feed_end_message {

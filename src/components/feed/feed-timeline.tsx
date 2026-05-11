@@ -13,8 +13,14 @@ const SKELETON_COUNT = 3;
  * - Shows a subtle spinner when fetching subsequent pages.
  */
 export const FeedList = () => {
-  const { posts, sentinelRef, isLoading, isFetchingNextPage, hasNextPage, error } =
-    useFeed();
+  const {
+    posts,
+    sentinelRef,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    error,
+  } = useFeed();
 
   // ── Error state ────────────────────────────────────────────────────────────
   if (error) {
@@ -60,11 +66,7 @@ export const FeedList = () => {
 
       {/* Infinite-scroll sentinel */}
       {hasNextPage ? (
-        <div
-          ref={sentinelRef}
-          className="_feed_sentinel"
-          aria-hidden="true"
-        >
+        <div ref={sentinelRef} className="_feed_sentinel" aria-hidden="true">
           {isFetchingNextPage && (
             <div className="_feed_loading_more" aria-label="Loading more posts">
               <span className="_feed_spinner" />
@@ -73,9 +75,7 @@ export const FeedList = () => {
         </div>
       ) : (
         posts.length > 0 && (
-          <p className="_feed_end_message">
-            {"You're all caught up! 🎉"}
-          </p>
+          <p className="_feed_end_message">{"You're all caught up! 🎉"}</p>
         )
       )}
     </div>

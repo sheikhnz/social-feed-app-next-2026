@@ -7,7 +7,10 @@ import { useComments } from "@/hooks/feed/use-comments";
 import { useReplies } from "@/hooks/feed/use-replies";
 import { useCreateComment } from "@/hooks/feed/use-create-comment";
 import { CommentLikeButton } from "@/components/feed/like-button";
-import { ReplyInput, type ComposerAvatarUser } from "@/components/feed/reply-input";
+import {
+  ReplyInput,
+  type ComposerAvatarUser,
+} from "@/components/feed/reply-input";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { formatDistanceToNowStrict } from "@/lib/utils/date";
 import { Tooltip } from "@/components/ui/antd";
@@ -70,7 +73,7 @@ const CommentItem = ({
   );
 
   return (
-    <div className={`_comment_main${depth > 0 ? " _comment_reply_item" : ""}`}>
+    <div className={`_comment_main${depth > 0 ? "_comment_reply_item" : ""}`}>
       <div className="_comment_image">
         <a href="#" className="_comment_image_link" tabIndex={-1}>
           {comment.author.image ? (
@@ -105,7 +108,10 @@ const CommentItem = ({
           </div>
 
           <div className="_comment_actions_row">
-            <CommentLikeButton comment={comment} parentCommentId={parentCommentId} />
+            <CommentLikeButton
+              comment={comment}
+              parentCommentId={parentCommentId}
+            />
 
             <button
               type="button"
@@ -123,12 +129,29 @@ const CommentItem = ({
               <Tooltip
                 title={
                   comment.recentLikers && comment.recentLikers.length > 0 ? (
-                    <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-                      {comment.recentLikers.map(l => (
-                        <span key={l.id}>• {l.name || [l.firstName, l.lastName].filter(Boolean).join(" ") || "Someone"}</span>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "2px",
+                      }}
+                    >
+                      {comment.recentLikers.map((l) => (
+                        <span key={l.id}>
+                          •{" "}
+                          {l.name ||
+                            [l.firstName, l.lastName]
+                              .filter(Boolean)
+                              .join(" ") ||
+                            "Someone"}
+                        </span>
                       ))}
                       {comment.likesCount > comment.recentLikers.length && (
-                        <span>• and {comment.likesCount - comment.recentLikers.length} others</span>
+                        <span>
+                          • and{" "}
+                          {comment.likesCount - comment.recentLikers.length}{" "}
+                          others
+                        </span>
                       )}
                     </div>
                   ) : (
@@ -159,7 +182,10 @@ const CommentItem = ({
           )}
 
           {repliesLoading && (
-            <div className="_skeleton _skeleton_line" style={{ width: "60%", marginTop: 8 }} />
+            <div
+              className="_skeleton _skeleton_line"
+              style={{ width: "60%", marginTop: 8 }}
+            />
           )}
 
           {repliesOpen && replies.length > 0 && (
@@ -253,8 +279,14 @@ export const CommentSection = ({
             <div key={i} className="_comment_main" style={{ marginTop: 12 }}>
               <div className="_skeleton _skeleton_avatar_sm" />
               <div style={{ flex: 1, marginLeft: 10 }}>
-                <div className="_skeleton _skeleton_line" style={{ width: "30%", marginBottom: 6 }} />
-                <div className="_skeleton _skeleton_line" style={{ width: "80%" }} />
+                <div
+                  className="_skeleton _skeleton_line"
+                  style={{ width: "30%", marginBottom: 6 }}
+                />
+                <div
+                  className="_skeleton _skeleton_line"
+                  style={{ width: "80%" }}
+                />
               </div>
             </div>
           ))}

@@ -21,7 +21,9 @@ export const POST = withAuth(async (req: NextRequest, { userId }) => {
   const body = await req.json().catch(() => null);
   const parsed = createCommentSchema.safeParse(body);
   if (!parsed.success) {
-    return badRequest(parsed.error.issues[0]?.message ?? "Invalid request body");
+    return badRequest(
+      parsed.error.issues[0]?.message ?? "Invalid request body",
+    );
   }
 
   const comment = await createComment(userId, parsed.data);
@@ -42,7 +44,9 @@ export const GET = withAuth(async (req: NextRequest, { userId }) => {
     limit: searchParams.get("limit") ?? undefined,
   });
   if (!parsed.success) {
-    return badRequest(parsed.error.issues[0]?.message ?? "Invalid query params");
+    return badRequest(
+      parsed.error.issues[0]?.message ?? "Invalid query params",
+    );
   }
 
   const { postId, cursor, limit } = parsed.data;

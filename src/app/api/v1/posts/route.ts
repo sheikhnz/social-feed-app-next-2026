@@ -1,7 +1,10 @@
 import { type NextRequest } from "next/server";
 import { withAuth } from "@/lib/api/auth-guard";
 import { badRequest, created, ok } from "@/lib/api/response";
-import { createPostSchema, feedQuerySchema } from "@/lib/schemas/feed/post.schema";
+import {
+  createPostSchema,
+  feedQuerySchema,
+} from "@/lib/schemas/feed/post.schema";
 import { createPost, getFeedPosts } from "@/lib/repositories/post.repository";
 
 /**
@@ -15,7 +18,9 @@ export const POST = withAuth(async (req: NextRequest, { userId }) => {
   const body = await req.json().catch(() => null);
   const parsed = createPostSchema.safeParse(body);
   if (!parsed.success) {
-    return badRequest(parsed.error.issues[0]?.message ?? "Invalid request body");
+    return badRequest(
+      parsed.error.issues[0]?.message ?? "Invalid request body",
+    );
   }
 
   const post = await createPost(userId, parsed.data);
@@ -41,7 +46,9 @@ export const GET = withAuth(async (req: NextRequest, { userId }) => {
     limit: searchParams.get("limit") ?? undefined,
   });
   if (!parsed.success) {
-    return badRequest(parsed.error.issues[0]?.message ?? "Invalid query params");
+    return badRequest(
+      parsed.error.issues[0]?.message ?? "Invalid query params",
+    );
   }
 
   const { cursor, limit } = parsed.data;

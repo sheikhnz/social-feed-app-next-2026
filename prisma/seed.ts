@@ -229,7 +229,9 @@ const main = async (): Promise<void> => {
     console.log(`  ✅ Comments: 5 seeded (2 top-level, 3 replies)`);
 
     // 4. Seed likes on posts
-    const publicPosts = createdPosts.filter((_, i) => POSTS[i]?.visibility === "PUBLIC");
+    const publicPosts = createdPosts.filter(
+      (_, i) => POSTS[i]?.visibility === "PUBLIC",
+    );
 
     await prisma.like.createMany({
       skipDuplicates: true,

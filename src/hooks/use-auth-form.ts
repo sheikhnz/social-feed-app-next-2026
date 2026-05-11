@@ -7,14 +7,19 @@ import { toast } from "sonner";
 import { getSession } from "next-auth/react";
 
 function isRedirectError(error: unknown) {
-  if (typeof error !== "object" || error === null || !("digest" in error)) return false;
-  return typeof error.digest === "string" && error.digest.startsWith("NEXT_REDIRECT");
+  if (typeof error !== "object" || error === null || !("digest" in error))
+    return false;
+  return (
+    typeof error.digest === "string" && error.digest.startsWith("NEXT_REDIRECT")
+  );
 }
 
 interface UseAuthFormOptions<T extends FieldValues> {
   schema: z.ZodType<T>;
   defaultValues: DefaultValues<T>;
-  action: (formData: FormData) => Promise<{ error?: string } | undefined | void>;
+  action: (
+    formData: FormData,
+  ) => Promise<{ error?: string } | undefined | void>;
   successMessage?: string;
   onSuccess?: () => void;
 }
@@ -27,9 +32,11 @@ export function useAuthForm<T extends FieldValues>({
   onSuccess,
 }: UseAuthFormOptions<T>) {
   const [loading, setLoading] = useState(false);
-  
+
   const form = useForm<T>({
-    resolver: zodResolver(schema as Parameters<typeof zodResolver>[0]) as unknown as Resolver<T>,
+    resolver: zodResolver(
+      schema as Parameters<typeof zodResolver>[0],
+    ) as unknown as Resolver<T>,
     defaultValues,
     mode: "onBlur",
   });
@@ -40,21 +47,24 @@ export function useAuthForm<T extends FieldValues>({
       const formData = new FormData();
       Object.entries(values).forEach(([key, val]) => {
         if (val !== undefined && val !== null) {
-          formData.append(key, typeof val === 'boolean' ? String(val) : (val as string));
+          formData.append(
+            key,
+            typeof val === "boolean" ? String(val) : (val as string),
+          );
         }
       });
-      
+
       const result = await action(formData);
-      
+
       if (result && "error" in result && result.error) {
         toast.error(result.error);
         return;
       }
-      
+
       if (successMessage) {
         toast.success(successMessage);
       }
-      
+
       if (onSuccess) {
         onSuccess();
       }
@@ -75,6 +85,8 @@ export function useAuthForm<T extends FieldValues>({
   return {
     form,
     loading,
-    handleSubmit: form.handleSubmit(onSubmit as unknown as Parameters<typeof form.handleSubmit>[0]),
+    handleSubmit: form.handleSubmit(
+      onSubmit as unknown as Parameters<typeof form.handleSubmit>[0],
+    ),
   };
 }

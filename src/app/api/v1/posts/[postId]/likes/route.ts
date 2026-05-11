@@ -2,7 +2,11 @@ import { LikeTargetType } from "@prisma/client";
 import { withAuth } from "@/lib/api/auth-guard";
 import { badRequest, notFound, ok } from "@/lib/api/response";
 import { postLikeParamsSchema } from "@/lib/schemas/feed/like.schema";
-import { likeTarget, unlikeTarget, getLikeCount } from "@/lib/repositories/like.repository";
+import {
+  likeTarget,
+  unlikeTarget,
+  getLikeCount,
+} from "@/lib/repositories/like.repository";
 import { postExists } from "@/lib/repositories/post.repository";
 
 /**

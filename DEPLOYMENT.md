@@ -17,15 +17,15 @@ This app is a Next.js App Router project with **Prisma 7**, **PostgreSQL** (via 
 
 Add these under **Project → Settings → Environment Variables**. Enable them for **Production** (and **Preview** if previews should talk to a real database).
 
-| Name | Required | Notes |
-|------|----------|--------|
-| `DATABASE_URL` | Yes | Pooled / app connection string for Prisma + `pg`. Required at **build** time (see `prisma.config.ts`). |
-| `DIRECT_URL` | Recommended | Non-pooled URL for migrations (`prisma migrate deploy` in the Vercel build). If omitted, migrations use `DATABASE_URL`. |
-| `AUTH_SECRET` | Strongly recommended | `openssl rand -base64 32` |
-| `NEXT_PUBLIC_SITE_URL` | Yes (prod) | Full origin, no trailing slash, for example `https://your-app.vercel.app` or your custom domain. |
-| `AUTH_URL` | Recommended (prod) | Same origin as the deployment, for example `https://your-app.vercel.app`. Helps Auth.js behind Vercel. |
-| `AUTH_GOOGLE_ID` | If using Google | From Google Cloud Console |
-| `AUTH_GOOGLE_SECRET` | If using Google | From Google Cloud Console |
+| Name                   | Required             | Notes                                                                                                                   |
+| ---------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `DATABASE_URL`         | Yes                  | Pooled / app connection string for Prisma + `pg`. Required at **build** time (see `prisma.config.ts`).                  |
+| `DIRECT_URL`           | Recommended          | Non-pooled URL for migrations (`prisma migrate deploy` in the Vercel build). If omitted, migrations use `DATABASE_URL`. |
+| `AUTH_SECRET`          | Strongly recommended | `openssl rand -base64 32`                                                                                               |
+| `NEXT_PUBLIC_SITE_URL` | Yes (prod)           | Full origin, no trailing slash, for example `https://your-app.vercel.app` or your custom domain.                        |
+| `AUTH_URL`             | Recommended (prod)   | Same origin as the deployment, for example `https://your-app.vercel.app`. Helps Auth.js behind Vercel.                  |
+| `AUTH_GOOGLE_ID`       | If using Google      | From Google Cloud Console                                                                                               |
+| `AUTH_GOOGLE_SECRET`   | If using Google      | From Google Cloud Console                                                                                               |
 
 Local reference: [.env.example](.env.example).
 

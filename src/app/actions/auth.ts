@@ -54,7 +54,7 @@ export const registerAction = async (formData: FormData) => {
         lastName,
       },
     });
-    
+
     // Sign in after registration
     await signIn("credentials", formData);
   } catch (error) {

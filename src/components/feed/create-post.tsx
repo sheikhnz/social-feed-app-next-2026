@@ -19,10 +19,30 @@ const LABEL_TEXT = "Write something ...";
 /* ─── Icons ────────────────────────────────────────────────────────────────── */
 
 const ATTACHMENT_BTNS = [
-  { key: "photo", label: "Photo", className: "_feed_inner_text_area_bottom_photo", icon: <PictureOutlined style={{ fontSize: 20, color: "#666" }} /> },
-  { key: "video", label: "Video", className: "_feed_inner_text_area_bottom_video", icon: <VideoCameraOutlined style={{ fontSize: 20, color: "#666" }} /> },
-  { key: "event", label: "Event", className: "_feed_inner_text_area_bottom_event", icon: <CalendarOutlined style={{ fontSize: 20, color: "#666" }} /> },
-  { key: "article", label: "Article", className: "_feed_inner_text_area_bottom_article", icon: <FileTextOutlined style={{ fontSize: 20, color: "#666" }} /> },
+  {
+    key: "photo",
+    label: "Photo",
+    className: "_feed_inner_text_area_bottom_photo",
+    icon: <PictureOutlined style={{ fontSize: 20, color: "#666" }} />,
+  },
+  {
+    key: "video",
+    label: "Video",
+    className: "_feed_inner_text_area_bottom_video",
+    icon: <VideoCameraOutlined style={{ fontSize: 20, color: "#666" }} />,
+  },
+  {
+    key: "event",
+    label: "Event",
+    className: "_feed_inner_text_area_bottom_event",
+    icon: <CalendarOutlined style={{ fontSize: 20, color: "#666" }} />,
+  },
+  {
+    key: "article",
+    label: "Article",
+    className: "_feed_inner_text_area_bottom_article",
+    icon: <FileTextOutlined style={{ fontSize: 20, color: "#666" }} />,
+  },
 ] as const;
 
 /* ─── Visibility selector ─────────────────────────────────────────────────── */
@@ -39,7 +59,7 @@ const VisibilityToggle = ({
   <div className="_composer_visibility_toggle">
     <button
       type="button"
-      className={`_composer_vis_btn${value === "PUBLIC" ? " _active" : ""}`}
+      className={`_composer_vis_btn${value === "PUBLIC" ? "_active" : ""}`}
       onClick={() => onChange("PUBLIC")}
       aria-pressed={value === "PUBLIC"}
     >
@@ -47,7 +67,7 @@ const VisibilityToggle = ({
     </button>
     <button
       type="button"
-      className={`_composer_vis_btn${value === "PRIVATE" ? " _active" : ""}`}
+      className={`_composer_vis_btn${value === "PRIVATE" ? "_active" : ""}`}
       onClick={() => onChange("PRIVATE")}
       aria-pressed={value === "PRIVATE"}
     >
@@ -107,7 +127,10 @@ export const PostComposer = () => {
             </div>
           )}
         </div>
-        <div className="form-floating _feed_inner_text_area_box_form" style={{ position: "relative" }}>
+        <div
+          className="form-floating _feed_inner_text_area_box_form"
+          style={{ position: "relative" }}
+        >
           <textarea
             id={fieldId}
             className="form-control _textarea"
@@ -137,8 +160,13 @@ export const PostComposer = () => {
         <div className="_feed_inner_text_area_item">
           {ATTACHMENT_BTNS.map(({ key, label, className, icon }) => (
             <div key={key} className={`${className} _feed_common`}>
-              <button type="button" className="_feed_inner_text_area_bottom_photo_link">
-                <span className="_feed_inner_text_area_bottom_photo_iamge _mar_img">{icon}</span>
+              <button
+                type="button"
+                className="_feed_inner_text_area_bottom_photo_link"
+              >
+                <span className="_feed_inner_text_area_bottom_photo_iamge _mar_img">
+                  {icon}
+                </span>
                 {label}
               </button>
             </div>
@@ -154,7 +182,14 @@ export const PostComposer = () => {
               disabled={!text.trim() || createPost.isPending}
               aria-label="Publish post"
             >
-              <SendOutlined className="_mar_img" style={{ fontSize: 14, color: "#fff", transform: "rotate(-45deg)" }} />
+              <SendOutlined
+                className="_mar_img"
+                style={{
+                  fontSize: 14,
+                  color: "#fff",
+                  transform: "rotate(-45deg)",
+                }}
+              />
               <span>{createPost.isPending ? "Posting…" : "Post"}</span>
             </button>
           </div>
@@ -167,8 +202,14 @@ export const PostComposer = () => {
           <div className="_feed_inner_text_area_item">
             {ATTACHMENT_BTNS.map(({ key, label, className, icon }) => (
               <div key={key} className={`${className} _feed_common`}>
-                <button type="button" className="_feed_inner_text_area_bottom_photo_link" aria-label={label}>
-                  <span className="_feed_inner_text_area_bottom_photo_iamge _mar_img">{icon}</span>
+                <button
+                  type="button"
+                  className="_feed_inner_text_area_bottom_photo_link"
+                  aria-label={label}
+                >
+                  <span className="_feed_inner_text_area_bottom_photo_iamge _mar_img">
+                    {icon}
+                  </span>
                 </button>
               </div>
             ))}
@@ -181,7 +222,14 @@ export const PostComposer = () => {
               disabled={!text.trim() || createPost.isPending}
               aria-label="Publish post"
             >
-              <SendOutlined className="_mar_img" style={{ fontSize: 14, color: "#fff", transform: "rotate(-45deg)" }} />
+              <SendOutlined
+                className="_mar_img"
+                style={{
+                  fontSize: 14,
+                  color: "#fff",
+                  transform: "rotate(-45deg)",
+                }}
+              />
               <span>{createPost.isPending ? "…" : "Post"}</span>
             </button>
           </div>

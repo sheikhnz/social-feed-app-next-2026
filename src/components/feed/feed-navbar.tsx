@@ -115,7 +115,12 @@ const PROFILE_DROP_ITEMS = [
  */
 export const FeedNavbar = () => {
   const { data: session } = useSession();
-  const userName = getUserName(session?.user?.firstName, session?.user?.lastName, "User", session?.user?.name);
+  const userName = getUserName(
+    session?.user?.firstName,
+    session?.user?.lastName,
+    "User",
+    session?.user?.name,
+  );
 
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifTab, setNotifTab] = useState<"all" | "unread">("all");
@@ -190,7 +195,10 @@ export const FeedNavbar = () => {
 
           <li className="_feed_header_nav_item">
             <Link href="#" className="_feed_header_nav_link">
-              <TeamOutlined className="_header_nav_filled_glyph" style={{ fontSize: 22 }} />
+              <TeamOutlined
+                className="_header_nav_filled_glyph"
+                style={{ fontSize: 22 }}
+              />
             </Link>
           </li>
 
@@ -203,7 +211,10 @@ export const FeedNavbar = () => {
                 aria-expanded={notifOpen}
                 aria-label="Notifications"
               >
-                <BellOutlined className="_header_nav_filled_glyph" style={{ fontSize: 20 }} />
+                <BellOutlined
+                  className="_header_nav_filled_glyph"
+                  style={{ fontSize: 20 }}
+                />
                 <span className="_counting">6</span>
               </button>
               <div
@@ -222,7 +233,13 @@ export const FeedNavbar = () => {
                       aria-label="Notification options"
                       onClick={toggleNotifOverflow}
                     >
-                      <MoreOutlined style={{ fontSize: 18, color: "#C4C4C4", transform: "rotate(90deg)" }} />
+                      <MoreOutlined
+                        style={{
+                          fontSize: 18,
+                          color: "#C4C4C4",
+                          transform: "rotate(90deg)",
+                        }}
+                      />
                     </button>
                     <div
                       className={`_notifications_drop_right ${notifOverflowOpen ? "show" : ""}`}
@@ -285,7 +302,10 @@ export const FeedNavbar = () => {
 
           <li className="_feed_header_nav_item">
             <Link href="#" className="_feed_header_nav_link">
-              <MessageOutlined className="_header_nav_filled_glyph" style={{ fontSize: 20 }} />
+              <MessageOutlined
+                className="_header_nav_filled_glyph"
+                style={{ fontSize: 20 }}
+              />
               <span className="_counting">2</span>
             </Link>
           </li>
@@ -298,12 +318,23 @@ export const FeedNavbar = () => {
             onClick={toggleProfile}
             aria-expanded={profileOpen}
             aria-label="Account menu"
-            style={{ display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", padding: 0 }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: 0,
+            }}
           >
             <div className="_feed_header_nav_profile_image">
               <UserAvatar user={session?.user} size={24} />
             </div>
-            <div className="_feed_header_nav_dropdown" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <div
+              className="_feed_header_nav_dropdown"
+              style={{ display: "flex", alignItems: "center", gap: 6 }}
+            >
               <p className="_feed_header_nav_para">{userName}</p>
               <DownOutlined style={{ fontSize: 10, color: "#112032" }} />
             </div>
@@ -311,7 +342,11 @@ export const FeedNavbar = () => {
 
           <div className={`_profile_dropdown ${profileOpen ? "show" : ""}`}>
             <div className="_profile_drop_info">
-              <UserAvatar user={session?.user} size={40} className="_profile_drop_avatar" />
+              <UserAvatar
+                user={session?.user}
+                size={40}
+                className="_profile_drop_avatar"
+              />
               <div>
                 <p className="_profile_drop_name">{userName}</p>
                 <a href="#" className="_profile_drop_link">
@@ -327,14 +362,24 @@ export const FeedNavbar = () => {
                     <button
                       type="button"
                       className="_profile_drop_item"
-                      style={{ width: "100%", textAlign: "left", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit" }}
+                      style={{
+                        width: "100%",
+                        textAlign: "left",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        fontFamily: "inherit",
+                        fontSize: "inherit",
+                      }}
                       onClick={() => signOut()}
                     >
                       <span className="_profile_drop_item_left">
                         <span style={{ display: "flex" }}>{item.icon}</span>
                         {item.label}
                       </span>
-                      <RightOutlined style={{ fontSize: 10, color: "#112032", opacity: 0.5 }} />
+                      <RightOutlined
+                        style={{ fontSize: 10, color: "#112032", opacity: 0.5 }}
+                      />
                     </button>
                   ) : (
                     <a href={item.href} className="_profile_drop_item">
@@ -342,7 +387,9 @@ export const FeedNavbar = () => {
                         <span style={{ display: "flex" }}>{item.icon}</span>
                         {item.label}
                       </span>
-                      <RightOutlined style={{ fontSize: 10, color: "#112032", opacity: 0.5 }} />
+                      <RightOutlined
+                        style={{ fontSize: 10, color: "#112032", opacity: 0.5 }}
+                      />
                     </a>
                   )}
                 </li>

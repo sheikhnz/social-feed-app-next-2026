@@ -28,7 +28,11 @@ export function useFeed() {
     const observer = new IntersectionObserver(
       (entries) => {
         const first = entries[0];
-        if (first?.isIntersecting && query.hasNextPage && !query.isFetchingNextPage) {
+        if (
+          first?.isIntersecting &&
+          query.hasNextPage &&
+          !query.isFetchingNextPage
+        ) {
           void query.fetchNextPage();
         }
       },

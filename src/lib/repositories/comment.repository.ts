@@ -3,7 +3,11 @@ import { prisma } from "@/lib/prisma";
 import { buildPaginatedResult, decodeCursor } from "@/lib/api/pagination";
 import type { PaginatedResult } from "@/lib/api/pagination";
 import { AUTHOR_SELECT, type AuthorPayload } from "./_shared";
-import { batchGetLikeCounts, batchGetUserLiked, batchGetRecentLikers } from "./like.repository";
+import {
+  batchGetLikeCounts,
+  batchGetUserLiked,
+  batchGetRecentLikers,
+} from "./like.repository";
 import type { CreateCommentInput } from "@/lib/schemas/feed/comment.schema";
 
 export interface CommentWithMeta {
@@ -68,7 +72,12 @@ export async function getComments(
   cursor?: string,
   limit = 20,
 ): Promise<PaginatedResult<CommentWithMeta>> {
-  return _getCommentPage(userId, { postId, parentCommentId: null }, cursor, limit);
+  return _getCommentPage(
+    userId,
+    { postId, parentCommentId: null },
+    cursor,
+    limit,
+  );
 }
 
 /**

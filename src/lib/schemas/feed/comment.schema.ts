@@ -7,7 +7,11 @@ export const createCommentSchema = z.object({
     .trim()
     .min(1, "Content is required")
     .max(2000, "Content must be under 2000 characters"),
-  parentCommentId: z.string().uuid("parentCommentId must be a valid UUID").optional().nullable(),
+  parentCommentId: z
+    .string()
+    .uuid("parentCommentId must be a valid UUID")
+    .optional()
+    .nullable(),
 });
 
 export const commentQuerySchema = z.object({

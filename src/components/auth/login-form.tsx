@@ -7,7 +7,10 @@ import { Input } from "@/components/ui/antd";
 import { Controller } from "react-hook-form";
 import { loginAction, signInWithGoogleAction } from "@/app/actions/auth";
 import { useAuthForm } from "@/hooks/use-auth-form";
-import { credentialsSignInSchema, CredentialsSignInValues } from "@/lib/schemas/sign-in";
+import {
+  credentialsSignInSchema,
+  CredentialsSignInValues,
+} from "@/lib/schemas/sign-in";
 
 const GOOGLE_SIGN_IN_LABEL = "Or sign-in with google";
 const OR_LABEL = "Or";
@@ -29,11 +32,18 @@ export const LoginForm = () => {
     action: loginAction,
   });
 
-  const { control, formState: { errors } } = form;
+  const {
+    control,
+    formState: { errors },
+  } = form;
 
   const renderError = (message?: string) => {
     if (!message) return null;
-    return <div style={{ color: "#ff4d4f", fontSize: "12px", marginTop: "4px" }}>{message}</div>;
+    return (
+      <div style={{ color: "#ff4d4f", fontSize: "12px", marginTop: "4px" }}>
+        {message}
+      </div>
+    );
   };
 
   return (
@@ -51,7 +61,11 @@ export const LoginForm = () => {
       <p className="_auth_subtitle">Welcome back</p>
       <h4 className="_auth_title">Login to your account</h4>
 
-      <button type="button" className="_google_btn" onClick={() => signInWithGoogleAction()}>
+      <button
+        type="button"
+        className="_google_btn"
+        onClick={() => signInWithGoogleAction()}
+      >
         <Image
           src="/assets/images/google.svg"
           alt="Google"
@@ -71,24 +85,47 @@ export const LoginForm = () => {
         style={{ fontFamily: "var(--font-poppins), Poppins, sans-serif" }}
       >
         <div style={{ marginBottom: 14 }}>
-          <label className="_auth_label" style={{ display: "block", marginBottom: 8 }}>{EMAIL_LABEL}</label>
+          <label
+            className="_auth_label"
+            style={{ display: "block", marginBottom: 8 }}
+          >
+            {EMAIL_LABEL}
+          </label>
           <Controller
             name="email"
             control={control}
             render={({ field }) => (
-              <Input {...field} type="email" size="large" autoComplete="email" style={{ borderRadius: 6 }} status={errors.email ? "error" : ""} />
+              <Input
+                {...field}
+                type="email"
+                size="large"
+                autoComplete="email"
+                style={{ borderRadius: 6 }}
+                status={errors.email ? "error" : ""}
+              />
             )}
           />
           {renderError(errors.email?.message)}
         </div>
 
         <div style={{ marginBottom: 14 }}>
-          <label className="_auth_label" style={{ display: "block", marginBottom: 8 }}>{PASSWORD_LABEL}</label>
+          <label
+            className="_auth_label"
+            style={{ display: "block", marginBottom: 8 }}
+          >
+            {PASSWORD_LABEL}
+          </label>
           <Controller
             name="password"
             control={control}
             render={({ field }) => (
-              <Input.Password {...field} size="large" autoComplete="current-password" style={{ borderRadius: 6 }} status={errors.password ? "error" : ""} />
+              <Input.Password
+                {...field}
+                size="large"
+                autoComplete="current-password"
+                style={{ borderRadius: 6 }}
+                status={errors.password ? "error" : ""}
+              />
             )}
           />
           {renderError(errors.password?.message)}

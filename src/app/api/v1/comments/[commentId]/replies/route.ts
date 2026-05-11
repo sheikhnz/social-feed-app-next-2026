@@ -2,7 +2,10 @@ import { type NextRequest } from "next/server";
 import { withAuth } from "@/lib/api/auth-guard";
 import { badRequest, notFound, ok } from "@/lib/api/response";
 import { commentLikeParamsSchema } from "@/lib/schemas/feed/like.schema";
-import { getReplies, commentExists } from "@/lib/repositories/comment.repository";
+import {
+  getReplies,
+  commentExists,
+} from "@/lib/repositories/comment.repository";
 import { z } from "zod";
 
 const repliesQuerySchema = z.object({
@@ -30,7 +33,9 @@ export const GET = withAuth<{ commentId: string }>(
       limit: searchParams.get("limit") ?? undefined,
     });
     if (!queryParsed.success) {
-      return badRequest(queryParsed.error.issues[0]?.message ?? "Invalid query");
+      return badRequest(
+        queryParsed.error.issues[0]?.message ?? "Invalid query",
+      );
     }
 
     const { cursor, limit } = queryParsed.data;

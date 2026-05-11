@@ -140,7 +140,10 @@ export const PostCard = ({ post }: PostCardProps) => {
               >
                 <ul className="_feed_timeline_dropdown_list">
                   {DROPDOWN_ITEMS.map((item) => (
-                    <li key={item.label} className="_feed_timeline_dropdown_item">
+                    <li
+                      key={item.label}
+                      className="_feed_timeline_dropdown_item"
+                    >
                       <button
                         type="button"
                         className="_feed_timeline_dropdown_link"
@@ -176,48 +179,58 @@ export const PostCard = ({ post }: PostCardProps) => {
       {/* ── Stats row ─────────────────────────────────────────────── */}
       <div className="_feed_inner_timeline_total_reacts _padd_r24 _padd_l24 _mar_b26">
         {post.likesCount > 0 && (
-            <Tooltip
-              title={
-                post.recentLikers && post.recentLikers.length > 0 ? (
-                  <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-                    {post.recentLikers.map(l => (
-                      <span key={l.id}>• {l.name || [l.firstName, l.lastName].filter(Boolean).join(" ") || "Someone"}</span>
-                    ))}
-                    {post.likesCount > post.recentLikers.length && (
-                      <span>• and {post.likesCount - post.recentLikers.length} others</span>
-                    )}
-                  </div>
-                ) : (
-                  `${post.likesCount} likes`
-                )
-              }
-              placement="top"
-            >
-              <div className="_feed_inner_timeline_total_reacts_image cursor-pointer">
-                {post.recentLikers?.map((liker, i) => {
-                  const zIndex = 10 - i;
-                  return (
-                    <UserAvatar
-                      key={liker.id}
-                      user={liker}
-                      size={24}
-                      className={i === 0 ? "_react_img1" : "_react_img"}
-                      fallbackClassName="_react_avatar_fallback"
-                      style={{ zIndex }}
-                    />
-                  );
-                })}
-                {post.likesCount > (post.recentLikers?.length || 0) && (
-                  <div 
-                    className="_react_count_badge"
-                    style={{ zIndex: 0 }}
-                  >
-                    {post.likesCount - (post.recentLikers?.length || 0)}+
-                  </div>
-                )}
-              </div>
-            </Tooltip>
-          )}
+          <Tooltip
+            title={
+              post.recentLikers && post.recentLikers.length > 0 ? (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "2px",
+                  }}
+                >
+                  {post.recentLikers.map((l) => (
+                    <span key={l.id}>
+                      •{" "}
+                      {l.name ||
+                        [l.firstName, l.lastName].filter(Boolean).join(" ") ||
+                        "Someone"}
+                    </span>
+                  ))}
+                  {post.likesCount > post.recentLikers.length && (
+                    <span>
+                      • and {post.likesCount - post.recentLikers.length} others
+                    </span>
+                  )}
+                </div>
+              ) : (
+                `${post.likesCount} likes`
+              )
+            }
+            placement="top"
+          >
+            <div className="_feed_inner_timeline_total_reacts_image cursor-pointer">
+              {post.recentLikers?.map((liker, i) => {
+                const zIndex = 10 - i;
+                return (
+                  <UserAvatar
+                    key={liker.id}
+                    user={liker}
+                    size={24}
+                    className={i === 0 ? "_react_img1" : "_react_img"}
+                    fallbackClassName="_react_avatar_fallback"
+                    style={{ zIndex }}
+                  />
+                );
+              })}
+              {post.likesCount > (post.recentLikers?.length || 0) && (
+                <div className="_react_count_badge" style={{ zIndex: 0 }}>
+                  {post.likesCount - (post.recentLikers?.length || 0)}+
+                </div>
+              )}
+            </div>
+          </Tooltip>
+        )}
         <div className="_feed_inner_timeline_total_reacts_txt">
           <button
             type="button"
@@ -249,7 +262,10 @@ export const PostCard = ({ post }: PostCardProps) => {
         >
           <span className="_feed_inner_timeline_reaction_link">
             <span>
-              <MessageOutlined className="_reaction_svg" style={{ fontSize: 20 }} />
+              <MessageOutlined
+                className="_reaction_svg"
+                style={{ fontSize: 20 }}
+              />
               Comment
             </span>
           </span>
@@ -262,7 +278,10 @@ export const PostCard = ({ post }: PostCardProps) => {
         >
           <span className="_feed_inner_timeline_reaction_link">
             <span>
-              <ShareAltOutlined className="_reaction_svg" style={{ fontSize: 20 }} />
+              <ShareAltOutlined
+                className="_reaction_svg"
+                style={{ fontSize: 20 }}
+              />
               Share
             </span>
           </span>

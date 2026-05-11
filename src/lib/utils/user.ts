@@ -1,4 +1,9 @@
-export function getUserName(firstName?: string | null, lastName?: string | null, fallback = "User", name?: string | null): string {
+export function getUserName(
+  firstName?: string | null,
+  lastName?: string | null,
+  fallback = "User",
+  name?: string | null,
+): string {
   return [firstName, lastName].filter(Boolean).join(" ") || name || fallback;
 }
 

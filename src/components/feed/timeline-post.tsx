@@ -102,14 +102,18 @@ const CommentComposer = ({ avatarSrc, textareaId }: CommentComposerProps) => (
               className="_feed_inner_comment_box_icon_btn"
               aria-label="Voice"
             >
-              <AudioOutlined style={{ fontSize: 16, color: "rgba(0,0,0,0.46)" }} />
+              <AudioOutlined
+                style={{ fontSize: 16, color: "rgba(0,0,0,0.46)" }}
+              />
             </button>
             <button
               type="button"
               className="_feed_inner_comment_box_icon_btn"
               aria-label="Image"
             >
-              <PictureOutlined style={{ fontSize: 16, color: "rgba(0,0,0,0.46)" }} />
+              <PictureOutlined
+                style={{ fontSize: 16, color: "rgba(0,0,0,0.46)" }}
+              />
             </button>
           </div>
         </div>
@@ -304,7 +308,10 @@ export const TimelinePost = ({ post }: TimelinePostProps) => {
         >
           <span className="_feed_inner_timeline_reaction_link">
             <span>
-              <MessageOutlined className="_reaction_svg" style={{ fontSize: 20 }} />
+              <MessageOutlined
+                className="_reaction_svg"
+                style={{ fontSize: 20 }}
+              />
               Comment
             </span>
           </span>
@@ -315,7 +322,10 @@ export const TimelinePost = ({ post }: TimelinePostProps) => {
         >
           <span className="_feed_inner_timeline_reaction_link">
             <span>
-              <ShareAltOutlined className="_reaction_svg" style={{ fontSize: 20 }} />
+              <ShareAltOutlined
+                className="_reaction_svg"
+                style={{ fontSize: 20 }}
+              />
               Share
             </span>
           </span>
