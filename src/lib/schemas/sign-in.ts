@@ -8,7 +8,8 @@ export const credentialsSignInSchema = z.object({
     .string()
     .trim()
     .min(1, "Email is required")
-    .email("Enter a valid email"),
+    .email("Enter a valid email")
+    .transform((value) => value.toLowerCase()),
   password: z.string().min(1, "Password is required"),
 });
 

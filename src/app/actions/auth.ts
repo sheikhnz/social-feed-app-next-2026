@@ -4,6 +4,7 @@ import { signIn, signOut as authSignOut } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import { AuthError } from "next-auth";
+import { registerSchema } from "@/lib/schemas/register";
 
 /**
  * Server Action wrapper for Auth.js sign-out with a stable default redirect.
@@ -29,14 +30,21 @@ export const loginAction = async (formData: FormData) => {
 };
 
 export const registerAction = async (formData: FormData) => {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const firstName = formData.get("firstName") as string;
-  const lastName = formData.get("lastName") as string;
-
-  if (!email || !password || !firstName || !lastName) {
-    return { error: "Missing required fields" };
+  const parsed = registerSchema.safeParse({
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    email: formData.get("email"),
+    password: formData.get("password"),
+    repeatPassword: formData.get("repeatPassword"),
+    terms: formData.get("terms") === "true",
+  });
+  if (!parsed.success) {
+    return {
+      error: parsed.error.issues[0]?.message ?? "Invalid registration data",
+    };
   }
+
+  const { firstName, lastName, email, password } = parsed.data;
 
   try {
     const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -55,8 +63,11 @@ export const registerAction = async (formData: FormData) => {
       },
     });
 
-    // Sign in after registration
-    await signIn("credentials", formData);
+    const signInFormData = new FormData();
+    signInFormData.set("email", email);
+    signInFormData.set("password", password);
+
+    await signIn("credentials", signInFormData);
   } catch (error) {
     if (error instanceof AuthError) {
       return { error: "Failed to sign in after registration." };

@@ -117,6 +117,29 @@ export async function getFeedPosts(
   return buildPaginatedResult(posts, limit);
 }
 
+export type PostReadAccess = "ok" | "not_found" | "forbidden";
+
+/**
+ * Resolve whether `userId` may read `postId`.
+ * - `not_found` — no post with this id
+ * - `forbidden` — post exists but is private to another user (403)
+ * - `ok` — readable (public or own private)
+ */
+export async function resolvePostReadAccess(
+  userId: string,
+  postId: string,
+): Promise<PostReadAccess> {
+  const post = await prisma.post.findUnique({
+    where: { id: postId },
+    select: { visibility: true, authorId: true },
+  });
+  if (!post) return "not_found";
+  if (post.visibility === "PRIVATE" && post.authorId !== userId) {
+    return "forbidden";
+  }
+  return "ok";
+}
+
 /**
  * Whether the requesting user may read this post (PUBLIC, or PRIVATE authored by them).
  * Used to prevent IDOR on private posts for likes, comments, and related APIs.
@@ -125,14 +148,6 @@ export async function isPostReadableByUser(
   userId: string,
   postId: string,
 ): Promise<boolean> {
-  const count = await prisma.post.count({
-    where: {
-      id: postId,
-      OR: [
-        { visibility: "PUBLIC" },
-        { authorId: userId, visibility: "PRIVATE" },
-      ],
-    },
-  });
-  return count > 0;
+  const access = await resolvePostReadAccess(userId, postId);
+  return access === "ok";
 }

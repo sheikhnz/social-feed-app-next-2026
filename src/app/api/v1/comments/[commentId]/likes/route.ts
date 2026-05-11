@@ -1,13 +1,14 @@
 import { LikeTargetType } from "@prisma/client";
 import { withAuth } from "@/lib/api/auth-guard";
-import { badRequest, notFound, ok } from "@/lib/api/response";
+import { badRequest, ok } from "@/lib/api/response";
+import { resourceAccessToResponse } from "@/lib/api/resource-access-response";
 import { commentLikeParamsSchema } from "@/lib/schemas/feed/like.schema";
 import {
   likeTarget,
   unlikeTarget,
   getLikeCount,
 } from "@/lib/repositories/like.repository";
-import { isCommentOnReadablePost } from "@/lib/repositories/comment.repository";
+import { resolveCommentReadAccess } from "@/lib/repositories/comment.repository";
 
 /**
  * POST /api/v1/comments/:commentId/likes
@@ -21,8 +22,11 @@ export const POST = withAuth<{ commentId: string }>(
     }
 
     const { commentId } = parsed.data;
-    if (!(await isCommentOnReadablePost(userId, commentId)))
-      return notFound("Comment");
+    const denied = resourceAccessToResponse(
+      await resolveCommentReadAccess(userId, commentId),
+      "Comment",
+    );
+    if (denied) return denied;
 
     await likeTarget(userId, LikeTargetType.COMMENT, commentId);
     const likesCount = await getLikeCount(LikeTargetType.COMMENT, commentId);
@@ -42,8 +46,11 @@ export const DELETE = withAuth<{ commentId: string }>(
     }
 
     const { commentId } = parsed.data;
-    if (!(await isCommentOnReadablePost(userId, commentId)))
-      return notFound("Comment");
+    const denied = resourceAccessToResponse(
+      await resolveCommentReadAccess(userId, commentId),
+      "Comment",
+    );
+    if (denied) return denied;
 
     await unlikeTarget(userId, LikeTargetType.COMMENT, commentId);
     const likesCount = await getLikeCount(LikeTargetType.COMMENT, commentId);

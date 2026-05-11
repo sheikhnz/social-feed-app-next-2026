@@ -1,13 +1,14 @@
 import { LikeTargetType } from "@prisma/client";
 import { withAuth } from "@/lib/api/auth-guard";
 import { badRequest, notFound, ok } from "@/lib/api/response";
+import { resourceAccessToResponse } from "@/lib/api/resource-access-response";
 import { postLikeParamsSchema } from "@/lib/schemas/feed/like.schema";
 import {
   likeTarget,
   unlikeTarget,
   getLikeCount,
 } from "@/lib/repositories/like.repository";
-import { isPostReadableByUser } from "@/lib/repositories/post.repository";
+import { resolvePostReadAccess } from "@/lib/repositories/post.repository";
 
 /**
  * POST /api/v1/posts/:postId/likes
@@ -21,8 +22,11 @@ export const POST = withAuth<{ postId: string }>(
     }
 
     const { postId } = parsed.data;
-    if (!(await isPostReadableByUser(userId, postId)))
-      return notFound("Post");
+    const denied = resourceAccessToResponse(
+      await resolvePostReadAccess(userId, postId),
+      "Post",
+    );
+    if (denied) return denied;
 
     await likeTarget(userId, LikeTargetType.POST, postId);
     const likesCount = await getLikeCount(LikeTargetType.POST, postId);
@@ -42,8 +46,11 @@ export const DELETE = withAuth<{ postId: string }>(
     }
 
     const { postId } = parsed.data;
-    if (!(await isPostReadableByUser(userId, postId)))
-      return notFound("Post");
+    const denied = resourceAccessToResponse(
+      await resolvePostReadAccess(userId, postId),
+      "Post",
+    );
+    if (denied) return denied;
 
     await unlikeTarget(userId, LikeTargetType.POST, postId);
     const likesCount = await getLikeCount(LikeTargetType.POST, postId);

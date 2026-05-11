@@ -1,10 +1,11 @@
 import { type NextRequest } from "next/server";
 import { withAuth } from "@/lib/api/auth-guard";
-import { badRequest, notFound, ok } from "@/lib/api/response";
+import { badRequest, ok } from "@/lib/api/response";
+import { resourceAccessToResponse } from "@/lib/api/resource-access-response";
 import { commentLikeParamsSchema } from "@/lib/schemas/feed/like.schema";
 import {
   getReplies,
-  isCommentOnReadablePost,
+  resolveCommentReadAccess,
 } from "@/lib/repositories/comment.repository";
 import { z } from "zod";
 
@@ -25,8 +26,11 @@ export const GET = withAuth<{ commentId: string }>(
     }
 
     const { commentId } = parsed.data;
-    if (!(await isCommentOnReadablePost(userId, commentId)))
-      return notFound("Comment");
+    const denied = resourceAccessToResponse(
+      await resolveCommentReadAccess(userId, commentId),
+      "Comment",
+    );
+    if (denied) return denied;
 
     const { searchParams } = new URL(req.url);
     const queryParsed = repliesQuerySchema.safeParse({

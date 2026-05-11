@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 import { withAuth } from "@/lib/api/auth-guard";
 import { badRequest, created, ok } from "@/lib/api/response";
+import { readValidatedJson } from "@/lib/api/validate-json";
 import {
   createPostSchema,
   feedQuerySchema,
@@ -17,15 +18,10 @@ import { isTrustedCloudinaryImageUrl } from "@/lib/uploads/cloudinary-url";
  * Returns 201 with PostWithMeta.
  */
 export const POST = withAuth(async (req: NextRequest, { userId }) => {
-  const body = await req.json().catch(() => null);
-  const parsed = createPostSchema.safeParse(body);
-  if (!parsed.success) {
-    return badRequest(
-      parsed.error.issues[0]?.message ?? "Invalid request body",
-    );
-  }
+  const bodyResult = await readValidatedJson(req, createPostSchema);
+  if (!bodyResult.ok) return bodyResult.response;
 
-  const { imageUrl } = parsed.data;
+  const { imageUrl } = bodyResult.data;
   if (imageUrl) {
     const cloudinaryEnv = getCloudinaryEnv();
     if (!cloudinaryEnv) {
@@ -41,7 +37,7 @@ export const POST = withAuth(async (req: NextRequest, { userId }) => {
     }
   }
 
-  const post = await createPost(userId, parsed.data);
+  const post = await createPost(userId, bodyResult.data);
   return created(post);
 });
 

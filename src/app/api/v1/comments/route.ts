@@ -1,6 +1,8 @@
 import { type NextRequest } from "next/server";
 import { withAuth } from "@/lib/api/auth-guard";
 import { badRequest, created, notFound, ok } from "@/lib/api/response";
+import { resourceAccessToResponse } from "@/lib/api/resource-access-response";
+import { readValidatedJson } from "@/lib/api/validate-json";
 import {
   createCommentSchema,
   commentQuerySchema,
@@ -10,7 +12,7 @@ import {
   getComments,
   isParentCommentOnPost,
 } from "@/lib/repositories/comment.repository";
-import { isPostReadableByUser } from "@/lib/repositories/post.repository";
+import { resolvePostReadAccess } from "@/lib/repositories/post.repository";
 
 /**
  * POST /api/v1/comments
@@ -20,18 +22,15 @@ import { isPostReadableByUser } from "@/lib/repositories/post.repository";
  * Returns 201 with CommentWithMeta.
  */
 export const POST = withAuth(async (req: NextRequest, { userId }) => {
-  const body = await req.json().catch(() => null);
-  const parsed = createCommentSchema.safeParse(body);
-  if (!parsed.success) {
-    return badRequest(
-      parsed.error.issues[0]?.message ?? "Invalid request body",
-    );
-  }
+  const bodyResult = await readValidatedJson(req, createCommentSchema);
+  if (!bodyResult.ok) return bodyResult.response;
 
-  const { postId, parentCommentId } = parsed.data;
-  if (!(await isPostReadableByUser(userId, postId))) {
-    return notFound("Post");
-  }
+  const { postId, parentCommentId } = bodyResult.data;
+  const denied = resourceAccessToResponse(
+    await resolvePostReadAccess(userId, postId),
+    "Post",
+  );
+  if (denied) return denied;
   if (
     parentCommentId &&
     !(await isParentCommentOnPost(postId, parentCommentId))
@@ -39,7 +38,7 @@ export const POST = withAuth(async (req: NextRequest, { userId }) => {
     return notFound("Comment");
   }
 
-  const comment = await createComment(userId, parsed.data);
+  const comment = await createComment(userId, bodyResult.data);
   return created(comment);
 });
 
@@ -63,9 +62,11 @@ export const GET = withAuth(async (req: NextRequest, { userId }) => {
   }
 
   const { postId, cursor, limit } = parsed.data;
-  if (!(await isPostReadableByUser(userId, postId))) {
-    return notFound("Post");
-  }
+  const denied = resourceAccessToResponse(
+    await resolvePostReadAccess(userId, postId),
+    "Post",
+  );
+  if (denied) return denied;
   const result = await getComments(userId, postId, cursor, limit);
   return ok(result);
 });

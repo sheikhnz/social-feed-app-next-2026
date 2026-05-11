@@ -92,6 +92,32 @@ export async function getReplies(
   return _getCommentPage(userId, { parentCommentId }, cursor, limit);
 }
 
+export type CommentReadAccess = "ok" | "not_found" | "forbidden";
+
+/**
+ * Resolve whether `userId` may read the post this comment belongs to.
+ * - `not_found` — no comment with this id
+ * - `forbidden` — comment exists but its post is private to another user (403)
+ * - `ok` — comment’s post is readable
+ */
+export async function resolveCommentReadAccess(
+  userId: string,
+  commentId: string,
+): Promise<CommentReadAccess> {
+  const row = await prisma.comment.findUnique({
+    where: { id: commentId },
+    select: {
+      post: { select: { visibility: true, authorId: true } },
+    },
+  });
+  if (!row) return "not_found";
+  const { visibility, authorId } = row.post;
+  if (visibility === "PRIVATE" && authorId !== userId) {
+    return "forbidden";
+  }
+  return "ok";
+}
+
 /**
  * Whether the comment exists and belongs to a post the user is allowed to read.
  * Prevents IDOR via comment/reply/like endpoints on private posts.
@@ -100,18 +126,8 @@ export async function isCommentOnReadablePost(
   userId: string,
   commentId: string,
 ): Promise<boolean> {
-  const count = await prisma.comment.count({
-    where: {
-      id: commentId,
-      post: {
-        OR: [
-          { visibility: "PUBLIC" },
-          { authorId: userId, visibility: "PRIVATE" },
-        ],
-      },
-    },
-  });
-  return count > 0;
+  const access = await resolveCommentReadAccess(userId, commentId);
+  return access === "ok";
 }
 
 /**
