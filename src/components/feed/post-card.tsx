@@ -198,9 +198,8 @@ export const PostCard = ({ post }: PostCardProps) => {
       </div>
 
       {/* ── Stats row ─────────────────────────────────────────────── */}
-      {(post.likesCount > 0 || post.commentsCount > 0) && (
-        <div className="_feed_inner_timeline_total_reacts _padd_r24 _padd_l24 _mar_b26">
-          {post.likesCount > 0 && (
+      <div className="_feed_inner_timeline_total_reacts _padd_r24 _padd_l24 _mar_b26">
+        {post.likesCount > 0 && (
             <Tooltip
               title={
                 post.recentLikers && post.recentLikers.length > 0
@@ -238,20 +237,23 @@ export const PostCard = ({ post }: PostCardProps) => {
               </div>
             </Tooltip>
           )}
-          {post.commentsCount > 0 && (
-            <div className="_feed_inner_timeline_total_reacts_txt">
-              <button
-                type="button"
-                className="_feed_inner_timeline_total_reacts_para1 _plain_btn"
-                onClick={toggleComments}
-              >
-                <span>{post.commentsCount}</span>{" "}
-                {post.commentsCount === 1 ? "Comment" : "Comments"}
-              </button>
-            </div>
-          )}
+        <div className="_feed_inner_timeline_total_reacts_txt">
+          <button
+            type="button"
+            className="_feed_inner_timeline_total_reacts_para1 _plain_btn"
+            onClick={toggleComments}
+          >
+            <span>{post.commentsCount}</span>{" "}
+            {post.commentsCount === 1 ? "Comment" : "Comments"}
+          </button>
+          <button
+            type="button"
+            className="_feed_inner_timeline_total_reacts_para1 _plain_btn"
+          >
+            <span>0</span> Share
+          </button>
         </div>
-      )}
+      </div>
 
       {/* ── Reaction bar ──────────────────────────────────────────── */}
       <div className="_feed_inner_timeline_reaction">

@@ -1863,6 +1863,7 @@
 ._feed_inner_timeline_total_reacts_txt {
   display: flex;
   gap: 12px;
+  margin-left: auto;
 }
 
 ._feed_inner_timeline_total_reacts_para1,
