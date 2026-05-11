@@ -17,7 +17,7 @@ type StoryStripNextButtonArgs = {
  * Hidden automatically when the strip fits (no overflow) or on mobile (CSS hides `._feed_inner_story_arrow`).
  */
 export const StoryStripNextButton = ({
-  scrollTargetId = DEFAULT_SCROLL_TARGET_ID
+  scrollTargetId = DEFAULT_SCROLL_TARGET_ID,
 }: StoryStripNextButtonArgs) => {
   const [showArrow, setShowArrow] = useState(false);
 
