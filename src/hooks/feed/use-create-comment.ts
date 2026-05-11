@@ -51,6 +51,7 @@ export function useCreateComment(
         likesCount: 0,
         repliesCount: 0,
         isLiked: false,
+        recentLikers: [],
       };
 
       qc.setQueryData<CommentPages>(key, (old) => {

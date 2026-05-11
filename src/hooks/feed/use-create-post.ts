@@ -40,6 +40,7 @@ export function useCreatePost(options?: { onSuccess?: () => void }) {
         likesCount: 0,
         commentsCount: 0,
         isLiked: false,
+        recentLikers: [],
       };
 
       qc.setQueryData<FeedPages>(queryKeys.feedPosts(), (old) => {

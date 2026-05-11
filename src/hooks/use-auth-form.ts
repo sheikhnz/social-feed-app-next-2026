@@ -4,6 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 
+function isRedirectError(error: unknown) {
+  if (typeof error !== "object" || error === null || !("digest" in error)) return false;
+  return typeof error.digest === "string" && error.digest.startsWith("NEXT_REDIRECT");
+}
+
 interface UseAuthFormOptions<T extends FieldValues> {
   schema: z.ZodType<T>;
   defaultValues: DefaultValues<T>;
@@ -52,6 +57,9 @@ export function useAuthForm<T extends FieldValues>({
         onSuccess();
       }
     } catch (error) {
+      if (isRedirectError(error)) {
+        throw error;
+      }
       console.log(error);
       toast.error("An unexpected error occurred. Please try again.");
     } finally {
