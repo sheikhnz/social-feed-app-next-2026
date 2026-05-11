@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 
+import { getSession } from "next-auth/react";
+
 function isRedirectError(error: unknown) {
   if (typeof error !== "object" || error === null || !("digest" in error)) return false;
   return typeof error.digest === "string" && error.digest.startsWith("NEXT_REDIRECT");
@@ -58,6 +60,9 @@ export function useAuthForm<T extends FieldValues>({
       }
     } catch (error) {
       if (isRedirectError(error)) {
+        // Silently fetch and update the Next-Auth session context
+        await getSession();
+        // Rethrow the redirect so Next.js performs a soft SPA navigation
         throw error;
       }
       console.log(error);
