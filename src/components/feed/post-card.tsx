@@ -6,6 +6,10 @@ import { PostLikeButton } from "@/components/feed/like-button";
 import { CommentSection } from "@/components/feed/comment-section";
 import { useCreateComment } from "@/hooks/feed/use-create-comment";
 import { formatDistanceToNowStrict } from "@/lib/utils/date";
+import {
+  resolveAuthorHeaderName,
+  resolveUserLabelPreferName,
+} from "@/lib/utils/user";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { Tooltip } from "@/components/ui/antd";
 import {
@@ -69,10 +73,11 @@ export const PostCard = ({ post }: PostCardProps) => {
   const [dropOpen, setDropOpen] = useState(false);
   const [commentOpen, setCommentOpen] = useState(false);
 
-  const authorName =
-    post.author.firstName && post.author.lastName
-      ? `${post.author.firstName} ${post.author.lastName}`
-      : (post.author.name ?? "Unknown");
+  const authorName = resolveAuthorHeaderName({
+    firstName: post.author.firstName,
+    lastName: post.author.lastName,
+    name: post.author.name,
+  });
 
   const timeAgo = formatDistanceToNowStrict(new Date(post.createdAt));
 
@@ -194,9 +199,11 @@ export const PostCard = ({ post }: PostCardProps) => {
                   {post.recentLikers.map((l) => (
                     <span key={l.id}>
                       •{" "}
-                      {l.name ||
-                        [l.firstName, l.lastName].filter(Boolean).join(" ") ||
-                        "Someone"}
+                      {resolveUserLabelPreferName({
+                        name: l.name,
+                        firstName: l.firstName,
+                        lastName: l.lastName,
+                      })}
                     </span>
                   ))}
                   {post.likesCount > post.recentLikers.length && (

@@ -13,6 +13,11 @@ import {
 } from "@/components/feed/reply-input";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { formatDistanceToNowStrict } from "@/lib/utils/date";
+import {
+  getUserInitial,
+  resolveAuthorHeaderName,
+  resolveUserLabelPreferName,
+} from "@/lib/utils/user";
 import { Tooltip } from "@/components/ui/antd";
 import { SendOutlined } from "@ant-design/icons";
 
@@ -48,10 +53,11 @@ const CommentItem = ({
 
   const createReply = useCreateComment(postId);
 
-  const authorName =
-    comment.author.firstName && comment.author.lastName
-      ? `${comment.author.firstName} ${comment.author.lastName}`
-      : (comment.author.name ?? "Unknown");
+  const authorName = resolveAuthorHeaderName({
+    firstName: comment.author.firstName,
+    lastName: comment.author.lastName,
+    name: comment.author.name,
+  });
 
   const handleReplySubmit = useCallback(
     (content: string) => {
@@ -88,7 +94,7 @@ const CommentItem = ({
               className="_comment_img1 _comment_avatar_fallback"
               aria-hidden="true"
             >
-              {authorName.slice(0, 1).toUpperCase()}
+              {getUserInitial(authorName)}
             </div>
           )}
         </a>
@@ -139,11 +145,11 @@ const CommentItem = ({
                       {comment.recentLikers.map((l) => (
                         <span key={l.id}>
                           •{" "}
-                          {l.name ||
-                            [l.firstName, l.lastName]
-                              .filter(Boolean)
-                              .join(" ") ||
-                            "Someone"}
+                          {resolveUserLabelPreferName({
+                            name: l.name,
+                            firstName: l.firstName,
+                            lastName: l.lastName,
+                          })}
                         </span>
                       ))}
                       {comment.likesCount > comment.recentLikers.length && (
