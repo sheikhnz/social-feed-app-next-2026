@@ -136,10 +136,7 @@ export const FeedRightSidebar = () => (
       {/* Friends list */}
       <div>
         {FRIENDS.map((friend) => (
-          <div
-            key={friend.id}
-            className={`_friend_item${!friend.online ? "_friend_item_inactive" : ""}`}
-          >
+          <div key={friend.id} className="_friend_item">
             <div className="_friend_info">
               <Image
                 src={friend.image}

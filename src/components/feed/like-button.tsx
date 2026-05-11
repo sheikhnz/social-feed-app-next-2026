@@ -30,7 +30,7 @@ export const PostLikeButton = ({ post }: PostLikeButtonProps) => {
   return (
     <button
       type="button"
-      className={`_feed_inner_timeline_reaction_emoji _feed_reaction${post.isLiked ? "_feed_reaction_active" : ""}`}
+      className={`_feed_inner_timeline_reaction_emoji _feed_reaction${post.isLiked ? " _feed_reaction_active" : ""}`}
       onClick={handleClick}
       disabled={isPending}
       aria-label={post.isLiked ? "Unlike post" : "Like post"}
@@ -85,7 +85,7 @@ export const CommentLikeButton = ({
   return (
     <button
       type="button"
-      className={`_comment_like_btn${comment.isLiked ? "_comment_like_btn_active" : ""}`}
+      className={`_comment_like_btn${comment.isLiked ? " _comment_like_btn_active" : ""}`}
       onClick={handleClick}
       disabled={isPending}
       aria-label={comment.isLiked ? "Unlike comment" : "Like comment"}

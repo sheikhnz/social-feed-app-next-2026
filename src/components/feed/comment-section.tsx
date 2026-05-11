@@ -73,7 +73,7 @@ const CommentItem = ({
   );
 
   return (
-    <div className={`_comment_main${depth > 0 ? "_comment_reply_item" : ""}`}>
+    <div className={`_comment_main${depth > 0 ? " _comment_reply_item" : ""}`}>
       <div className="_comment_image">
         <a href="#" className="_comment_image_link" tabIndex={-1}>
           {comment.author.image ? (

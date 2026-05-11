@@ -238,7 +238,9 @@ export const TimelinePost = ({ post }: TimelinePostProps) => {
                 <MoreOutlined style={{ fontSize: 18, color: "#C4C4C4" }} />
               </button>
             </div>
-            <div className={`_feed_timeline_dropdown${dropOpen ? "show" : ""}`}>
+            <div
+              className={`_feed_timeline_dropdown${dropOpen ? " show" : ""}`}
+            >
               <ul className="_feed_timeline_dropdown_list">
                 {DROPDOWN_ITEMS.map((item) => (
                   <li key={item.label} className="_feed_timeline_dropdown_item">
@@ -292,7 +294,7 @@ export const TimelinePost = ({ post }: TimelinePostProps) => {
       <div className="_feed_inner_timeline_reaction">
         <button
           type="button"
-          className={`_feed_inner_timeline_reaction_emoji _feed_reaction${activeReaction === "Like" ? "_feed_reaction_active" : ""}`}
+          className={`_feed_inner_timeline_reaction_emoji _feed_reaction${activeReaction === "Like" ? " _feed_reaction_active" : ""}`}
           onClick={handleLike}
         >
           <span className="_feed_inner_timeline_reaction_link">

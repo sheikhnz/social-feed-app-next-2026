@@ -59,7 +59,7 @@ const VisibilityToggle = ({
   <div className="_composer_visibility_toggle">
     <button
       type="button"
-      className={`_composer_vis_btn${value === "PUBLIC" ? "_active" : ""}`}
+      className={`_composer_vis_btn${value === "PUBLIC" ? " _active" : ""}`}
       onClick={() => onChange("PUBLIC")}
       aria-pressed={value === "PUBLIC"}
     >
@@ -67,7 +67,7 @@ const VisibilityToggle = ({
     </button>
     <button
       type="button"
-      className={`_composer_vis_btn${value === "PRIVATE" ? "_active" : ""}`}
+      className={`_composer_vis_btn${value === "PRIVATE" ? " _active" : ""}`}
       onClick={() => onChange("PRIVATE")}
       aria-pressed={value === "PRIVATE"}
     >
