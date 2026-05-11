@@ -1,12 +1,14 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { useSession } from "next-auth/react";
 import type { CommentWithMeta } from "@/lib/repositories/comment.repository";
 import { useComments } from "@/hooks/feed/use-comments";
 import { useReplies } from "@/hooks/feed/use-replies";
 import { useCreateComment } from "@/hooks/feed/use-create-comment";
 import { CommentLikeButton } from "@/components/feed/like-button";
-import { ReplyInput } from "@/components/feed/reply-input";
+import { ReplyInput, type ComposerAvatarUser } from "@/components/feed/reply-input";
+import { UserAvatar } from "@/components/ui/user-avatar";
 import { formatDistanceToNowStrict } from "@/lib/utils/date";
 import { Tooltip } from "@/components/ui/antd";
 import { SendOutlined } from "@ant-design/icons";
@@ -22,9 +24,17 @@ type CommentItemProps = {
   depth?: number;
   /** Id of the parent comment — required when depth > 0 to correctly update the replies cache */
   parentCommentId?: string;
+  /** Logged-in user for reply composer avatar (image or initials while typing). */
+  composerUser?: ComposerAvatarUser | null;
 };
 
-const CommentItem = ({ comment, postId, depth = 0, parentCommentId }: CommentItemProps) => {
+const CommentItem = ({
+  comment,
+  postId,
+  depth = 0,
+  parentCommentId,
+  composerUser,
+}: CommentItemProps) => {
   const [replyOpen, setReplyOpen] = useState(false);
   const [repliesOpen, setRepliesOpen] = useState(false);
 
@@ -161,6 +171,7 @@ const CommentItem = ({ comment, postId, depth = 0, parentCommentId }: CommentIte
                   postId={postId}
                   depth={1}
                   parentCommentId={comment.id}
+                  composerUser={composerUser}
                 />
               ))}
             </div>
@@ -172,6 +183,7 @@ const CommentItem = ({ comment, postId, depth = 0, parentCommentId }: CommentIte
               postId={postId}
               onSubmit={handleReplySubmit}
               isPending={createReply.isPending}
+              composerUser={composerUser}
               placeholder={`Reply to ${authorName}…`}
             />
           )}
@@ -188,8 +200,6 @@ const CommentItem = ({ comment, postId, depth = 0, parentCommentId }: CommentIte
 type CommentSectionProps = {
   postId: string;
   isOpen: boolean;
-  /** Avatar src for the current user's composer */
-  currentUserImage?: string | null;
   onAddComment: (content: string) => void;
   isAddingComment?: boolean;
 };
@@ -197,10 +207,18 @@ type CommentSectionProps = {
 export const CommentSection = ({
   postId,
   isOpen,
-  currentUserImage,
   onAddComment,
   isAddingComment,
 }: CommentSectionProps) => {
+  const { data: session } = useSession();
+  const composerUser: ComposerAvatarUser | null = session?.user
+    ? {
+        firstName: session.user.firstName,
+        lastName: session.user.lastName,
+        name: session.user.name,
+        image: session.user.image,
+      }
+    : null;
   const { comments, isLoading, isFetchingNextPage, hasNextPage, loadMoreRef } =
     useComments(postId, isOpen);
 
@@ -212,19 +230,12 @@ export const CommentSection = ({
       <div className="_feed_inner_comment_box">
         <div className="_feed_inner_comment_box_content">
           <div className="_feed_inner_comment_box_content_image">
-            {currentUserImage ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={currentUserImage}
-                alt=""
-                className="_comment_img"
-              />
-            ) : (
-              <div
-                className="_comment_avatar_placeholder"
-                aria-hidden="true"
-              />
-            )}
+            <UserAvatar
+              user={composerUser ?? undefined}
+              size={36}
+              className="_comment_img"
+              fallbackClassName="_comment_avatar_fallback"
+            />
           </div>
           <div className="_feed_inner_comment_box_content_txt">
             <CommentComposerInput
@@ -251,7 +262,12 @@ export const CommentSection = ({
       ) : (
         <div className="_timline_comment_main">
           {comments.map((comment) => (
-            <CommentItem key={comment.id} comment={comment} postId={postId} />
+            <CommentItem
+              key={comment.id}
+              comment={comment}
+              postId={postId}
+              composerUser={composerUser}
+            />
           ))}
 
           {hasNextPage && (

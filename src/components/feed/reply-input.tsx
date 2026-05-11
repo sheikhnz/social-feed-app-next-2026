@@ -2,6 +2,15 @@
 
 import { useCallback, useRef, useState, type KeyboardEvent } from "react";
 import { SendOutlined } from "@ant-design/icons";
+import { UserAvatar } from "@/components/ui/user-avatar";
+
+/** Same shape NextAuth attaches to `session.user`; used only for avatar + initials fallback. */
+export type ComposerAvatarUser = {
+  firstName?: string | null;
+  lastName?: string | null;
+  name?: string | null;
+  image?: string | null;
+};
 
 type ReplyInputProps = {
   /** The parent comment's id */
@@ -10,7 +19,8 @@ type ReplyInputProps = {
   /** Called with the reply text when submitted */
   onSubmit: (content: string) => void;
   isPending?: boolean;
-  avatarSrc?: string | null;
+  /** Current user for inline avatar (image or letter fallback). */
+  composerUser?: ComposerAvatarUser | null;
   placeholder?: string;
 };
 
@@ -20,7 +30,7 @@ type ReplyInputProps = {
 export const ReplyInput = ({
   onSubmit,
   isPending,
-  avatarSrc,
+  composerUser,
   placeholder = "Write a reply…",
 }: ReplyInputProps) => {
   const [text, setText] = useState("");
@@ -48,12 +58,12 @@ export const ReplyInput = ({
       <div className="_feed_inner_comment_box">
         <div className="_feed_inner_comment_box_content">
           <div className="_feed_inner_comment_box_content_image">
-            {avatarSrc ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={avatarSrc} alt="" className="_comment_img" />
-            ) : (
-              <div className="_comment_avatar_placeholder" aria-hidden="true" />
-            )}
+            <UserAvatar
+              user={composerUser ?? undefined}
+              size={36}
+              className="_comment_img"
+              fallbackClassName="_comment_avatar_fallback"
+            />
           </div>
           <div className="_feed_inner_comment_box_content_txt">
             <textarea

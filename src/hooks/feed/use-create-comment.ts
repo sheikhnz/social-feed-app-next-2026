@@ -2,6 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { InfiniteData } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import { createComment } from "@/lib/api/feed-api";
 import { queryKeys } from "@/hooks/query-keys";
 import type { CommentWithMeta } from "@/lib/repositories/comment.repository";
@@ -13,15 +14,16 @@ type CommentPages = InfiniteData<PaginatedResult<CommentWithMeta>>;
 /**
  * Mutation for creating a top-level comment OR a reply.
  *
- * - If `input.parentCommentId` is set → optimistically appends to the
- *   feedReplies cache for that parent comment.
- * - Otherwise → optimistically appends to the feedComments cache for the post.
+ * - If `input.parentCommentId` is set → optimistically prepends to the
+ *   feedReplies cache for that parent (same newest-first order as the API).
+ * - Otherwise → optimistically prepends to the feedComments cache for the post.
  */
 export function useCreateComment(
   postId: string,
   options?: { onSuccess?: () => void },
 ) {
   const qc = useQueryClient();
+  const { data: session } = useSession();
 
   return useMutation({
     mutationFn: (input: CreateCommentInput) => createComment(input),
@@ -35,6 +37,7 @@ export function useCreateComment(
       await qc.cancelQueries({ queryKey: key });
       const previous = qc.getQueryData<CommentPages>(key);
 
+      const u = session?.user;
       const optimistic: CommentWithMeta = {
         id: `temp-${Date.now()}`,
         postId,
@@ -42,11 +45,11 @@ export function useCreateComment(
         content: input.content,
         createdAt: new Date(),
         author: {
-          id: "",
-          firstName: null,
-          lastName: null,
-          name: "You",
-          image: null,
+          id: u?.id ?? "",
+          firstName: u?.firstName ?? null,
+          lastName: u?.lastName ?? null,
+          name: u?.name ?? "You",
+          image: u?.image ?? null,
         },
         likesCount: 0,
         repliesCount: 0,
@@ -68,7 +71,8 @@ export function useCreateComment(
           pages: [
             {
               ...firstPage!,
-              items: [...(firstPage?.items ?? []), optimistic],
+              /** Newest-first matches `getComments` / `getReplies` (createdAt desc). */
+              items: [optimistic, ...(firstPage?.items ?? [])],
             },
             ...rest,
           ],

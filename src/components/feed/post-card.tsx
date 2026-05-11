@@ -5,7 +5,6 @@ import type { PostWithMeta } from "@/lib/repositories/post.repository";
 import { PostLikeButton } from "@/components/feed/like-button";
 import { CommentSection } from "@/components/feed/comment-section";
 import { useCreateComment } from "@/hooks/feed/use-create-comment";
-import { useSession } from "next-auth/react";
 import { formatDistanceToNowStrict } from "@/lib/utils/date";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { Tooltip } from "@/components/ui/antd";
@@ -69,9 +68,6 @@ export const PostCard = ({ post }: PostCardProps) => {
   const uid = useId();
   const [dropOpen, setDropOpen] = useState(false);
   const [commentOpen, setCommentOpen] = useState(false);
-  const { data: session } = useSession();
-
-  const createComment = useCreateComment(post.id);
 
   const authorName =
     post.author.firstName && post.author.lastName
@@ -82,6 +78,8 @@ export const PostCard = ({ post }: PostCardProps) => {
 
   const toggleDrop = useCallback(() => setDropOpen((v) => !v), []);
   const toggleComments = useCallback(() => setCommentOpen((v) => !v), []);
+
+  const createComment = useCreateComment(post.id);
 
   const handleAddComment = useCallback(
     (content: string) => {
@@ -276,7 +274,6 @@ export const PostCard = ({ post }: PostCardProps) => {
         <CommentSection
           postId={post.id}
           isOpen={commentOpen}
-          currentUserImage={session?.user?.image ?? null}
           onAddComment={handleAddComment}
           isAddingComment={createComment.isPending}
         />

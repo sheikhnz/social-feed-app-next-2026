@@ -63,6 +63,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.name = user.name;
         token.firstName = user.firstName;
         token.lastName = user.lastName;
+        token.picture = user.image ?? token.picture;
       }
       return token;
     },
@@ -72,6 +73,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.name = token.name as string | undefined;
         session.user.firstName = token.firstName as string | undefined;
         session.user.lastName = token.lastName as string | undefined;
+        if (token.picture) {
+          session.user.image = token.picture as string;
+        }
       }
       return session;
     },
